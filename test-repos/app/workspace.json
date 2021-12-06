@@ -117,7 +117,7 @@
         "semantic-release": {
           "executor": "@theunderscorer/nx-semantic-release:semantic-release",
           "options": {
-            "dryRun": false,
+            "dryRun": true,
             "buildTarget": "app-b:build",
             "repositoryUrl": "https://github.com/TheUnderScorer/nx-semantic-release-test-app",
             "github": true,
