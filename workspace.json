@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "projects": {
+    "nx-semantic-release": "packages/nx-semantic-release"
+  }
+}

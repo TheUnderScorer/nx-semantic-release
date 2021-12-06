@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "../../dist/out-tsc",
+    "declaration": true,
+    "types": ["node"],
+    "files": [
+      "./src/typings/semantic-release-plugin-decorators.d.ts"
+    ]
+  },
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/tests"],
+  "include": ["**/*.ts"]
+}

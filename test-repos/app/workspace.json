@@ -1,0 +1,178 @@
+{
+  "version": 2,
+  "projects": {
+    "app-a": {
+      "root": "apps/app-a",
+      "sourceRoot": "apps/app-a/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/app-a",
+            "main": "apps/app-a/src/main.ts",
+            "tsConfig": "apps/app-a/tsconfig.app.json",
+            "assets": ["apps/app-a/src/assets"],
+            "generatePackageJson": true
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/app-a/src/environments/environment.ts",
+                  "with": "apps/app-a/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "app-a:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/app-a/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/app-a"],
+          "options": {
+            "jestConfig": "apps/app-a/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "semantic-release": {
+          "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+          "options": {
+            "dryRun": false,
+            "buildTarget": "app-a:build",
+            "repositoryUrl": "https://github.com/TheUnderScorer/nx-semantic-release-test-app",
+            "github": true,
+            "ci": false,
+            "outputPath": "dist/apps/app-a"
+          }
+        }
+      },
+      "tags": []
+    },
+    "app-b": {
+      "root": "apps/app-b",
+      "sourceRoot": "apps/app-b/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/app-b",
+            "main": "apps/app-b/src/main.ts",
+            "tsConfig": "apps/app-b/tsconfig.app.json",
+            "assets": ["apps/app-b/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/app-b/src/environments/environment.ts",
+                  "with": "apps/app-b/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "app-b:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/app-b/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/app-b"],
+          "options": {
+            "jestConfig": "apps/app-b/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "semantic-release": {
+          "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+          "options": {
+            "dryRun": false,
+            "buildTarget": "app-b:build",
+            "repositoryUrl": "https://github.com/TheUnderScorer/nx-semantic-release-test-app",
+            "github": true,
+            "ci": false,
+            "outputPath": "dist/apps/app-b"
+          }
+        }
+      },
+      "tags": []
+    },
+    "lib-a": {
+      "root": "libs/lib-a",
+      "sourceRoot": "libs/lib-a/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/lib-a/**/*.ts"]
+          },
+          "outputs": ["{options.outputFile}"]
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/lib-a"],
+          "options": {
+            "jestConfig": "libs/lib-a/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "lib-a-dependency": {
+      "root": "libs/lib-a-dependency",
+      "sourceRoot": "libs/lib-a-dependency/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/lib-a-dependency/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/lib-a-dependency"],
+          "options": {
+            "jestConfig": "libs/lib-a-dependency/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    }
+  }
+}

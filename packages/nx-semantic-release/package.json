@@ -1,0 +1,5 @@
+{
+  "name": "@theunderscorer/nx-semantic-release",
+  "version": "0.0.1",
+  "builders": "./builders.json"
+}

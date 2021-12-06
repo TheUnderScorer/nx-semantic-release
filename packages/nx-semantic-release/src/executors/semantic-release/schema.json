@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "theunderscorer-semantic-release",
+  "title": "NX Semantic Release",
+  "description": "Automate versioning and CHANGELOG generation.",
+  "type": "object",
+  "cli": "nx",
+  "properties": {
+    "dryRun": {
+      "description": "See what commands would be run, without committing to git or updating files.",
+      "type": "boolean",
+      "default": false
+    },
+    "ci": {
+      "description": "Set to false to skip CI checks.",
+      "type": "boolean",
+      "default": true
+    },
+    "changelog": {
+      "description": "Whether to generate changelog.",
+      "type": "boolean",
+      "default": true
+    },
+    "changelogFile": {
+      "description": "Path to changelog file.",
+      "type": "string",
+      "default": "${PROJECT_DIR}/CHANGELOG.md"
+    },
+    "repositoryUrl": {
+      "description": "The URL of the repository to release from.",
+      "type": "string",
+      "default": ""
+    },
+    "tagFormat": {
+      "description": "Tag format to use.",
+      "type": "string"
+    },
+    "npm": {
+      "description": "Whether to bump package.json version and publish to registry (if package is public).",
+      "type": "boolean",
+      "default": true
+    },
+    "github": {
+      "description": "Whether to create github release.",
+      "type": "boolean",
+      "default": true
+    },
+    "buildTarget": {
+      "description": "The target of the build command.",
+      "type": "string",
+      "default": "build"
+    },
+    "outputPath": {
+      "description": "The path to the output directory.",
+      "type": "string"
+    }
+  }
+}
