@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@app/common-lib": ["libs/common-lib/src/index.ts"],
       "@app/lib-a": ["libs/lib-a/src/index.ts"],
       "@app/lib-a-dependency": ["libs/lib-a-dependency/src/index.ts"]
     }

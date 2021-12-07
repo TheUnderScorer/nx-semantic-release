@@ -2,12 +2,21 @@
   "name": "theunderscorer",
   "version": "0.0.0",
   "license": "MIT",
+  "engines": {
+    "node": ">=12.13.1"
+  },
   "scripts": {
+    "prepare": "npm run setup-test-workspace",
+    "setup-test-repo": "ts-node --project scripts/tsconfig.scripts.json scripts/setup-test-repo.ts",
+    "cleanup-test-repo": "ts-node --project scripts/tsconfig.scripts.json scripts/cleanup-test-repo.ts",
+    "validate-local-git-server": "ts-node --project scripts/tsconfig.scripts.json scripts/validate-local-git-server.ts",
+    "setup-test-workspace": "ts-node --project scripts/tsconfig.scripts.json scripts/setup-test-workspace.ts",
+    "release": "ts-node --project scripts/tsconfig.scripts.json scripts/release.ts",
     "nx": "nx",
-    "start": "nx serve",
-    "build": "nx build",
-    "test": "nx test",
-    "lint": "nx workspace-lint && nx lint",
+    "start": "nx build nx-semantic-release --watch",
+    "build": "nx build nx-semantic-release",
+    "test": "nx test nx-semantic-release --runInBand",
+    "lint": "nx lint nx-semantic-release",
     "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
@@ -33,11 +42,8 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^8.0.2",
     "@semantic-release/npm": "^8.0.3",
-    "conventional-changelog-angular": "5.0.13",
     "remeda": "^0.0.32",
-    "semantic-release": "18.0.1",
-    "tslib": "^2.0.0",
-    "yargs": "^17.3.0"
+    "semantic-release": "18.0.1"
   },
   "devDependencies": {
     "@nrwl/cli": "13.2.3",
@@ -54,7 +60,7 @@
     "@typescript-eslint/eslint-plugin": "~4.33.0",
     "@typescript-eslint/parser": "~4.33.0",
     "@zerollup/ts-transform-paths": "^1.7.18",
-    "dotenv": "10.0.0",
+    "dotenv": "^10.0.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.1.0",
     "gitlog": "^4.0.4",

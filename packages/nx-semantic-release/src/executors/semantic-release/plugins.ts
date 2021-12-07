@@ -45,12 +45,17 @@ export const resolvePlugins = (
   context: ExecutorContext
 ) => {
   const projectRoot = getDefaultProjectRoot(context);
-  const relativeProjectPath = projectRoot.replace(`${context.cwd}/`, '');
+  const relativeProjectPath = path.relative(context.cwd, projectRoot);
 
   const emptyArray = [] as unknown as release.PluginSpec;
   const defaultPlugins: release.PluginSpec[] = [
     '@semantic-release/commit-analyzer',
-    '@semantic-release/release-notes-generator',
+    [
+      '@semantic-release/release-notes-generator',
+      {
+        host: 'http://localhost',
+      },
+    ],
 
     ...(options.changelog
       ? [
@@ -62,25 +67,14 @@ export const resolvePlugins = (
           ],
         ]
       : emptyArray),
-
-    ...(options.buildTarget && options.outputPath
-      ? [
-          [
-            '@semantic-release/exec',
-            {
-              execCwd: context.cwd,
-              prepareCmd: `npx nx run ${options.buildTarget}`,
-            },
-          ],
-        ]
-      : emptyArray),
     ...(options.npm ? getNpmPlugin(options.outputPath, context) : emptyArray),
     [
       '@semantic-release/git',
       {
+        message: options.commitMessage,
         assets: [
           // Git requires relative paths from project root
-          options.changelogFile.replace(`${context.cwd}/`, ''),
+          path.relative(context.cwd, options.changelogFile),
           path.join(relativeProjectPath, 'package.json'),
         ],
       },

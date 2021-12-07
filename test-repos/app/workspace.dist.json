@@ -56,10 +56,11 @@
           "options": {
             "dryRun": false,
             "buildTarget": "app-a:build",
-            "repositoryUrl": "https://github.com/TheUnderScorer/nx-semantic-release-test-app",
-            "github": true,
+            "repositoryUrl": "../../git-server/repos/project.git",
+            "github": false,
             "ci": false,
-            "outputPath": "dist/apps/app-a"
+            "outputPath": "dist/apps/app-a",
+            "commitMessage": "chore(app-a): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}"
           }
         }
       },
@@ -117,12 +118,59 @@
         "semantic-release": {
           "executor": "@theunderscorer/nx-semantic-release:semantic-release",
           "options": {
-            "dryRun": true,
+            "dryRun": false,
             "buildTarget": "app-b:build",
-            "repositoryUrl": "https://github.com/TheUnderScorer/nx-semantic-release-test-app",
-            "github": true,
+            "repositoryUrl": "../../git-server/repos/project.git",
+            "github": false,
             "ci": false,
-            "outputPath": "dist/apps/app-b"
+            "outputPath": "dist/apps/app-b",
+            "commitMessage": "chore(app-b): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}"
+          }
+        }
+      },
+      "tags": []
+    },
+    "common-lib": {
+      "root": "libs/common-lib",
+      "sourceRoot": "libs/common-lib/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-lib/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/common-lib"],
+          "options": {
+            "jestConfig": "libs/common-lib/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-lib",
+            "tsConfig": "libs/common-lib/tsconfig.lib.json",
+            "packageJson": "libs/common-lib/package.json",
+            "main": "libs/common-lib/src/index.ts",
+            "assets": ["libs/common-lib/*.md"]
+          }
+        },
+        "semantic-release": {
+          "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+          "options": {
+            "dryRun": false,
+            "buildTarget": "common-lib:build",
+            "repositoryUrl": "../../git-server/repos/project.git",
+            "github": false,
+            "ci": false,
+            "outputPath": "dist/libs/common-lib",
+            "commitMessage": "chore(common-lib): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}"
           }
         }
       },

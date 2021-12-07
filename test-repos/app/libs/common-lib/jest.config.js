@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'nx-semantic-release',
+  displayName: 'common-lib',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,7 +11,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/packages/nx-semantic-release',
-  setupFilesAfterEnv: ['./src/tests/setup.ts'],
-  testTimeout: 100000,
+  coverageDirectory: '../../coverage/libs/common-lib',
 };

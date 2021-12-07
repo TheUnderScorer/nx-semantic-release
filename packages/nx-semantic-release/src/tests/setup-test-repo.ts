@@ -1,36 +1,50 @@
-import { remoteRepoName, testRepoPath } from './constants';
+import {
+  remoteGitPath,
+  remoteReposDirectory,
+  testRepoLastCommitMessage,
+  testRepoPath,
+} from './constants';
 import { exec } from '../utils/exec';
-import gitlog from 'gitlog';
 import { cleanupTestRepo } from './cleanup-test-repo';
-import { githubClient } from './github';
+import { getTestRepoCommits } from './git';
+import { TestRepoCommit } from './types';
+import { wait } from './utils';
+import fs from 'fs';
 
 export interface SetupTestRepoResult {
-  commits: {
-    hash: string;
-    subject: string;
-    abbrevHash: string;
-  }[];
+  commits: TestRepoCommit[];
+}
+
+async function setupRemoteRepo() {
+  await wait(250);
+
+  if (!fs.existsSync(remoteReposDirectory)) {
+    fs.mkdirSync(remoteReposDirectory, { recursive: true });
+  }
+
+  await exec(`git init --bare project.git`, {
+    cwd: remoteReposDirectory,
+    verbose: true,
+  });
 }
 
 const setupCommands: Array<string | (() => Promise<void>)> = [
+  setupRemoteRepo,
   'git init',
+  'git config user.email "test@example.com"',
+  'git config user.name "Test"',
   'git add apps/app-a',
   'git commit -m "feat: add app-a"',
   'git add apps/app-b',
   'git commit -m "feat: add app-b"',
   'git add libs/lib-a libs/lib-a-dependency',
   'git commit -m "feat: add app-a libs"',
+  'git add libs/common-lib',
+  'git commit -m "feat: add common-lib"',
   'git add .',
-  'git commit -m "feat: add rest"',
-  async () => {
-    const { data } = await githubClient.request('POST /user/repos', {
-      name: remoteRepoName,
-      private: true,
-    });
-
-    await exec(`git remote add origin ${data.clone_url}`);
-  },
-  'git push --set-upstream origin master',
+  `git commit -m "${testRepoLastCommitMessage}"`,
+  `git remote add origin ${remoteGitPath}`,
+  'git push origin master',
 ];
 
 const runCommands = async () => {
@@ -46,17 +60,14 @@ const runCommands = async () => {
 export const setupTestRepo = async (): Promise<SetupTestRepoResult> => {
   const currentCwd = process.cwd();
 
-  try {
-    process.chdir(testRepoPath);
+  process.chdir(testRepoPath);
 
+  try {
     await cleanupTestRepo();
 
     await runCommands();
 
-    const commits = gitlog({
-      repo: './',
-      fields: ['hash', 'subject', 'abbrevHash'],
-    });
+    const commits = getTestRepoCommits();
 
     return {
       commits,

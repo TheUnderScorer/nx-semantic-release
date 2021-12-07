@@ -5,6 +5,12 @@
 /tmp
 /out-tsc
 
+# docker git server volume
+git-server
+
+# env files
+.env
+
 # dependencies
 /node_modules
 

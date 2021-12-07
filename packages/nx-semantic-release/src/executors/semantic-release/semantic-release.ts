@@ -3,6 +3,7 @@ import release from 'semantic-release';
 import { setExecutorContext } from '../../config';
 import { resolvePlugins } from './plugins';
 import { getDefaultProjectRoot } from '../../common/project';
+import { exec } from '../../utils/exec';
 
 export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   npm?: boolean;
@@ -12,6 +13,7 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   git?: boolean;
   changelogFile?: string;
   outputPath?: string;
+  commitMessage?: string;
 };
 
 export async function semanticRelease(
@@ -19,6 +21,12 @@ export async function semanticRelease(
   context: ExecutorContext
 ) {
   const resolvedOptions = resolveOptions(options, context);
+
+  if (resolvedOptions.buildTarget) {
+    await exec(`npx nx run ${options.buildTarget}`, {
+      verbose: true,
+    });
+  }
 
   setExecutorContext(context);
 

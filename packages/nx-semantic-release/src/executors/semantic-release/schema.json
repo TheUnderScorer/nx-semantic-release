@@ -53,6 +53,49 @@
     "outputPath": {
       "description": "The path to the output directory.",
       "type": "string"
+    },
+    "commitMessage": {
+      "description": "The commit message to use when committing the release.",
+      "type": "string",
+      "default": "chore(release): ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}"
+    },
+    "branches": {
+      "description": "Branches configuration for workflow release",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string", "maxLength": 100, "minLength": 1 },
+          {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string", "maxLength": 100, "minLength": 1 },
+              "channel": {
+                "oneOf": [
+                  { "type": "string", "maxLength": 100, "minLength": 1 },
+                  { "const": false }
+                ]
+              },
+              "range": { "type": "string", "maxLength": 100, "minLength": 1 },
+              "prerelease": {
+                "oneOf": [
+                  { "type": "string", "maxLength": 100, "minLength": 1 },
+                  { "type": "boolean" }
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": ["name"]
+          }
+        ]
+      },
+      "uniqueItems": true,
+      "default": [
+        "master",
+        "main",
+        "next",
+        { "name": "beta", "prerelease": true },
+        { "name": "alpha", "prerelease": true }
+      ]
     }
   }
 }

@@ -49,6 +49,17 @@
           }
         ]
       }
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "dryRun": true,
+        "buildTarget": "nx-semantic-release:build",
+        "repositoryUrl": "https://github.com/TheUnderScorer/nx-semantic-release",
+        "github": true,
+        "ci": false,
+        "outputPath": "dist/packages/nx-semantic-release"
+      }
     }
   },
   "tags": []
