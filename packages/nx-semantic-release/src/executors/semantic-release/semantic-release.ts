@@ -6,14 +6,14 @@ import { getDefaultProjectRoot } from '../../common/project';
 import { exec } from '../../utils/exec';
 
 export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
-  npm?: boolean;
-  github?: boolean;
+  npm: boolean;
+  github: boolean;
   buildTarget?: string;
-  changelog?: boolean;
-  git?: boolean;
-  changelogFile?: string;
-  outputPath?: string;
-  commitMessage?: string;
+  changelog: boolean;
+  git: boolean;
+  changelogFile: string;
+  outputPath: string;
+  commitMessage: string;
 };
 
 export async function semanticRelease(

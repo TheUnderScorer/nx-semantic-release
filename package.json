@@ -6,10 +6,10 @@
     "node": ">=12.13.1"
   },
   "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.base.json",
     "prepare": "npm run setup-test-workspace",
     "setup-test-repo": "ts-node --project scripts/tsconfig.scripts.json scripts/setup-test-repo.ts",
     "cleanup-test-repo": "ts-node --project scripts/tsconfig.scripts.json scripts/cleanup-test-repo.ts",
-    "validate-local-git-server": "ts-node --project scripts/tsconfig.scripts.json scripts/validate-local-git-server.ts",
     "setup-test-workspace": "ts-node --project scripts/tsconfig.scripts.json scripts/setup-test-workspace.ts",
     "release": "ts-node --project scripts/tsconfig.scripts.json scripts/release.ts",
     "nx": "nx",

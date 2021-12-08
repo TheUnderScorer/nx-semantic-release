@@ -32,7 +32,7 @@ logger.info(`Remote repository url: ${repositoryUrl}`);
 testProjects.forEach((projectName) => {
   const project = workspace.projects[projectName] as ProjectConfiguration;
 
-  project.targets['semantic-release'].options.repositoryUrl = repositoryUrl;
+  project.targets!['semantic-release'].options.repositoryUrl = repositoryUrl;
 });
 
 fs.writeFileSync(workspaceJsonPath, JSON.stringify(workspace, null, 2));

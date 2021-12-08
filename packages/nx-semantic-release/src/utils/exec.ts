@@ -28,7 +28,7 @@ export const exec = (
   command: string,
   { verbose = false, sudoInCi, ...rest }: ExecOptions = {}
 ) =>
-  new Promise((resolve, reject) => {
+  new Promise<string>((resolve, reject) => {
     const wrappedCommand = sudoInCi ? wrapCommand(command) : command;
 
     const result = cp.exec(
@@ -47,8 +47,8 @@ export const exec = (
     );
 
     if (verbose) {
-      result.stdout.pipe(process.stdout);
-      result.stderr.pipe(process.stderr);
-      result.stdin.pipe(process.stdin);
+      result.stdout?.pipe(process.stdout);
+      result.stderr?.pipe(process.stderr);
+      result.stdin?.pipe(process.stdin);
     }
   });

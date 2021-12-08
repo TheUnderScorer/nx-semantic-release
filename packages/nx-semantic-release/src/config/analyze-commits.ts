@@ -14,6 +14,10 @@ export const getCommitsForProject =
       throw new Error('Executor context is missing.');
     }
 
+    if (!context.commits) {
+      throw new Error('Commits are missing.');
+    }
+
     const filteredCommits = await filterCommits(
       context.commits,
       executorContext,
@@ -33,8 +37,10 @@ const filterCommits = async (
   context: Context,
   verbose?: boolean
 ) => {
-  const deps = await getProjectDependencies(executorContext.projectName);
-  const allDeps = [...deps, executorContext.projectName];
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const deps = await getProjectDependencies(executorContext.projectName!);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const allDeps = [...deps, executorContext.projectName!];
 
   if (verbose) {
     context.logger.log(

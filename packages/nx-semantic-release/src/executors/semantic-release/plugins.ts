@@ -68,6 +68,7 @@ export const resolvePlugins = (
         ]
       : emptyArray),
     ...(options.npm ? getNpmPlugin(options.outputPath, context) : emptyArray),
+    ...(options.plugins ?? []),
     [
       '@semantic-release/git',
       {

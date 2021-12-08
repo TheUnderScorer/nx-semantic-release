@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { isCommitAffectingProjects } from './git';
 import { readTestAppWorkspace } from '../tests/utils';
 import { createFakeSemanticReleaseLogger } from '../tests/logger';
@@ -29,42 +30,42 @@ describe('isCommitAffectingProjects', () => {
       {
         commitHash: commits.find(
           (commit) => commit.subject === 'feat: add app-a libs'
-        ).abbrevHash,
+        )!.abbrevHash,
         projects: ['lib-a'],
         expected: true,
       },
       {
         commitHash: commits.find(
           (commit) => commit.subject === 'feat: add app-a libs'
-        ).abbrevHash,
+        )!.abbrevHash,
         projects: ['app-a'],
         expected: false,
       },
       {
         commitHash: commits.find(
           (commit) => commit.subject === 'feat: add app-a libs'
-        ).abbrevHash,
+        )!.abbrevHash,
         projects: ['lib-a'],
         expected: true,
       },
       {
         commitHash: commits.find(
           (commit) => commit.subject === 'feat: add app-b'
-        ).abbrevHash,
+        )!.abbrevHash,
         projects: ['app-a'],
         expected: false,
       },
       {
         commitHash: commits.find(
           (commit) => commit.subject === 'feat: add app-b'
-        ).abbrevHash,
+        )!.abbrevHash,
         projects: ['app-b'],
         expected: true,
       },
       {
         commitHash: commits.find(
           (commit) => commit.subject === 'feat: add app-b'
-        ).abbrevHash,
+        )!.abbrevHash,
         projects: ['app-b'],
         expected: true,
       },
