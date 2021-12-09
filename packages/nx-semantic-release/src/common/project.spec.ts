@@ -6,10 +6,14 @@ describe('getProjectDependencies', () => {
   it.each<{ projectName: string; expectedDependencies: string[] }>([
     {
       projectName: 'app-a',
-      expectedDependencies: ['lib-a', 'lib-a-dependency'],
+      expectedDependencies: ['lib-a', 'lib-a-dependency', 'common-lib'],
     },
     {
       projectName: 'app-b',
+      expectedDependencies: ['common-lib'],
+    },
+    {
+      projectName: 'common-lib',
       expectedDependencies: [],
     },
   ])('should return correct dependencies', async (data) => {

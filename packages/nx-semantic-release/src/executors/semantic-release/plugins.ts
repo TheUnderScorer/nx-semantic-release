@@ -6,17 +6,19 @@ import { SemanticReleaseOptions } from './semantic-release';
 import { getDefaultProjectRoot } from '../../common/project';
 
 const getNpmPlugin = (
-  buildPath: string,
-  context: ExecutorContext
+  context: ExecutorContext,
+  buildPath?: string
 ): release.PluginSpec[] => {
   const projectRoot = getDefaultProjectRoot(context);
   const projectPkgPath = path.join(projectRoot, 'package.json');
 
-  const buildPkgRoot = path.join(buildPath, 'package.json');
+  const buildPkgRoot = buildPath
+    ? path.join(buildPath, 'package.json')
+    : undefined;
 
   const plugins: release.PluginSpec[] = [];
 
-  if (fs.existsSync(buildPkgRoot)) {
+  if (buildPkgRoot && fs.existsSync(buildPkgRoot)) {
     // Bump package.json version for built project, so that it can be published to NPM with correct version (if package is public)
     plugins.push([
       '@semantic-release/npm',
@@ -45,12 +47,17 @@ export const resolvePlugins = (
   context: ExecutorContext
 ) => {
   const projectRoot = getDefaultProjectRoot(context);
-  const relativeProjectPath = projectRoot.replace(`${context.cwd}/`, '');
+  const relativeProjectPath = path.relative(context.cwd, projectRoot);
 
   const emptyArray = [] as unknown as release.PluginSpec;
   const defaultPlugins: release.PluginSpec[] = [
     '@semantic-release/commit-analyzer',
-    '@semantic-release/release-notes-generator',
+    [
+      '@semantic-release/release-notes-generator',
+      {
+        host: 'http://localhost',
+      },
+    ],
 
     ...(options.changelog
       ? [
@@ -62,26 +69,17 @@ export const resolvePlugins = (
           ],
         ]
       : emptyArray),
-
-    ...(options.buildTarget && options.outputPath
-      ? [
-          [
-            '@semantic-release/exec',
-            {
-              execCwd: context.cwd,
-              prepareCmd: `npx nx run ${options.buildTarget}`,
-            },
-          ],
-        ]
-      : emptyArray),
-    ...(options.npm ? getNpmPlugin(options.outputPath, context) : emptyArray),
+    ...(options.npm ? getNpmPlugin(context, options.outputPath) : emptyArray),
+    ...(options.plugins ?? []),
     [
       '@semantic-release/git',
       {
+        message: options.commitMessage,
         assets: [
           // Git requires relative paths from project root
-          options.changelogFile.replace(`${context.cwd}/`, ''),
+          path.relative(context.cwd, options.changelogFile),
           path.join(relativeProjectPath, 'package.json'),
+          ...(options.gitAssets ?? []),
         ],
       },
     ],

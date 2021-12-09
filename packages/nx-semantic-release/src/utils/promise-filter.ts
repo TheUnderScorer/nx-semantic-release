@@ -6,4 +6,4 @@ export const promiseFilter = <T>(
     array.map((item) =>
       predicate(item).then((result) => (result ? item : null))
     )
-  ).then((results) => results.filter(Boolean));
+  ).then((results) => results.filter(Boolean)) as Promise<T[]>;

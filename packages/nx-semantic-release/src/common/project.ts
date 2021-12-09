@@ -16,7 +16,8 @@ export const getProjectDependencies = async (projectName: string) => {
 };
 
 export const getProject = (context: GetProjectContext) =>
-  context.workspace.projects[context.projectName];
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  context.workspace.projects[context.projectName!];
 
 export const getProjectRoot = (project: ProjectConfiguration, cwd: string) =>
   path.join(cwd, project.root);
@@ -24,7 +25,10 @@ export const getProjectRoot = (project: ProjectConfiguration, cwd: string) =>
 export const getDefaultProjectRoot = (context: GetProjectContext) =>
   getProjectRoot(getProject(context), context.cwd);
 
-const getRecursiveDependencies = (projectName: string, graph: ProjectGraph) => {
+const getRecursiveDependencies = (
+  projectName: string,
+  graph: ProjectGraph
+): string[] => {
   const deps = graph.dependencies[projectName];
 
   if (!deps) {
@@ -35,7 +39,7 @@ const getRecursiveDependencies = (projectName: string, graph: ProjectGraph) => {
     deps,
     filter((dependency) => !dependency.target.startsWith('npm:')),
     map((dependency) => dependency.target),
-    (filteredDeps) =>
+    (filteredDeps: string[]) =>
       filteredDeps.reduce((acc, target) => {
         const targetDeps = getRecursiveDependencies(target, graph);
 

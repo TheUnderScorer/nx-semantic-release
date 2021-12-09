@@ -1,5 +1,14 @@
 {
   "name": "@theunderscorer/nx-semantic-release",
   "version": "0.0.1",
+  "description": "Semantic release for NX.",
+  "author": {
+    "email": "przemyslawzydek@gmail.com",
+    "name": "Przemysław Zydek"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheUnderScorer/nx-semantic-release"
+  },
   "builders": "./builders.json"
 }

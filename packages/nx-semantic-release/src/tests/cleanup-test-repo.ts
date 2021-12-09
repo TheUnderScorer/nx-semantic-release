@@ -1,7 +1,30 @@
 import path from 'path';
 import fs from 'fs';
-import { githubClient } from './github';
-import { remoteRepoName, testRepoPath } from './constants';
+import {
+  remoteGitPath,
+  testRepoLastCommitMessage,
+  testRepoPath,
+} from './constants';
+import { getTestRepoCommits } from './git';
+import { exec } from '../utils/exec';
+
+async function revertToLastCommit() {
+  const targetCommit = getTestRepoCommits().find(
+    (commit) => commit.subject === testRepoLastCommitMessage
+  );
+
+  if (!targetCommit) {
+    throw new Error(
+      `Unable to find target commit: "${testRepoLastCommitMessage}"`
+    );
+  }
+
+  await exec(`git reset --hard ${targetCommit.hash}`);
+}
+
+function removeRemoteDockerRepo() {
+  fs.rmSync(remoteGitPath, { recursive: true });
+}
 
 export const cleanupTestRepo = async () => {
   const currentCwd = process.cwd();
@@ -12,13 +35,12 @@ export const cleanupTestRepo = async () => {
     const gitPath = path.resolve('.git');
 
     if (fs.existsSync(gitPath)) {
-      fs.rmdirSync(gitPath, { recursive: true });
+      await revertToLastCommit();
+
+      fs.rmSync(gitPath, { recursive: true });
 
       try {
-        await githubClient.repos.delete({
-          repo: remoteRepoName,
-          owner: 'TheUnderScorer',
-        });
+        removeRemoteDockerRepo();
       } catch (error) {
         console.error(`Failed to remove remote: ${error.message}`);
       }
