@@ -9,10 +9,18 @@ import {
 } from '../../tests/files';
 import { assertReleaseNotes } from '../../tests/release-notes';
 import { TestApp, TestRepoCommit } from '../../tests/types';
+import { omit } from 'remeda';
+
+const removeCiEnv = () =>
+  omit(process.env, [
+    'GITHUB_EVENT_NAME',
+    'GITHUB_RUN_ID',
+    'GITHUB_REPOSITORY',
+    'GITHUB_WORKSPACE',
+    'GITHUB_ACTIONS',
+  ]);
 
 const findReleaseCommit = (app: TestApp, commits: TestRepoCommit[]) => {
-  //"commitMessage": "chore(app-b): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}"
-
   const match = [`chore(${app})`, 'release'];
 
   const result = commits.find((commit) =>
@@ -110,19 +118,28 @@ describe('Semantic release', () => {
 
   describe('Independent mode', () => {
     it('should release package if itself or dependencies were changed - app-a', async () => {
-      await exec('npx nx run app-a:semantic-release', { verbose: true });
+      await exec('npx nx run app-a:semantic-release', {
+        verbose: true,
+        env: removeCiEnv(),
+      });
 
       await checkAppA();
     });
 
     it('should release package if itself or dependencies were changed - common-lib', async () => {
-      await exec('npx nx run common-lib:semantic-release', { verbose: true });
+      await exec('npx nx run common-lib:semantic-release', {
+        verbose: true,
+        env: removeCiEnv(),
+      });
 
       await checkCommonLib();
     });
 
     it('should release package if itself or dependencies were changed - app-b', async () => {
-      await exec('npx nx run app-b:semantic-release', { verbose: true });
+      await exec('npx nx run app-b:semantic-release', {
+        verbose: true,
+        env: removeCiEnv(),
+      });
 
       await checkAppB();
     });
@@ -132,6 +149,7 @@ describe('Semantic release', () => {
         'npx nx run-many --target=semantic-release --all --parallel=1',
         {
           verbose: true,
+          env: removeCiEnv(),
         }
       );
 
