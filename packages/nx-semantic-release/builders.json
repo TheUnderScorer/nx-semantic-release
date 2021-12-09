@@ -1,7 +1,7 @@
 {
   "executors": {
     "semantic-release": {
-      "implementation": "./src/executors/semantic-release/executor",
+      "implementation": "./src/executors/semantic-release/index",
       "schema": "./src/executors/semantic-release/schema.json",
       "description": "Automate versioning and CHANGELOG generation."
     }
