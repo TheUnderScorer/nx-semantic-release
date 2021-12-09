@@ -2,7 +2,6 @@ import cp from 'child_process';
 
 export interface ExecOptions extends cp.ExecOptions {
   verbose?: boolean;
-  sudoInCi?: boolean;
 }
 
 export class ExecError extends Error {
@@ -11,28 +10,13 @@ export class ExecError extends Error {
   }
 }
 
-// "Hacky" check if we are in CI mode, because process.env.CI might not be set
-const isCi = () =>
-  process.env.CI ||
-  process.env.PATH?.toString().startsWith('/home/runner/work');
-
-const wrapCommand = (command: string) => {
-  if (!isCi() || command.startsWith('sudo')) {
-    return command;
-  }
-
-  return `sudo ${command}`;
-};
-
 export const exec = (
   command: string,
-  { verbose = false, sudoInCi, ...rest }: ExecOptions = {}
+  { verbose = false, ...rest }: ExecOptions = {}
 ) =>
   new Promise<string>((resolve, reject) => {
-    const wrappedCommand = sudoInCi ? wrapCommand(command) : command;
-
     const result = cp.exec(
-      wrappedCommand,
+      command,
       {
         env: process.env,
         ...rest,
