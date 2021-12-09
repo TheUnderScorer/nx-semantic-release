@@ -1,3 +1,10 @@
+## [1.0.3](http://localhost/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.2...nx-semantic-release-v1.0.3) (2021-12-09)
+
+
+### Bug Fixes
+
+* add missing [@semantic-release](http://localhost/semantic-release) dependencies ([02c79f1](http://localhost/TheUnderScorer/nx-semantic-release/commit/02c79f125de9039a9af4ed09443b7e93c5a20319))
+
 ## [1.0.2](http://localhost/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.1...nx-semantic-release-v1.0.2) (2021-12-09)
 
 
