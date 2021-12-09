@@ -1,3 +1,10 @@
+## [1.0.2](http://localhost/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.1...nx-semantic-release-v1.0.2) (2021-12-09)
+
+
+### Bug Fixes
+
+* add "semantic-release-plugin-decorators" as dependency ([ce2aecd](http://localhost/TheUnderScorer/nx-semantic-release/commit/ce2aecd904ebad6330bd24abbb57f38de65f4c1e))
+
 ## [1.0.1](http://localhost/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.0...nx-semantic-release-v1.0.1) (2021-12-09)
 
 
@@ -11,4 +18,3 @@
 ### Features
 
 * initial release ([c196a27](http://localhost/TheUnderScorer/nx-semantic-release/commit/c196a279a299ab4228037f7ea81e1726a61c93f9))
-
