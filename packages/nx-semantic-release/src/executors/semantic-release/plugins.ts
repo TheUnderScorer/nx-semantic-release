@@ -77,6 +77,7 @@ export const resolvePlugins = (
           // Git requires relative paths from project root
           path.relative(context.cwd, options.changelogFile),
           path.join(relativeProjectPath, 'package.json'),
+          ...(options.gitAssets ?? []),
         ],
       },
     ],

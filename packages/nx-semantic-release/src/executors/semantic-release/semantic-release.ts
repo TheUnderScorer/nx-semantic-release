@@ -14,6 +14,7 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   changelogFile: string;
   outputPath: string;
   commitMessage: string;
+  gitAssets?: string[];
 };
 
 export async function semanticRelease(
