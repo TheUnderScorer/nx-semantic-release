@@ -12,7 +12,7 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   changelog: boolean;
   git: boolean;
   changelogFile: string;
-  outputPath: string;
+  outputPath?: string;
   commitMessage: string;
   gitAssets?: string[];
 };

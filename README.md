@@ -1,94 +1,104 @@
+# @theunderscorer/nx-semantic-release
+
+[nx](https://nx.dev/) plugin for automated releases, powered by [semantic-release](https://github.com/semantic-release/semantic-release)
+
+## Installation
+
+Run:
+```shell
+npm install -D @theunderscorer/nx-semantic-release
+```
+
+For now this package supports only <b>Independent</b> versioning mode, synced mode is planned to be added soon.
+
+## Usage
+
+In order to release your projects, add this executor to your configuration file (ex. `workspace.json`), bare minimal configuration looks like this:
+
+```json
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "my-app:build",
+        "repositoryUrl": "https://github.com/YourName/YourRepo",
+        "outputPath": "dist/apps/my-app"
+      }
+    }
+```
+
+After running this, the executor will do the following:
+
+* Filter commits retrieved by semantic-release in order to find only these that affects selected project or it's dependencies.
+* Perform semantic-release using following plugins (in this order:)
+  * @semantic-release/commit-analyzer
+  * @semantic-release/release-notes-generator
+  * @semantic-release/changelog
+  * @semantic-release/npm
+  * @semantic-release/git
+  * @semantic-release/github
+* The result will be a fully versioned project. If you are releasing it as npm package, the package will be built, version in package.json will be updated and package itself will be published.
 
 
-# Theunderscorer
+### Configuration
 
-This project was generated using [Nx](https://nx.dev).
+| name          | type         | default                                                                        | required | description                                                                                                                                                                                                                                                                                                                     |
+|---------------|--------------|--------------------------------------------------------------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  dryRun       | boolean      | false                                                                          | no       | See what commands would be run, without committing to git or updating files                                                                                                                                                                                                                                                     |
+| ci            | boolean      | true                                                                           | no       | Set to false to skip CI checks.                                                                                                                                                                                                                                                                                                 |
+| changelog     | boolean      | true                                                                           | no       | Whether to generate changelog.                                                                                                                                                                                                                                                                                                  |
+| changelogFile | string       | ${PROJECT_DIR}/CHANGELOG.md                                                    | no       | Path to changelog file. $PROJECT_DIR will be resolved to current project directory.                                                                                                                                                                                                                                             |
+| repositoryUrl | string       | repositoryUrl                                                                  | no       | The URL of the repository to release from.                                                                                                                                                                                                                                                                                      |
+| tagFormat     | string       |                                                                                | no       | Tag format to use. You can refer to [semantic-release configuration](https://github.com/semantic-release/semantic-release/blob/master/docs/usage/configuration.md#tagformat)                                                                                                                                                    |
+| npm           | boolean      | true                                                                           | no       | Whether to bump package.json version and publish to registry (if package is public).                                                                                                                                                                                                                                            |
+| github        | boolean      | true                                                                           | no       | Whether to create github release.                                                                                                                                                                                                                                                                                               |
+| buildTarget   | string       |                                                                                | no       | The target of the build command. If your package is public and you want to release it to npm as part of release, you have to provide it. Plugin will use it to build your package and set version in package.json before releasing it to npm registry.                                                                          |
+| outputPath    | string       |                                                                                | no       | The path to the output directory. Provide that if your package is public and you want to publish it into npm.                                                                                                                                                                                                                   |
+| commitMessage | string       | chore(release): ${nextRelease.version} [skip ci] \\ n \\ n${nextRelease.notes} |          | The commit message to use when committing the release. You can refer to [@semantic-release/git](https://github.com/semantic-release/git#options).                                                                                                                                                                               |
+| gitAssets     | string[]     |                                                                                | no       | Path to additional assets that will be commited to git with current release.                                                                                                                                                                                                                                                    |
+| plugins       | PluginSpec[] |                                                                                | no       | Additional plugins for semantic-release. Note: these plugins will be added before @semantic-release/git, which means that you can assets generated by them to git as well. Supports the same format as [semantic-release](https://github.com/semantic-release/semantic-release/blob/master/docs/usage/configuration.md#plugins) |
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
-
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
-
-## Adding capabilities to your workspace
-
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
-
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
-
-Below are our core plugins:
-
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
-
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
-
-## Generate an application
-
-Run `nx g @nrwl/react:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@theunderscorer/mylib`.
-
-## Development server
-
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
+#### Build target
+By setting `buildTarget` option plugin will run your build executor as part of the release, which is useful if ex. you want to publish released package to npm registry.
 
 
+### CI/CD
 
-## ☁ Nx Cloud
+Example of GitHub actions workflow:
+```yaml
+name: default
 
-### Computation Memoization in the Cloud
+on:
+  push:
+    branches:
+      - 'master'
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+  
+      - name: configure git
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
+      - run: npm ci
+  
+      - run: npx nx run my-app:semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
 
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
+### Development
 
-Visit [Nx Cloud](https://nx.app/) to learn more.
+After cloning repo run:
+```shell
+npm install
+```
+It will also automatically setup test workspace at `test-repos/app` directory.
+
+In order to run tests run:
+```shell
+npm run test
+```

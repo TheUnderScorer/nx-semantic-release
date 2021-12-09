@@ -6,17 +6,19 @@ import { SemanticReleaseOptions } from './semantic-release';
 import { getDefaultProjectRoot } from '../../common/project';
 
 const getNpmPlugin = (
-  buildPath: string,
-  context: ExecutorContext
+  context: ExecutorContext,
+  buildPath?: string
 ): release.PluginSpec[] => {
   const projectRoot = getDefaultProjectRoot(context);
   const projectPkgPath = path.join(projectRoot, 'package.json');
 
-  const buildPkgRoot = path.join(buildPath, 'package.json');
+  const buildPkgRoot = buildPath
+    ? path.join(buildPath, 'package.json')
+    : undefined;
 
   const plugins: release.PluginSpec[] = [];
 
-  if (fs.existsSync(buildPkgRoot)) {
+  if (buildPkgRoot && fs.existsSync(buildPkgRoot)) {
     // Bump package.json version for built project, so that it can be published to NPM with correct version (if package is public)
     plugins.push([
       '@semantic-release/npm',
@@ -67,7 +69,7 @@ export const resolvePlugins = (
           ],
         ]
       : emptyArray),
-    ...(options.npm ? getNpmPlugin(options.outputPath, context) : emptyArray),
+    ...(options.npm ? getNpmPlugin(context, options.outputPath) : emptyArray),
     ...(options.plugins ?? []),
     [
       '@semantic-release/git',
