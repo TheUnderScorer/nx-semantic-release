@@ -60,7 +60,8 @@
             "github": false,
             "ci": false,
             "outputPath": "dist/apps/app-a",
-            "commitMessage": "chore(app-a): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}"
+            "commitMessage": "chore(app-a): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}",
+            "branches": ["*"]
           }
         }
       },
@@ -124,7 +125,8 @@
             "github": false,
             "ci": false,
             "outputPath": "dist/apps/app-b",
-            "commitMessage": "chore(app-b): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}"
+            "commitMessage": "chore(app-b): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}",
+            "branches": ["*"]
           }
         }
       },
@@ -170,7 +172,8 @@
             "github": false,
             "ci": false,
             "outputPath": "dist/libs/common-lib",
-            "commitMessage": "chore(common-lib): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}"
+            "commitMessage": "chore(common-lib): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}",
+            "branches": ["*"]
           }
         }
       },
