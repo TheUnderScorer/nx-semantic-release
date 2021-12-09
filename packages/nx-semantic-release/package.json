@@ -2,6 +2,11 @@
   "name": "@theunderscorer/nx-semantic-release",
   "version": "1.0.0",
   "description": "Semantic release for NX.",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "private": false,
   "author": {
     "email": "przemyslawzydek@gmail.com",
     "name": "Przemysław Zydek"
