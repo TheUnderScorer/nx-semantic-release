@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.3...nx-semantic-release-v1.0.4) (2021-12-09)
+
+
+### Bug Fixes
+
+* remove invalid host in release-notes-generator ([ade0624](https://github.com/TheUnderScorer/nx-semantic-release/commit/ade06241cc0141718db6c994742892d2298bc62d))
+
 ## [1.0.3](http://localhost/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.2...nx-semantic-release-v1.0.3) (2021-12-09)
 
 
