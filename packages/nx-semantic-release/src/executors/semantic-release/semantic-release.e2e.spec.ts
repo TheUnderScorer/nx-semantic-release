@@ -20,6 +20,7 @@ const findReleaseCommit = (app: TestApp, commits: TestRepoCommit[]) => {
   );
 
   if (!result) {
+    console.log(commits.map((commit) => commit.subject));
     throw new Error(`Could not find release commit for ${app}`);
   }
 
