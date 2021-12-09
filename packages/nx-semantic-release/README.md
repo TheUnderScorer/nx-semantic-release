@@ -1,3 +1,3 @@
 # nx-semantic-release
 
-[See documentation](../../README.md).
+[See documentation](https://github.com/TheUnderScorer/nx-semantic-release).
