@@ -35,8 +35,8 @@ export async function semanticRelease(
 
   await release({
     extends: '@theunderscorer/nx-semantic-release',
-    plugins,
     ...resolvedOptions,
+    plugins,
   });
 
   return {
