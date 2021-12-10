@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.4...nx-semantic-release-v1.0.5) (2021-12-10)
+
+
+### Bug Fixes
+
+* fix library plugins being overwritten by user provided plugins ([9d33e2d](https://github.com/TheUnderScorer/nx-semantic-release/commit/9d33e2d6f92459cc42b724f21bc6acece645b184))
+
 ## [1.0.4](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.3...nx-semantic-release-v1.0.4) (2021-12-09)
 
 
