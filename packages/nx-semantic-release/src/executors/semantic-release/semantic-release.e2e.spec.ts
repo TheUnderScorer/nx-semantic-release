@@ -53,8 +53,14 @@ async function checkCommonLib() {
 
   assertReleaseNotes({
     notes: changelog,
-    shouldContain: ['add common-lib', '1.0.0'],
-    shouldNotContain: ['add app-a', 'add app-b', 'add app-a libs'],
+    shouldContain: ['add common-lib', '1.0.0', 'add rest'],
+    shouldNotContain: [
+      'add app-a',
+      'add app-b',
+      'add app-a libs',
+      'update test.txt',
+      'update test.txt again',
+    ],
   });
 }
 
@@ -73,7 +79,13 @@ async function checkAppB() {
 
   assertReleaseNotes({
     notes: changelog,
-    shouldContain: ['add app-b', 'add common-lib'],
+    shouldContain: [
+      'add app-b',
+      'add common-lib',
+      'update test.txt',
+      'update test.txt again',
+      'add rest',
+    ],
     shouldNotContain: ['add app-a', 'add app-a libs'],
   });
 }
@@ -100,8 +112,13 @@ async function checkAppA() {
 
   assertReleaseNotes({
     notes: changelog,
-    shouldContain: ['add app-a', 'add app-a libs', 'add common-lib'],
-    shouldNotContain: ['add app-b'],
+    shouldContain: [
+      'add app-a',
+      'add app-a libs',
+      'add common-lib',
+      'add rest',
+    ],
+    shouldNotContain: ['add app-b', 'update test.txt', 'update test.txt again'],
   });
 }
 

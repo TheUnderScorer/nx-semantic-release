@@ -1,15 +1,33 @@
 import { Commit, Context } from 'semantic-release';
-import { ExecutorContext } from '@nrwl/devkit';
+import { ProjectGraph } from '@nrwl/devkit';
 import { exec } from '../utils/exec';
+import { calculateFileChanges } from '@nrwl/workspace/src/core/file-utils';
+import { filterAffected } from '@nrwl/workspace/src/core/affected-project-graph';
 
-export const isCommitAffectingProjects = async (
-  commit: Pick<Commit, 'subject' | 'commit'>,
-  projects: string[],
-  executorContext: Pick<ExecutorContext, 'workspace'>,
-  context: Pick<Context, 'logger'>,
-  verbose?: boolean
-) => {
+interface CommitAffectingProjectsParams {
+  commit: Pick<Commit, 'subject' | 'commit'>;
+  projects: string[];
+  context: Pick<Context, 'logger'>;
+  verbose?: boolean;
+  graph: ProjectGraph;
+}
+
+export const isCommitAffectingProjects = async ({
+  commit,
+  projects,
+  context,
+  verbose,
+  graph,
+}: CommitAffectingProjectsParams) => {
   const affectedFiles = await listAffectedFilesInCommit(commit);
+  const fileChanges = calculateFileChanges(affectedFiles, {
+    projects,
+  });
+  const filteredGraph = filterAffected(graph, fileChanges);
+
+  const isAffected = projects.some((project) =>
+    Boolean(filteredGraph.nodes[project])
+  );
 
   if (verbose) {
     context.logger.log(
@@ -17,16 +35,8 @@ export const isCommitAffectingProjects = async (
     );
   }
 
-  const result = affectedFiles.some((file) =>
-    projects.find((project) => {
-      const projectPath = executorContext.workspace.projects[project].root;
-
-      return file.includes(projectPath);
-    })
-  );
-
   if (verbose) {
-    if (result) {
+    if (isAffected) {
       context.logger.log(
         `✔  Commit "${commit.subject}" affects project or its dependencies`
       );
@@ -37,7 +47,7 @@ export const isCommitAffectingProjects = async (
     }
   }
 
-  return result;
+  return isAffected;
 };
 
 const listAffectedFilesInCommit = async (commit: Pick<Commit, 'commit'>) => {

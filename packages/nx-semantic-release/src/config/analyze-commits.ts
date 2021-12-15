@@ -37,27 +37,29 @@ const filterCommits = async (
   context: Context,
   verbose?: boolean
 ) => {
+  const { dependencies, graph } = await getProjectDependencies(
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    executorContext.projectName!
+  );
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const deps = await getProjectDependencies(executorContext.projectName!);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const allDeps = [...deps, executorContext.projectName!];
+  const allDeps = [...dependencies, executorContext.projectName!];
 
   if (verbose) {
     context.logger.log(
-      `Found following dependencies: "${deps.join(', ')}" for project "${
-        executorContext.projectName
-      }"`
+      `Found following dependencies: "${dependencies.join(
+        ', '
+      )}" for project "${executorContext.projectName}"`
     );
   }
 
   const result = await promiseFilter(commits, (commit) =>
-    isCommitAffectingProjects(
+    isCommitAffectingProjects({
       commit,
-      allDeps,
-      executorContext,
-      context,
-      verbose
-    )
+      projects: allDeps,
+      context: context,
+      verbose: verbose,
+      graph,
+    })
   );
 
   if (verbose) {
