@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.5...nx-semantic-release-v1.1.0) (2021-12-15)
+
+
+### Features
+
+* calculate affected files using project graph ([609de85](https://github.com/TheUnderScorer/nx-semantic-release/commit/609de85a29da0dd33587f643ea2ee2f7373462cc))
+
 ## [1.0.5](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.4...nx-semantic-release-v1.0.5) (2021-12-10)
 
 
