@@ -19,7 +19,7 @@ describe('getProjectDependencies', () => {
   ])('should return correct dependencies', async (data) => {
     const result = await getProjectDependencies(data.projectName);
 
-    expect(result).toEqual(data.expectedDependencies);
+    expect(result.dependencies).toEqual(data.expectedDependencies);
   });
 });
 

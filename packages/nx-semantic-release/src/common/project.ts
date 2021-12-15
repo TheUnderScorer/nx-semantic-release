@@ -12,7 +12,10 @@ type GetProjectContext = Pick<
 export const getProjectDependencies = async (projectName: string) => {
   const graph = await createProjectGraphAsync();
 
-  return getRecursiveDependencies(projectName, graph);
+  return {
+    dependencies: getRecursiveDependencies(projectName, graph),
+    graph,
+  };
 };
 
 export const getProject = (context: GetProjectContext) =>
@@ -25,7 +28,7 @@ export const getProjectRoot = (project: ProjectConfiguration, cwd: string) =>
 export const getDefaultProjectRoot = (context: GetProjectContext) =>
   getProjectRoot(getProject(context), context.cwd);
 
-const getRecursiveDependencies = (
+export const getRecursiveDependencies = (
   projectName: string,
   graph: ProjectGraph
 ): string[] => {
