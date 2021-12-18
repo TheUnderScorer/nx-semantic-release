@@ -126,7 +126,8 @@
             "ci": false,
             "outputPath": "dist/apps/app-b",
             "commitMessage": "chore(app-b): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}",
-            "branches": ["*"]
+            "branches": ["*"],
+            "packageJsonPath": "${PROJECT_DIR}/stuff/package.json"
           }
         }
       },

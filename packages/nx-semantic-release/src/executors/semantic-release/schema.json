@@ -40,6 +40,10 @@
       "type": "boolean",
       "default": true
     },
+    "packageJsonDir": {
+      "description": "Path to package.json file (usable only if npm is true).",
+      "type": "string"
+    },
     "github": {
       "description": "Whether to create github release.",
       "type": "boolean",
