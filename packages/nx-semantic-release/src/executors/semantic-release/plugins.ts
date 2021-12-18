@@ -7,13 +7,14 @@ import { getDefaultProjectRoot } from '../../common/project';
 
 const getNpmPlugin = (
   context: ExecutorContext,
-  buildPath?: string
+  options: SemanticReleaseOptions
 ): release.PluginSpec[] => {
-  const projectRoot = getDefaultProjectRoot(context);
-  const projectPkgPath = path.join(projectRoot, 'package.json');
+  const packageJsonDir =
+    options.packageJsonDir ?? getDefaultProjectRoot(context);
+  const projectPkgPath = path.join(packageJsonDir, 'package.json');
 
-  const buildPkgRoot = buildPath
-    ? path.join(buildPath, 'package.json')
+  const buildPkgRoot = options.outputPath
+    ? path.join(options.outputPath, 'package.json')
     : undefined;
 
   const plugins: release.PluginSpec[] = [];
@@ -23,7 +24,7 @@ const getNpmPlugin = (
     plugins.push([
       '@semantic-release/npm',
       {
-        pkgRoot: buildPath,
+        pkgRoot: options.outputPath,
       },
     ]);
   }
@@ -33,7 +34,7 @@ const getNpmPlugin = (
     plugins.push([
       '@semantic-release/npm',
       {
-        pkgRoot: projectRoot,
+        pkgRoot: packageJsonDir,
         npmPublish: false,
       },
     ]);
@@ -64,7 +65,7 @@ export const resolvePlugins = (
           ],
         ]
       : emptyArray),
-    ...(options.npm ? getNpmPlugin(context, options.outputPath) : emptyArray),
+    ...(options.npm ? getNpmPlugin(context, options) : emptyArray),
     ...(options.plugins ?? []),
     [
       '@semantic-release/git',

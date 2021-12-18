@@ -15,6 +15,7 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   outputPath?: string;
   commitMessage: string;
   gitAssets?: string[];
+  packageJsonDir?: string;
 };
 
 export async function semanticRelease(
@@ -44,6 +45,9 @@ export async function semanticRelease(
   };
 }
 
+const applyProjectRoot = (value: string, root: string) =>
+  value.replace('${PROJECT_DIR}', root);
+
 const resolveOptions = (
   options: SemanticReleaseOptions,
   context: ExecutorContext
@@ -52,7 +56,10 @@ const resolveOptions = (
 
   return {
     ...options,
-    changelogFile: options.changelogFile?.replace('${PROJECT_DIR}', root),
+    changelogFile: applyProjectRoot(options.changelogFile, root),
     tagFormat: options.tagFormat ?? `${context.projectName}-v\${version}`,
+    packageJsonDir: options.packageJsonDir
+      ? applyProjectRoot(options.packageJsonDir, root)
+      : undefined,
   };
 };
