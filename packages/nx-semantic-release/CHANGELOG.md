@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.1.0...nx-semantic-release-v1.2.0) (2021-12-18)
+
+
+### Features
+
+* support passing package.json path ([491397f](https://github.com/TheUnderScorer/nx-semantic-release/commit/491397fedb37a3cdaa2af743708cedeb8d2d5f43))
+
 # [1.1.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.0.5...nx-semantic-release-v1.1.0) (2021-12-15)
 
 
