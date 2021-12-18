@@ -10,6 +10,9 @@ import {
 import { assertReleaseNotes } from '../../tests/release-notes';
 import { TestApp, TestRepoCommit } from '../../tests/types';
 import { omit } from 'remeda';
+import fs from 'fs';
+import path from 'path';
+import { PackageJson } from 'type-fest';
 
 const removeCiEnv = () =>
   omit(process.env, [
@@ -69,11 +72,19 @@ async function checkAppB() {
   const releaseCommit = findReleaseCommit('app-b', commits);
   const commonLibReleaseCommit = findReleaseCommit('common-lib', commits);
 
+  const packageJson = JSON.parse(
+    fs
+      .readFileSync(
+        path.join(testRepoPath, 'apps', 'app-b', 'stuff', 'package.json')
+      )
+      .toString()
+  ) as PackageJson;
   const tag = await getCommitTag(releaseCommit.hash);
   const commonLibTag = await getCommitTag(commonLibReleaseCommit.hash);
 
   expect(tag).toEqual('app-b-v1.0.0');
   expect(commonLibTag).toEqual('common-lib-v1.0.0');
+  expect(packageJson.version).toEqual('1.0.0');
 
   const changelog = readTestAppChangelog('app-b');
 
