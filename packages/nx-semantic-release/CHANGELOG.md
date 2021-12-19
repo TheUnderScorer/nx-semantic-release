@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.2.0...nx-semantic-release-v1.2.1) (2021-12-19)
+
+
+### Bug Fixes
+
+* add missing plugin steps (prepare and success) ([6f95c54](https://github.com/TheUnderScorer/nx-semantic-release/commit/6f95c54155f4dc5685802f5e986a6e28a0188d47))
+
 # [1.2.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.1.0...nx-semantic-release-v1.2.0) (2021-12-18)
 
 
