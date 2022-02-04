@@ -20,9 +20,7 @@ export const isCommitAffectingProjects = async ({
   graph,
 }: CommitAffectingProjectsParams) => {
   const affectedFiles = await listAffectedFilesInCommit(commit);
-  const fileChanges = calculateFileChanges(affectedFiles, {
-    projects,
-  });
+  const fileChanges = calculateFileChanges(affectedFiles, [], { projects });
   const filteredGraph = filterAffected(graph, fileChanges);
 
   const isAffected = projects.some((project) =>
