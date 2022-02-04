@@ -18,10 +18,18 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
         "accessToken": "NDE5MzEzNzgtNDA2ZC00NDE1LWE0YTktMjlmYzU2MjJhNmM1fHJlYWQtd3JpdGU=",
         "parallel": 1,
-        "strictlyOrderedTargets": ["build", "semantic-release"]
+        "strictlyOrderedTargets": [
+          "build",
+          "semantic-release"
+        ]
       }
     }
   },
@@ -39,6 +47,11 @@
         "projects": "dependencies"
       }
     ],
-    "semantic-release": [{ "target": "release", "projects": "dependencies" }]
+    "semantic-release": [
+      {
+        "target": "release",
+        "projects": "dependencies"
+      }
+    ]
   }
 }
