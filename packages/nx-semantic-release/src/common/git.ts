@@ -5,20 +5,31 @@ import { calculateFileChanges } from '@nrwl/workspace/src/core/file-utils';
 import { filterAffected } from '@nrwl/workspace/src/core/affected-project-graph';
 
 interface CommitAffectingProjectsParams {
-  commit: Pick<Commit, 'subject' | 'commit'>;
+  commit: Pick<Commit, 'subject' | 'commit' | 'body'>;
   projects: string[];
+  // Name of root project
+  projectName: string;
   context: Pick<Context, 'logger'>;
   verbose?: boolean;
   graph: ProjectGraph;
 }
 
-export const isCommitAffectingProjects = async ({
+export async function isCommitAffectingProjects({
   commit,
   projects,
   context,
   verbose,
   graph,
-}: CommitAffectingProjectsParams) => {
+  projectName,
+}: CommitAffectingProjectsParams) {
+  if (shouldSkipCommit(commit, projectName)) {
+    if (verbose) {
+      context.logger.log(`ℹ️ Commit ${commit.subject} is skipped`);
+    }
+
+    return false;
+  }
+
   const affectedFiles = await listAffectedFilesInCommit(commit);
   const fileChanges = calculateFileChanges(affectedFiles, [], { projects });
   const filteredGraph = filterAffected(graph, fileChanges);
@@ -46,9 +57,13 @@ export const isCommitAffectingProjects = async ({
   }
 
   return isAffected;
-};
+}
 
-const listAffectedFilesInCommit = async (commit: Pick<Commit, 'commit'>) => {
+const shouldSkipCommit = (commit: Pick<Commit, 'body'>, projectName: string) =>
+  commit.body.includes(`[skip ${projectName}]`) ||
+  commit.body.includes(`[skip all]`);
+
+async function listAffectedFilesInCommit(commit: Pick<Commit, 'commit'>) {
   const files = await exec(`git show --name-status ${commit.commit.short}`);
 
   return files
@@ -57,4 +72,4 @@ const listAffectedFilesInCommit = async (commit: Pick<Commit, 'commit'>) => {
     .filter(Boolean)
     .map((line) => line.split('\t')[1])
     .filter(Boolean);
-};
+}

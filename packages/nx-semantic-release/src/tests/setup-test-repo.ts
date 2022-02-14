@@ -10,6 +10,8 @@ import { getTestRepoCommits } from './git';
 import { TestRepoCommit } from './types';
 import { wait } from './utils';
 import fs from 'fs';
+import path from 'path';
+import { PackageJson } from 'type-fest';
 
 export interface SetupTestRepoResult {
   commits: TestRepoCommit[];
@@ -26,6 +28,15 @@ async function setupRemoteRepo() {
     cwd: remoteReposDirectory,
     verbose: true,
   });
+}
+
+async function addDescriptionToPkgJson() {
+  const pkgPath = path.join(testRepoPath, 'apps/app-a/package.json');
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8')) as PackageJson;
+
+  pkg.description = 'Test repo';
+
+  fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
 }
 
 const setupCommands: Array<string | (() => Promise<void>)> = [
@@ -47,6 +58,9 @@ const setupCommands: Array<string | (() => Promise<void>)> = [
   'echo "Test123456" > apps/app-b/test.txt',
   'git add apps/app-b/test.txt',
   'git commit -m "feat: update test.txt again"',
+  addDescriptionToPkgJson,
+  'git add apps/app-a/package.json',
+  'git commit -m "feat: add description\n\n[skip app-a]"',
   'git add .',
   `git commit -m "${testRepoLastCommitMessage}"`,
   `git remote add origin ${remoteGitPath}`,

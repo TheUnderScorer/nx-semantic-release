@@ -9,7 +9,8 @@ import { getTestRepoCommits } from './git';
 import { exec } from '../utils/exec';
 
 async function revertToLastCommit() {
-  const targetCommit = getTestRepoCommits().find(
+  const testRepoCommits = getTestRepoCommits();
+  const targetCommit = testRepoCommits.find(
     (commit) => commit.subject === testRepoLastCommitMessage
   );
 
@@ -35,7 +36,11 @@ export const cleanupTestRepo = async () => {
     const gitPath = path.resolve('.git');
 
     if (fs.existsSync(gitPath)) {
-      await revertToLastCommit();
+      try {
+        await revertToLastCommit();
+      } catch (error) {
+        console.error(error);
+      }
 
       fs.rmSync(gitPath, { recursive: true });
 
