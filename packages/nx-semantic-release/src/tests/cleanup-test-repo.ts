@@ -1,23 +1,17 @@
 import path from 'path';
 import fs from 'fs';
-import {
-  remoteGitPath,
-  testRepoLastCommitMessage,
-  testRepoPath,
-} from './constants';
+import { remoteGitPath, commitToRevertTo, testRepoPath } from './constants';
 import { getTestRepoCommits } from './git';
 import { exec } from '../utils/exec';
 
 async function revertToLastCommit() {
   const testRepoCommits = getTestRepoCommits();
   const targetCommit = testRepoCommits.find(
-    (commit) => commit.subject === testRepoLastCommitMessage
+    (commit) => commit.subject === commitToRevertTo
   );
 
   if (!targetCommit) {
-    throw new Error(
-      `Unable to find target commit: "${testRepoLastCommitMessage}"`
-    );
+    throw new Error(`Unable to find target commit: "${commitToRevertTo}"`);
   }
 
   await exec(`git reset --hard ${targetCommit.hash}`);

@@ -1,7 +1,7 @@
 import {
   remoteGitPath,
   remoteReposDirectory,
-  testRepoLastCommitMessage,
+  commitToRevertTo,
   testRepoPath,
 } from './constants';
 import { exec } from '../utils/exec';
@@ -52,6 +52,8 @@ const setupCommands: Array<string | (() => Promise<void>)> = [
   'git commit -m "feat: add app-a libs"',
   'git add libs/common-lib',
   'git commit -m "feat: add common-lib"',
+  'git add .',
+  `git commit -m "${commitToRevertTo}"`,
   'echo "Test123" > apps/app-b/test.txt',
   'git add apps/app-b/test.txt',
   'git commit -m "feat: update test.txt"',
@@ -61,13 +63,11 @@ const setupCommands: Array<string | (() => Promise<void>)> = [
   addDescriptionToPkgJson,
   'git add apps/app-a/package.json',
   'git commit -m "feat: add description\n\n[skip app-a]"',
-  'git add .',
-  `git commit -m "${testRepoLastCommitMessage}"`,
   `git remote add origin ${remoteGitPath}`,
   'git push origin master',
 ];
 
-const runCommands = async () => {
+async function runCommands() {
   for (const command of setupCommands) {
     if (typeof command === 'string') {
       await exec(command);
@@ -75,9 +75,9 @@ const runCommands = async () => {
       await command();
     }
   }
-};
+}
 
-export const setupTestRepo = async (): Promise<SetupTestRepoResult> => {
+export async function setupTestRepo(): Promise<SetupTestRepoResult> {
   const currentCwd = process.cwd();
 
   process.chdir(testRepoPath);
@@ -95,4 +95,4 @@ export const setupTestRepo = async (): Promise<SetupTestRepoResult> => {
   } finally {
     process.chdir(currentCwd);
   }
-};
+}

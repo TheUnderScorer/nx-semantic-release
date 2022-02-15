@@ -7,7 +7,7 @@ export const testRepoPath = path.resolve(
 
 export const remoteRepoName = 'nx-semantic-release-test-repos-app';
 
-export const testRepoLastCommitMessage = `feat: add rest`;
+export const commitToRevertTo = `feat: add rest`;
 
 export const remoteServerDirectory = path.resolve(
   __dirname,
