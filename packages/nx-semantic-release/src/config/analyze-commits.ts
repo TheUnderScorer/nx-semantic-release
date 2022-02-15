@@ -31,24 +31,22 @@ export const getCommitsForProject =
     });
   };
 
-const filterCommits = async (
+async function filterCommits(
   commits: Commit[],
   executorContext: ExecutorContext,
   context: Context,
   verbose?: boolean
-) => {
-  const { dependencies, graph } = await getProjectDependencies(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    executorContext.projectName!
-  );
+) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const allDeps = [...dependencies, executorContext.projectName!];
+  const projectName = executorContext.projectName!;
+  const { dependencies, graph } = await getProjectDependencies(projectName);
+  const allDeps = [...dependencies, projectName];
 
   if (verbose) {
     context.logger.log(
       `Found following dependencies: "${dependencies.join(
         ', '
-      )}" for project "${executorContext.projectName}"`
+      )}" for project "${projectName}"`
     );
   }
 
@@ -59,6 +57,7 @@ const filterCommits = async (
       context: context,
       verbose: verbose,
       graph,
+      projectName,
     })
   );
 
@@ -69,4 +68,4 @@ const filterCommits = async (
   }
 
   return result;
-};
+}

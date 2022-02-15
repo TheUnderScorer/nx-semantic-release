@@ -1,7 +1,7 @@
 import {
   remoteGitPath,
   remoteReposDirectory,
-  testRepoLastCommitMessage,
+  commitToRevertTo,
   testRepoPath,
 } from './constants';
 import { exec } from '../utils/exec';
@@ -10,6 +10,8 @@ import { getTestRepoCommits } from './git';
 import { TestRepoCommit } from './types';
 import { wait } from './utils';
 import fs from 'fs';
+import path from 'path';
+import { PackageJson } from 'type-fest';
 
 export interface SetupTestRepoResult {
   commits: TestRepoCommit[];
@@ -28,6 +30,15 @@ async function setupRemoteRepo() {
   });
 }
 
+async function addDescriptionToPkgJson() {
+  const pkgPath = path.join(testRepoPath, 'apps/app-a/package.json');
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8')) as PackageJson;
+
+  pkg.description = 'Test repo';
+
+  fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
+}
+
 const setupCommands: Array<string | (() => Promise<void>)> = [
   setupRemoteRepo,
   'git init',
@@ -41,19 +52,22 @@ const setupCommands: Array<string | (() => Promise<void>)> = [
   'git commit -m "feat: add app-a libs"',
   'git add libs/common-lib',
   'git commit -m "feat: add common-lib"',
+  'git add .',
+  `git commit -m "${commitToRevertTo}"`,
   'echo "Test123" > apps/app-b/test.txt',
   'git add apps/app-b/test.txt',
   'git commit -m "feat: update test.txt"',
   'echo "Test123456" > apps/app-b/test.txt',
   'git add apps/app-b/test.txt',
   'git commit -m "feat: update test.txt again"',
-  'git add .',
-  `git commit -m "${testRepoLastCommitMessage}"`,
+  addDescriptionToPkgJson,
+  'git add apps/app-a/package.json',
+  'git commit -m "feat: add description\n\n[skip app-a]"',
   `git remote add origin ${remoteGitPath}`,
   'git push origin master',
 ];
 
-const runCommands = async () => {
+async function runCommands() {
   for (const command of setupCommands) {
     if (typeof command === 'string') {
       await exec(command);
@@ -61,9 +75,9 @@ const runCommands = async () => {
       await command();
     }
   }
-};
+}
 
-export const setupTestRepo = async (): Promise<SetupTestRepoResult> => {
+export async function setupTestRepo(): Promise<SetupTestRepoResult> {
   const currentCwd = process.cwd();
 
   process.chdir(testRepoPath);
@@ -81,4 +95,4 @@ export const setupTestRepo = async (): Promise<SetupTestRepoResult> => {
   } finally {
     process.chdir(currentCwd);
   }
-};
+}

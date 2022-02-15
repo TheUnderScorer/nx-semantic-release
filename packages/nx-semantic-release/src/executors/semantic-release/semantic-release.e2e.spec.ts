@@ -129,7 +129,12 @@ async function checkAppA() {
       'add common-lib',
       'add rest',
     ],
-    shouldNotContain: ['add app-b', 'update test.txt', 'update test.txt again'],
+    shouldNotContain: [
+      'add app-b',
+      'update test.txt',
+      'update test.txt again',
+      'add description',
+    ],
   });
 }
 
