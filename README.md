@@ -19,13 +19,15 @@ In order to release your projects, add this executor to your configuration file 
 configuration looks like this:
 
 ```json
-    "semantic-release": {
-"executor": "@theunderscorer/nx-semantic-release:semantic-release",
-"options": {
-"buildTarget": "my-app:build",
-"repositoryUrl": "https://github.com/YourName/YourRepo",
-"outputPath": "dist/apps/my-app"
-}
+{
+  "semantic-release": {
+    "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+    "options": {
+      "buildTarget": "my-app:build",
+      "repositoryUrl": "https://github.com/YourName/YourRepo",
+      "outputPath": "dist/apps/my-app"
+    }
+  }
 }
 ```
 
@@ -67,6 +69,19 @@ After running this, the executor will do the following:
 
 By setting `buildTarget` option plugin will run your build executor as part of the release, which is useful if ex. you
 want to publish released package to npm registry.
+
+#### Skipping commits
+
+You can skip commits for given project using `[skip $PROJECT_NAME]` in its body. Ex:
+
+```
+  feat: update something
+  
+  [skip my-app]
+```
+During analysis this commit will be skipped for release pipeline for my-app.
+
+You can also use `[skip all]` to skip commit for all projects..
 
 ### CI/CD
 
