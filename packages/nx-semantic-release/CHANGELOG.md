@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.3.0...nx-semantic-release-v1.4.0) (2022-02-15)
+
+
+### Features
+
+* support skipping commits manually ([99aea60](https://github.com/TheUnderScorer/nx-semantic-release/commit/99aea607bf0da101f88b1b80506ea4ef28343f52))
+
 # [1.3.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.2.1...nx-semantic-release-v1.3.0) (2022-02-04)
 
 
