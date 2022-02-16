@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.4.1...nx-semantic-release-v1.4.2) (2022-02-16)
+
+
+### Bug Fixes
+
+* Add other missing dependencies ([4b6cc98](https://github.com/TheUnderScorer/nx-semantic-release/commit/4b6cc98509d2754bc08d20f1838f2e5c9b049651))
+
 ## [1.4.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.4.0...nx-semantic-release-v1.4.1) (2022-02-16)
 
 
