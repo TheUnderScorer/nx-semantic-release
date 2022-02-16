@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.4.0...nx-semantic-release-v1.4.1) (2022-02-16)
+
+
+### Bug Fixes
+
+* Add missing "semantic-release-plugin-decorators" dependency to the package ([719b39a](https://github.com/TheUnderScorer/nx-semantic-release/commit/719b39a67eebcbc5b9e816baa7ee8f8f3f9a7b42))
+
 # [1.4.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.3.0...nx-semantic-release-v1.4.0) (2022-02-15)
 
 
