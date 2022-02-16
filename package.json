@@ -59,7 +59,6 @@
     "@nrwl/cli": "13.8.1",
     "@nrwl/eslint-plugin-nx": "13.8.1",
     "@nrwl/jest": "13.8.1",
-    "@nrwl/js": "13.8.1",
     "@nrwl/linter": "13.8.1",
     "@nrwl/node": "13.8.1",
     "@nrwl/nx-cloud": "13.1.4",
