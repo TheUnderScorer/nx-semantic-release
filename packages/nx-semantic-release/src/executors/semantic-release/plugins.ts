@@ -52,8 +52,19 @@ export const resolvePlugins = (
 
   const emptyArray = [] as unknown as release.PluginSpec;
   const defaultPlugins: release.PluginSpec[] = [
-    '@semantic-release/commit-analyzer',
-    '@semantic-release/release-notes-generator',
+    [
+      '@semantic-release/commit-analyzer',
+      {
+        parserOpts: options.parserOpts,
+      }
+    ],
+    [
+      '@semantic-release/release-notes-generator',
+      {
+        parserOpts: options.parserOpts,
+        writerOpts: options.writerOpts,
+      }
+    ],
 
     ...(options.changelog
       ? [

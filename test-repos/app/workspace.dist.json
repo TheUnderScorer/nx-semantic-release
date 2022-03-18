@@ -133,6 +133,78 @@
       },
       "tags": []
     },
+    "app-c": {
+      "root": "apps/app-c",
+      "sourceRoot": "apps/app-c/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/app-c",
+            "main": "apps/app-c/src/main.ts",
+            "tsConfig": "apps/app-c/tsconfig.app.json",
+            "assets": ["apps/app-c/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/app-c/src/environments/environment.ts",
+                  "with": "apps/app-c/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "app-c:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/app-c/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/app-c"],
+          "options": {
+            "jestConfig": "apps/app-c/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "semantic-release": {
+          "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+          "options": {
+            "dryRun": false,
+            "buildTarget": "app-c:build",
+            "repositoryUrl": "../../git-server/repos/project.git",
+            "github": false,
+            "ci": false,
+            "outputPath": "dist/apps/app-b",
+            "commitMessage": "chore(app-c): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}",
+            "branches": ["*"],
+            "packageJsonDir": "${PROJECT_DIR}/stuff",
+            "parserOpts": {
+              "noteKeywords": ["CHANGE"]
+            },
+            "writerOpts": {
+              "groupBy": false
+            }
+          }
+        }
+      },
+      "tags": []
+    },
     "common-lib": {
       "root": "libs/common-lib",
       "sourceRoot": "libs/common-lib/src",
