@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.4.2...nx-semantic-release-v1.5.0) (2022-03-19)
+
+
+### Features
+
+* Support passing parserOpts and writerOpts ([00bc505](https://github.com/TheUnderScorer/nx-semantic-release/commit/00bc505a892a9242cc65562b473a1bba64201191))
+
 ## [1.4.2](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.4.1...nx-semantic-release-v1.4.2) (2022-02-16)
 
 
