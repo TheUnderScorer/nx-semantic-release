@@ -17,7 +17,7 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   gitAssets?: string[];
   packageJsonDir?: string;
   parserOpts?: Record<string, unknown>;
-  writerOpts?: Record<string, unknown>
+  writerOpts?: Record<string, unknown>;
 };
 
 export async function semanticRelease(
