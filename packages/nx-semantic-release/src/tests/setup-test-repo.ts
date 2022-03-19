@@ -48,6 +48,8 @@ const setupCommands: Array<string | (() => Promise<void>)> = [
   'git commit -m "feat: add app-a"',
   'git add apps/app-b',
   'git commit -m "feat: add app-b"',
+  'git add apps/app-c',
+  'git commit -m "feat: add app-c" -m "CHANGE: Test"',
   'git add libs/lib-a libs/lib-a-dependency',
   'git commit -m "feat: add app-a libs"',
   'git add libs/common-lib',

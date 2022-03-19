@@ -31,6 +31,14 @@
       "type": "string",
       "default": ""
     },
+    "parserOpts": {
+      "description": "Parser options used by commit-analyzer and @semantic-release/release-notes-generator and @semantic-release/changelog",
+      "type": "object"
+    },
+    "writerOpts": {
+      "description": "Writer options used by commit-analyzer and @semantic-release/release-notes-generator",
+      "type": "object"
+    },
     "tagFormat": {
       "description": "Tag format to use.",
       "type": "string"
@@ -81,8 +89,12 @@
             "type": "array",
             "items": {
               "oneOf": [
-                {"type": "string"},
-                {"type": "object"}
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object"
+                }
               ]
             }
           }
@@ -94,27 +106,53 @@
       "type": "array",
       "items": {
         "oneOf": [
-          { "type": "string", "maxLength": 100, "minLength": 1 },
+          {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1
+          },
           {
             "type": "object",
             "properties": {
-              "name": { "type": "string", "maxLength": 100, "minLength": 1 },
+              "name": {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 1
+              },
               "channel": {
                 "oneOf": [
-                  { "type": "string", "maxLength": 100, "minLength": 1 },
-                  { "const": false }
+                  {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  {
+                    "const": false
+                  }
                 ]
               },
-              "range": { "type": "string", "maxLength": 100, "minLength": 1 },
+              "range": {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 1
+              },
               "prerelease": {
                 "oneOf": [
-                  { "type": "string", "maxLength": 100, "minLength": 1 },
-                  { "type": "boolean" }
+                  {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  {
+                    "type": "boolean"
+                  }
                 ]
               }
             },
             "additionalProperties": false,
-            "required": ["name"]
+            "required": [
+              "name"
+            ]
           }
         ]
       },
@@ -123,8 +161,14 @@
         "master",
         "main",
         "next",
-        { "name": "beta", "prerelease": true },
-        { "name": "alpha", "prerelease": true }
+        {
+          "name": "beta",
+          "prerelease": true
+        },
+        {
+          "name": "alpha",
+          "prerelease": true
+        }
       ]
     }
   }

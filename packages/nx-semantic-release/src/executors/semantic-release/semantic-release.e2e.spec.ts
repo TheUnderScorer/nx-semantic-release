@@ -190,5 +190,32 @@ describe('Semantic release', () => {
       await checkAppB();
       await checkCommonLib();
     });
+
+    // TODO Add config file (nx-semantic-release.json)
+    it('should support passing writerOpts and parserOpts', async () => {
+      await exec('npx nx run app-c:semantic-release', {
+        verbose: true,
+        env: removeCiEnv(),
+      });
+
+      const changelog = readTestAppChangelog('app-c');
+
+      expect(changelog).not.toContain('### Features');
+      expect(changelog).toContain(`### BREAKING CHANGES
+
+* Test`);
+
+      assertReleaseNotes({
+        notes: changelog,
+        shouldContain: ['add app-c', 'add rest'],
+        shouldNotContain: [
+          'add app-a',
+          'add app-b',
+          'update test.txt',
+          'update test.txt again',
+          'add description',
+        ],
+      });
+    });
   });
 });

@@ -18,4 +18,4 @@ export const remoteReposDirectory = path.join(remoteServerDirectory, 'repos');
 
 export const remoteGitPath = path.join(remoteReposDirectory, 'project.git');
 
-export const testProjects = ['app-a', 'app-b', 'common-lib'] as const;
+export const testProjects = ['app-a', 'app-b', 'app-c', 'common-lib'] as const;
