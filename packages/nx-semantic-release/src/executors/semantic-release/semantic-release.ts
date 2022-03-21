@@ -52,9 +52,13 @@ const applyTokens = (
   context: ExecutorContext
 ) => {
   const PROJECT_DIR = getDefaultProjectRoot(context);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const PROJECT_NAME = context.projectName!;
 
   const replaceTokens = (value: string): string => {
-    return value.replace('${PROJECT_DIR}', PROJECT_DIR);
+    return value
+      .replace('${PROJECT_DIR}', PROJECT_DIR)
+      .replace('${PROJECT_NAME}', PROJECT_NAME);
   };
 
   ['changelogFile', 'packageJsonDir'].forEach((option) => {
