@@ -61,9 +61,18 @@ const applyTokens = (
       .replace('${PROJECT_NAME}', PROJECT_NAME);
   };
 
-  ['changelogFile', 'packageJsonDir', 'tagFormat'].forEach((option) => {
+  [
+    'buildTarget',
+    'changelogFile',
+    'commitMessage',
+    'packageJsonDir',
+    'tagFormat',
+  ].forEach((option) => {
     if (options[option]) options[option] = replaceTokens(options[option]);
   });
+
+  if (options.gitAssets && options.gitAssets.length > 0)
+    options.gitAssets = options.gitAssets.map((asset) => replaceTokens(asset));
 
   return options;
 };
