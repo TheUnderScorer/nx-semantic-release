@@ -47,21 +47,32 @@ export async function semanticRelease(
   };
 }
 
-const applyProjectRoot = (value: string, root: string) =>
-  value.replace('${PROJECT_DIR}', root);
+const applyTokens = (
+  options: SemanticReleaseOptions,
+  context: ExecutorContext
+) => {
+  const PROJECT_DIR = getDefaultProjectRoot(context);
+
+  const replaceTokens = (value: string): string => {
+    return value.replace('${PROJECT_DIR}', PROJECT_DIR);
+  };
+
+  ['changelogFile', 'packageJsonDir'].forEach((option) => {
+    if (options[option]) options[option] = replaceTokens(options[option]);
+  });
+
+  return options;
+};
 
 const resolveOptions = (
   options: SemanticReleaseOptions,
   context: ExecutorContext
 ) => {
-  const root = getDefaultProjectRoot(context);
-
-  return {
-    ...options,
-    changelogFile: applyProjectRoot(options.changelogFile, root),
-    tagFormat: options.tagFormat ?? `${context.projectName}-v\${version}`,
-    packageJsonDir: options.packageJsonDir
-      ? applyProjectRoot(options.packageJsonDir, root)
-      : undefined,
-  };
+  return applyTokens(
+    {
+      ...options,
+      tagFormat: options.tagFormat ?? `${context.projectName}-v\${version}`,
+    },
+    context
+  );
 };
