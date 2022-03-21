@@ -61,7 +61,7 @@ const applyTokens = (
       .replace('${PROJECT_NAME}', PROJECT_NAME);
   };
 
-  ['changelogFile', 'packageJsonDir'].forEach((option) => {
+  ['changelogFile', 'packageJsonDir', 'tagFormat'].forEach((option) => {
     if (options[option]) options[option] = replaceTokens(options[option]);
   });
 
@@ -75,7 +75,6 @@ const resolveOptions = (
   return applyTokens(
     {
       ...options,
-      tagFormat: options.tagFormat ?? `${context.projectName}-v\${version}`,
     },
     context
   );
