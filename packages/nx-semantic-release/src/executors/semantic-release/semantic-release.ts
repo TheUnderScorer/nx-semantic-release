@@ -27,7 +27,7 @@ export async function semanticRelease(
   const resolvedOptions = resolveOptions(options, context);
 
   if (resolvedOptions.buildTarget) {
-    await exec(`npx nx run ${options.buildTarget}`, {
+    await exec(`npx nx run ${resolvedOptions.buildTarget}`, {
       verbose: true,
     });
   }
