@@ -21,10 +21,10 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
 };
 
 export async function semanticRelease(
-  options: SemanticReleaseOptions,
+  projectOptions: SemanticReleaseOptions,
   context: ExecutorContext
 ) {
-  const resolvedOptions = resolveOptions(options, context);
+  const resolvedOptions = resolveOptions(projectOptions, context);
 
   if (resolvedOptions.buildTarget) {
     await exec(`npx nx run ${resolvedOptions.buildTarget}`, {
@@ -78,12 +78,12 @@ export const applyTokens = (
 };
 
 const resolveOptions = (
-  options: SemanticReleaseOptions,
+  projectOptions: SemanticReleaseOptions,
   context: ExecutorContext
 ) => {
   return applyTokens(
     {
-      ...options,
+      ...projectOptions,
     },
     context
   );
