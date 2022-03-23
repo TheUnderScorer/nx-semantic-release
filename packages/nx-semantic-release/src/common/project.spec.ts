@@ -1,3 +1,4 @@
+import path from 'path';
 import { getProject, getProjectDependencies, getProjectRoot } from './project';
 import { readTestAppWorkspace } from '../tests/utils';
 import { testRepoPath } from '../tests/constants';
@@ -29,7 +30,7 @@ describe('getProjectRoot', () => {
 
     const result = getProjectRoot(workspace.projects['app-a'], testRepoPath);
 
-    expect(result).toEqual(`${testRepoPath}/apps/app-a`);
+    expect(result).toEqual(path.join(testRepoPath, '/apps/app-a'));
   });
 });
 
