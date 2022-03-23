@@ -71,7 +71,7 @@ const applyTokens = (
     if (options[option]) options[option] = replaceTokens(options[option]);
   });
 
-  if (options.gitAssets && options.gitAssets.length > 0)
+  if (options.gitAssets?.length)
     options.gitAssets = options.gitAssets.map((asset) => replaceTokens(asset));
 
   return options;
