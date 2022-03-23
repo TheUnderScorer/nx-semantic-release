@@ -47,7 +47,7 @@ export async function semanticRelease(
   };
 }
 
-const applyTokens = (
+export const applyTokens = (
   options: SemanticReleaseOptions,
   context: ExecutorContext
 ) => {
