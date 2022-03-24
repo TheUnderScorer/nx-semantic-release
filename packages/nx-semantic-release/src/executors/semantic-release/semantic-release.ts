@@ -1,4 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit';
+import { cosmiconfigSync } from 'cosmiconfig';
 import release from 'semantic-release';
 import { setExecutorContext } from '../../config';
 import { resolvePlugins } from './plugins';
@@ -82,9 +83,13 @@ const resolveOptions = (
   projectOptions: SemanticReleaseOptions,
   context: ExecutorContext
 ) => {
+  const cosmicOptions: SemanticReleaseOptions =
+    cosmiconfigSync('nxrelease').search(context.cwd)?.config ?? {};
+
   return applyTokens(
     {
       ...defaultOptions,
+      ...cosmicOptions,
       ...projectOptions,
     },
     context
