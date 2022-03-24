@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.5.0...nx-semantic-release-v1.6.0) (2022-03-24)
+
+
+### Features
+
+* Improve token support ([5bcf7f9](https://github.com/TheUnderScorer/nx-semantic-release/commit/5bcf7f9767185521ac3ea7001b8e80c340cb6ace))
+
 # [1.5.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.4.2...nx-semantic-release-v1.5.0) (2022-03-19)
 
 
