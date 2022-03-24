@@ -21,12 +21,7 @@ configuration looks like this:
 ```json
 {
   "semantic-release": {
-    "executor": "@theunderscorer/nx-semantic-release:semantic-release",
-    "options": {
-      "buildTarget": "my-app:build",
-      "repositoryUrl": "https://github.com/YourName/YourRepo",
-      "outputPath": "dist/apps/my-app"
-    }
+    "executor": "@theunderscorer/nx-semantic-release:semantic-release"
   }
 }
 ```
@@ -45,7 +40,64 @@ After running this, the executor will do the following:
 * The result will be a fully versioned project. If you are releasing it as npm package, the package will be built,
   version in package.json will be updated and package itself will be published.
 
-### Configuration
+## Configuration
+
+Options can be configured in 3 ways:
+
+1. **cli**: Passing them on the cli command
+2. **config file:** Including them in a global `nxrelease` config file in the root of your monorepo (see below)
+3. **project:** Within the options section of the executor for each project (`workspace.json`)
+
+Multiple configurations are fully supported, allowing for global configuration options in the config file and then project specific overrides in the `workspaces.json`. Options merged in the following order of precedence:
+
+```
+cli flags > project > config file > defaults
+```
+
+_Note:_ Object/Array type options are shallowly merged. For example, if gitAssets is set in both the config file and the project options, the whole of the project options version will be used and the config file option will be discarded.
+
+### Configuration file
+
+nx-semantic-release's options can be set globally via either:
+
+* a `nxrelease` key in the project's `package.json` file
+* a `.nxreleaserc` file, written in YAML or JSON, with optional extensions: `.yaml`/`.yml`/`.json`/`.js`
+* a `nxrelease.config.js` file that exports an object
+
+The following examples are all the same.
+
+* Via `nxrelease` key in the monorepo `package.json` file:
+
+```json
+{
+  "nxrelease": {
+    "repositoryUrl": "https://github.com/TheUnderScorer/nx-semantic-release"
+  }
+}
+```
+
+* Via `.nxreleaserc` YAML file:
+
+```yaml
+---
+repositoryUrl: 'https://github.com/TheUnderScorer/nx-semantic-release'
+```
+
+* Via `nxrelease.config.js` file:
+
+```js
+module.exports = {
+  repositoryUrl: 'https://github.com/TheUnderScorer/nx-semantic-release',
+};
+```
+
+* Via CLI arguments:
+
+```
+$ nx semantic-release app-c --repositoryUrl "https://github.com/TheUnderScorer/nx-semantic-release"
+```
+
+### Available Options
 
 | name           | type         | default                                                                        | required | description                                                                                                                                                                                                                                                                                                                     |
 |----------------|--------------|--------------------------------------------------------------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -78,25 +130,26 @@ The following options support tokens: `buildTarget`, `changelogFile`, `commitMes
 
 You may see other tokens like `${nextRelease.version}`, those are tokens that are replaced by semantic-release itself.
 
-#### Build target
+### Build target
 
 By setting `buildTarget` option plugin will run your build executor as part of the release, which is useful if ex. you
 want to publish released package to npm registry.
 
-#### Skipping commits
+## Skipping commits
 
 You can skip commits for given project using `[skip $PROJECT_NAME]` in its body. Ex:
 
 ```
   feat: update something
-  
+
   [skip my-app]
 ```
+
 During analysis this commit will be skipped for release pipeline for my-app.
 
 You can also use `[skip all]` to skip commit for all projects..
 
-### CI/CD
+## CI/CD
 
 Example of GitHub actions workflow:
 
@@ -126,7 +179,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### Development
+## Development
 
 After cloning repo run:
 
