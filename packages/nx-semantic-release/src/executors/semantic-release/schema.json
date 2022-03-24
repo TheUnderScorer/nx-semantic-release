@@ -8,28 +8,23 @@
   "properties": {
     "dryRun": {
       "description": "See what commands would be run, without committing to git or updating files.",
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     },
     "ci": {
       "description": "Set to false to skip CI checks.",
-      "type": "boolean",
-      "default": true
+      "type": "boolean"
     },
     "changelog": {
       "description": "Whether to generate changelog.",
-      "type": "boolean",
-      "default": true
+      "type": "boolean"
     },
     "changelogFile": {
       "description": "Path to changelog file.",
-      "type": "string",
-      "default": "${PROJECT_DIR}/CHANGELOG.md"
+      "type": "string"
     },
     "repositoryUrl": {
       "description": "The URL of the repository to release from.",
-      "type": "string",
-      "default": ""
+      "type": "string"
     },
     "parserOpts": {
       "description": "Parser options used by commit-analyzer and @semantic-release/release-notes-generator and @semantic-release/changelog",
@@ -41,13 +36,11 @@
     },
     "tagFormat": {
       "description": "Tag format to use.",
-      "type": "string",
-      "default": "${PROJECT_NAME}-v${version}"
+      "type": "string"
     },
     "npm": {
       "description": "Whether to bump package.json version and publish to registry (if package is public).",
-      "type": "boolean",
-      "default": true
+      "type": "boolean"
     },
     "packageJsonDir": {
       "description": "Path to package.json file (usable only if npm is true).",
@@ -55,8 +48,7 @@
     },
     "github": {
       "description": "Whether to create github release.",
-      "type": "boolean",
-      "default": true
+      "type": "boolean"
     },
     "buildTarget": {
       "description": "The target of the build command.",
@@ -68,8 +60,7 @@
     },
     "commitMessage": {
       "description": "The commit message to use when committing the release.",
-      "type": "string",
-      "default": "chore(release): ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}"
+      "type": "string"
     },
     "gitAssets": {
       "description": "Path to assets to include in git commit.",
@@ -151,26 +142,11 @@
               }
             },
             "additionalProperties": false,
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         ]
       },
-      "uniqueItems": true,
-      "default": [
-        "master",
-        "main",
-        "next",
-        {
-          "name": "beta",
-          "prerelease": true
-        },
-        {
-          "name": "alpha",
-          "prerelease": true
-        }
-      ]
+      "uniqueItems": true
     }
   }
 }

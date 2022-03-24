@@ -4,6 +4,7 @@ import { setExecutorContext } from '../../config';
 import { resolvePlugins } from './plugins';
 import { getDefaultProjectRoot } from '../../common/project';
 import { exec } from '../../utils/exec';
+import { defaultOptions } from './default-options';
 
 export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   npm: boolean;
@@ -83,6 +84,7 @@ const resolveOptions = (
 ) => {
   return applyTokens(
     {
+      ...defaultOptions,
       ...projectOptions,
     },
     context
