@@ -27,7 +27,7 @@ export async function semanticRelease(
   const resolvedOptions = resolveOptions(options, context);
 
   if (resolvedOptions.buildTarget) {
-    await exec(`npx nx run ${options.buildTarget}`, {
+    await exec(`npx nx run ${resolvedOptions.buildTarget}`, {
       verbose: true,
     });
   }
@@ -47,21 +47,44 @@ export async function semanticRelease(
   };
 }
 
-const applyProjectRoot = (value: string, root: string) =>
-  value.replace('${PROJECT_DIR}', root);
+export const applyTokens = (
+  options: SemanticReleaseOptions,
+  context: ExecutorContext
+) => {
+  const PROJECT_DIR = getDefaultProjectRoot(context);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const PROJECT_NAME = context.projectName!;
+
+  const replaceTokens = (value: string): string => {
+    return value
+      .replace('${PROJECT_DIR}', PROJECT_DIR)
+      .replace('${PROJECT_NAME}', PROJECT_NAME);
+  };
+
+  [
+    'buildTarget',
+    'changelogFile',
+    'commitMessage',
+    'packageJsonDir',
+    'tagFormat',
+  ].forEach((option) => {
+    if (options[option]) options[option] = replaceTokens(options[option]);
+  });
+
+  if (options.gitAssets?.length)
+    options.gitAssets = options.gitAssets.map((asset) => replaceTokens(asset));
+
+  return options;
+};
 
 const resolveOptions = (
   options: SemanticReleaseOptions,
   context: ExecutorContext
 ) => {
-  const root = getDefaultProjectRoot(context);
-
-  return {
-    ...options,
-    changelogFile: applyProjectRoot(options.changelogFile, root),
-    tagFormat: options.tagFormat ?? `${context.projectName}-v\${version}`,
-    packageJsonDir: options.packageJsonDir
-      ? applyProjectRoot(options.packageJsonDir, root)
-      : undefined,
-  };
+  return applyTokens(
+    {
+      ...options,
+    },
+    context
+  );
 };

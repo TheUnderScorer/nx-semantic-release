@@ -41,7 +41,8 @@
     },
     "tagFormat": {
       "description": "Tag format to use.",
-      "type": "string"
+      "type": "string",
+      "default": "${PROJECT_NAME}-v${version}"
     },
     "npm": {
       "description": "Whether to bump package.json version and publish to registry (if package is public).",
