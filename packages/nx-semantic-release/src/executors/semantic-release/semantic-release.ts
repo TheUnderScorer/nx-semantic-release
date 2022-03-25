@@ -26,7 +26,15 @@ export async function semanticRelease(
   projectOptions: SemanticReleaseOptions,
   context: ExecutorContext
 ) {
-  const resolvedOptions = resolveOptions(projectOptions, context);
+  const cosmicOptions: SemanticReleaseOptions =
+    cosmiconfigSync('nxrelease').search(context.cwd)?.config ?? {};
+
+  const resolvedOptions = resolveOptions(
+    defaultOptions,
+    cosmicOptions,
+    projectOptions,
+    context
+  );
 
   if (resolvedOptions.buildTarget) {
     await exec(`npx nx run ${resolvedOptions.buildTarget}`, {
@@ -79,19 +87,17 @@ export const applyTokens = (
   return options;
 };
 
-const resolveOptions = (
+export const resolveOptions = (
+  defaultOptions: SemanticReleaseOptions,
+  cosmicOptions: SemanticReleaseOptions,
   projectOptions: SemanticReleaseOptions,
   context: ExecutorContext
 ) => {
-  const cosmicOptions: SemanticReleaseOptions =
-    cosmiconfigSync('nxrelease').search(context.cwd)?.config ?? {};
+  const mergedOptions = {
+    ...defaultOptions,
+    ...cosmicOptions,
+    ...projectOptions,
+  };
 
-  return applyTokens(
-    {
-      ...defaultOptions,
-      ...cosmicOptions,
-      ...projectOptions,
-    },
-    context
-  );
+  return applyTokens(mergedOptions, context);
 };
