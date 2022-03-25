@@ -4,6 +4,15 @@ import { testRepoPath } from '../../tests/constants';
 import { ExecutorContext } from '@nrwl/devkit';
 import path from 'path';
 
+const requiredOptions: SemanticReleaseOptions = {
+  changelog: true,
+  changelogFile: '',
+  commitMessage: '',
+  git: true,
+  github: true,
+  npm: true,
+};
+
 describe('applyTokens', () => {
   let workspace;
   let mockOptions: SemanticReleaseOptions;
@@ -12,15 +21,12 @@ describe('applyTokens', () => {
   beforeAll(() => {
     workspace = readTestAppWorkspace();
     mockOptions = {
+      ...requiredOptions,
       buildTarget: '${PROJECT_NAME}:build',
       changelogFile: '${PROJECT_DIR}/CHANGELOG.md',
       commitMessage: 'release ${PROJECT_NAME} in ${PROJECT_DIR}',
       packageJsonDir: '${PROJECT_DIR}/src',
       tagFormat: '${PROJECT_NAME}-v${version}',
-      npm: true,
-      github: true,
-      git: true,
-      changelog: true,
     };
     mockContext = {
       cwd: testRepoPath,
