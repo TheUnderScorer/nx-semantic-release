@@ -13,13 +13,18 @@ const requiredOptions: SemanticReleaseOptions = {
   npm: true,
 };
 
+const mockContext: ExecutorContext = {
+  cwd: testRepoPath,
+  root: testRepoPath,
+  workspace: readTestAppWorkspace(),
+  isVerbose: false,
+  projectName: 'app-a',
+};
+
 describe('applyTokens', () => {
-  let workspace;
   let mockOptions: SemanticReleaseOptions;
-  let mockContext: ExecutorContext;
 
   beforeAll(() => {
-    workspace = readTestAppWorkspace();
     mockOptions = {
       ...requiredOptions,
       buildTarget: '${PROJECT_NAME}:build',
@@ -27,13 +32,6 @@ describe('applyTokens', () => {
       commitMessage: 'release ${PROJECT_NAME} in ${PROJECT_DIR}',
       packageJsonDir: '${PROJECT_DIR}/src',
       tagFormat: '${PROJECT_NAME}-v${version}',
-    };
-    mockContext = {
-      cwd: testRepoPath,
-      root: testRepoPath,
-      workspace,
-      isVerbose: false,
-      projectName: 'app-a',
     };
   });
 
