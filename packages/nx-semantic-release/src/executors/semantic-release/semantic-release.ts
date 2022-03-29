@@ -1,9 +1,11 @@
 import { ExecutorContext } from '@nrwl/devkit';
+import { cosmiconfigSync } from 'cosmiconfig';
 import release from 'semantic-release';
 import { setExecutorContext } from '../../config';
 import { resolvePlugins } from './plugins';
 import { getDefaultProjectRoot } from '../../common/project';
 import { exec } from '../../utils/exec';
+import { defaultOptions } from './default-options';
 
 export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   npm: boolean;
@@ -17,14 +19,22 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   gitAssets?: string[];
   packageJsonDir?: string;
   parserOpts?: Record<string, unknown>;
-  writerOpts?: Record<string, unknown>
+  writerOpts?: Record<string, unknown>;
 };
 
 export async function semanticRelease(
-  options: SemanticReleaseOptions,
+  projectOptions: SemanticReleaseOptions,
   context: ExecutorContext
 ) {
-  const resolvedOptions = resolveOptions(options, context);
+  const cosmicOptions: SemanticReleaseOptions =
+    cosmiconfigSync('nxrelease').search(context.cwd)?.config ?? {};
+
+  const resolvedOptions = resolveOptions(
+    defaultOptions,
+    cosmicOptions,
+    projectOptions,
+    context
+  );
 
   if (resolvedOptions.buildTarget) {
     await exec(`npx nx run ${resolvedOptions.buildTarget}`, {
@@ -77,14 +87,17 @@ export const applyTokens = (
   return options;
 };
 
-const resolveOptions = (
-  options: SemanticReleaseOptions,
+export const resolveOptions = (
+  defaultOptions: SemanticReleaseOptions,
+  cosmicOptions: SemanticReleaseOptions,
+  projectOptions: SemanticReleaseOptions,
   context: ExecutorContext
 ) => {
-  return applyTokens(
-    {
-      ...options,
-    },
-    context
-  );
+  const mergedOptions = {
+    ...defaultOptions,
+    ...cosmicOptions,
+    ...projectOptions,
+  };
+
+  return applyTokens(mergedOptions, context);
 };
