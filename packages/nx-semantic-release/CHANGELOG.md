@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.7.0...nx-semantic-release-v1.8.0) (2022-03-29)
+
+
+### Features
+
+* Introduce new options: releaseRules, linkCompare and linkReferences ([8eb1f5b](https://github.com/TheUnderScorer/nx-semantic-release/commit/8eb1f5b239bb10ac40cf176384e0f067298963ba))
+
 # [1.7.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.6.0...nx-semantic-release-v1.7.0) (2022-03-29)
 
 
