@@ -56,14 +56,17 @@ export const resolvePlugins = (
       '@semantic-release/commit-analyzer',
       {
         parserOpts: options.parserOpts,
-      }
+        releaseRules: options.releaseRules,
+      },
     ],
     [
       '@semantic-release/release-notes-generator',
       {
+        linkCompare: options.linkCompare,
+        linkReferences: options.linkReferences,
         parserOpts: options.parserOpts,
         writerOpts: options.writerOpts,
-      }
+      },
     ],
 
     ...(options.changelog

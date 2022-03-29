@@ -20,6 +20,9 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   packageJsonDir?: string;
   parserOpts?: Record<string, unknown>;
   writerOpts?: Record<string, unknown>;
+  linkCompare?: boolean;
+  linkReferences?: boolean;
+  releaseRules?: string | { release: string; [key: string]: unknown }[];
 };
 
 export async function semanticRelease(

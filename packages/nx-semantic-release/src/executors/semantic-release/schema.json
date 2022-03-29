@@ -26,6 +26,35 @@
       "description": "The URL of the repository to release from.",
       "type": "string"
     },
+    "linkCompare": {
+      "description": "Whether to include a link to compare changes since previous release in the release note.",
+      "type": "boolean"
+    },
+    "linkReferences": {
+      "description": "Whether to include a link to issues and commits in the release note.",
+      "type": "boolean"
+    },
+    "releaseRules": {
+      "description": "Release rules are used when deciding if the commits since the last release warrant a new release.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "release": {
+                "type": "string"
+              }
+            },
+            "required": ["release"]
+          }
+        }
+      ]
+    },
     "parserOpts": {
       "description": "Parser options used by commit-analyzer and @semantic-release/release-notes-generator and @semantic-release/changelog",
       "type": "object"
