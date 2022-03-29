@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.6.0...nx-semantic-release-v1.7.0) (2022-03-29)
+
+
+### Features
+
+* Add support for global configuration ([9ec58f4](https://github.com/TheUnderScorer/nx-semantic-release/commit/9ec58f43e529509792777cd7ebc9d21f0ddf4a7b))
+
 # [1.6.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.5.0...nx-semantic-release-v1.6.0) (2022-03-24)
 
 
