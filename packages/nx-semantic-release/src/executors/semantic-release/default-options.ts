@@ -12,7 +12,7 @@ export const defaultOptions: SemanticReleaseOptions = {
   changelogFile: '${PROJECT_DIR}/CHANGELOG.md',
   ci: true,
   commitMessage:
-    'chore(release): ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}',
+    'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
   dryRun: false,
   github: true,
   git: false,
