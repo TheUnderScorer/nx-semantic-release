@@ -86,9 +86,15 @@ export const resolvePlugins = (
       {
         message: options.commitMessage,
         assets: [
-          // Git requires relative paths from project root
-          path.relative(context.cwd, options.changelogFile),
-          path.join(relativeProjectPath, 'package.json'),
+          // Git requires relative paths from project root in a posix format
+          path
+            .relative(context.cwd, options.changelogFile)
+            .split(path.sep)
+            .join(path.posix.sep),
+          path
+            .join(relativeProjectPath, 'package.json')
+            .split(path.sep)
+            .join(path.posix.sep),
           ...(options.gitAssets ?? []),
         ],
       },
