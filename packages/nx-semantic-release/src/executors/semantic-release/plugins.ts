@@ -47,8 +47,9 @@ export const resolvePlugins = (
   options: SemanticReleaseOptions,
   context: ExecutorContext
 ) => {
-  const projectRoot = getDefaultProjectRoot(context);
-  const relativeProjectPath = path.relative(context.cwd, projectRoot);
+  const packageJsonDir =
+    options.packageJsonDir ?? getDefaultProjectRoot(context);
+  const relativeProjectPkgPath = path.relative(context.cwd, packageJsonDir);
 
   const emptyArray = [] as unknown as release.PluginSpec;
   const defaultPlugins: release.PluginSpec[] = [
@@ -92,7 +93,7 @@ export const resolvePlugins = (
             .split(path.sep)
             .join(path.posix.sep),
           path
-            .join(relativeProjectPath, 'package.json')
+            .join(relativeProjectPkgPath, 'package.json')
             .split(path.sep)
             .join(path.posix.sep),
           ...(options.gitAssets ?? []),
