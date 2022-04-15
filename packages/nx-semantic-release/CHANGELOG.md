@@ -1,3 +1,11 @@
+## [1.8.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.8.0...nx-semantic-release-v1.8.1) (2022-04-15)
+
+
+### Bug Fixes
+
+* honor the packageJsonDir option in the gitAssets ([4f88a28](https://github.com/TheUnderScorer/nx-semantic-release/commit/4f88a28b09c78823ebf69414c6f04b61da54186c))
+* use posix path format for default git assets ([9c251c5](https://github.com/TheUnderScorer/nx-semantic-release/commit/9c251c5377c271cf2a5fc41b791a9f7a4cd1f8ae))
+
 # [1.8.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.7.0...nx-semantic-release-v1.8.0) (2022-03-29)
 
 
