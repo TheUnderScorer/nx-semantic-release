@@ -47,8 +47,9 @@ export const resolvePlugins = (
   options: SemanticReleaseOptions,
   context: ExecutorContext
 ) => {
-  const projectRoot = getDefaultProjectRoot(context);
-  const relativeProjectPath = path.relative(context.cwd, projectRoot);
+  const packageJsonDir =
+    options.packageJsonDir ?? getDefaultProjectRoot(context);
+  const relativeProjectPkgPath = path.relative(context.cwd, packageJsonDir);
 
   const emptyArray = [] as unknown as release.PluginSpec;
   const defaultPlugins: release.PluginSpec[] = [
@@ -86,9 +87,15 @@ export const resolvePlugins = (
       {
         message: options.commitMessage,
         assets: [
-          // Git requires relative paths from project root
-          path.relative(context.cwd, options.changelogFile),
-          path.join(relativeProjectPath, 'package.json'),
+          // Git requires relative paths from project root in a posix format
+          path
+            .relative(context.cwd, options.changelogFile)
+            .split(path.sep)
+            .join(path.posix.sep),
+          path
+            .join(relativeProjectPkgPath, 'package.json')
+            .split(path.sep)
+            .join(path.posix.sep),
           ...(options.gitAssets ?? []),
         ],
       },
