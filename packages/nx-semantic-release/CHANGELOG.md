@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.8.1...nx-semantic-release-v1.8.2) (2022-04-15)
+
+
+### Bug Fixes
+
+* remove extra slash in commitMessage ([3f22e97](https://github.com/TheUnderScorer/nx-semantic-release/commit/3f22e976876a4ea030f97758f423ac3928775def))
+
 ## [1.8.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.8.0...nx-semantic-release-v1.8.1) (2022-04-15)
 
 
