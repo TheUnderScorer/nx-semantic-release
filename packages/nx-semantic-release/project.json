@@ -5,30 +5,22 @@
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "packages/nx-semantic-release/**/*.ts"
-        ]
+        "lintFilePatterns": ["packages/nx-semantic-release/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/packages/nx-semantic-release"
-      ],
+      "outputs": ["coverage/packages/nx-semantic-release"],
       "options": {
         "jestConfig": "packages/nx-semantic-release/jest.config.js",
         "passWithNoTests": true
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-semantic-release",
         "tsConfig": "packages/nx-semantic-release/tsconfig.lib.json",
@@ -40,11 +32,7 @@
           {
             "input": "packages/nx-semantic-release",
             "glob": "**/*.json",
-            "ignore": [
-              "**/tsconfig*.json",
-              "project.json",
-              "node_modules/**"
-            ],
+            "ignore": ["**/tsconfig*.json", "project.json", "node_modules/**"],
             "output": "/"
           }
         ]

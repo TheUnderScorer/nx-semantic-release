@@ -1,7 +1,10 @@
 import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
-import { ExecutorContext, ProjectGraph } from '@nrwl/devkit';
+import {
+  ExecutorContext,
+  ProjectConfiguration,
+  ProjectGraph,
+} from '@nrwl/devkit';
 import { filter, map, pipe } from 'remeda';
-import { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
 import path from 'path';
 
 type GetProjectContext = Pick<
