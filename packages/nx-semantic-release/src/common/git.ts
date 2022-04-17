@@ -2,7 +2,7 @@ import { Commit, Context } from 'semantic-release';
 import { ProjectGraph } from '@nrwl/devkit';
 import { exec } from '../utils/exec';
 import { calculateFileChanges } from '@nrwl/workspace/src/core/file-utils';
-import { filterAffected } from '@nrwl/workspace/src/core/affected-project-graph';
+import { filterAffected } from 'nx/src/project-graph/affected/affected-project-graph';
 
 interface CommitAffectingProjectsParams {
   commit: Pick<Commit, 'subject' | 'commit' | 'body'>;

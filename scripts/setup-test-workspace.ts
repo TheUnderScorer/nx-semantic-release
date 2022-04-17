@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import { logger, Workspace } from '@nrwl/devkit';
-import { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
+import { logger, ProjectConfiguration, Workspace } from '@nrwl/devkit';
 import {
   remoteGitPath,
   testProjects,
