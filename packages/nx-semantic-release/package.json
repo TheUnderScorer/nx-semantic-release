@@ -1,6 +1,6 @@
 {
   "name": "@theunderscorer/nx-semantic-release",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "description": "Semantic release for NX.",
   "publishConfig": {
     "access": "public",

@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.8.2...nx-semantic-release-v1.9.0) (2022-04-17)
+
+
+### Features
+
+* Update to latest nx version (13.10.2) ([34ea0d6](https://github.com/TheUnderScorer/nx-semantic-release/commit/34ea0d6c5006c6c46e8ecb5bde2a1a8bcdf05a88))
+
 ## [1.8.2](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.8.1...nx-semantic-release-v1.8.2) (2022-04-15)
 
 
