@@ -25,6 +25,7 @@
         "outputPath": "dist/packages/nx-semantic-release",
         "tsConfig": "packages/nx-semantic-release/tsconfig.lib.json",
         "packageJson": "packages/nx-semantic-release/package.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "main": "packages/nx-semantic-release/src/index.ts",
         "assets": [
           "packages/nx-semantic-release/*.md",
