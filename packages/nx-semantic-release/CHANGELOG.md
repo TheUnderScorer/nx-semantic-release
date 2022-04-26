@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.9.0...nx-semantic-release-v1.9.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* Use dependencies instead of peerDependencies ([aa1fc19](https://github.com/TheUnderScorer/nx-semantic-release/commit/aa1fc1979ab22c01b05969ead3591081a7222873))
+
 # [1.9.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.8.2...nx-semantic-release-v1.9.0) (2022-04-17)
 
 
