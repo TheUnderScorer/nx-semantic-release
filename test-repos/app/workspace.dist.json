@@ -7,7 +7,7 @@
       "projectType": "application",
       "targets": {
         "build": {
-          "executor": "@nrwl/node:build",
+          "executor": "@nrwl/node:webpack",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/app-a",
@@ -56,7 +56,7 @@
           "options": {
             "dryRun": false,
             "buildTarget": "app-a:build",
-            "repositoryUrl": "../../git-server/repos/project.git",
+            "repositoryUrl": "replace-me",
             "github": false,
             "ci": false,
             "outputPath": "dist/apps/app-a",
@@ -73,7 +73,7 @@
       "projectType": "application",
       "targets": {
         "build": {
-          "executor": "@nrwl/node:build",
+          "executor": "@nrwl/node:webpack",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/app-b",
@@ -121,7 +121,7 @@
           "options": {
             "dryRun": false,
             "buildTarget": "app-b:build",
-            "repositoryUrl": "../../git-server/repos/project.git",
+            "repositoryUrl": "replace-me",
             "github": false,
             "ci": false,
             "outputPath": "dist/apps/app-b",
@@ -139,7 +139,7 @@
       "projectType": "application",
       "targets": {
         "build": {
-          "executor": "@nrwl/node:build",
+          "executor": "@nrwl/node:webpack",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/app-c",
@@ -187,7 +187,7 @@
           "options": {
             "dryRun": false,
             "buildTarget": "app-c:build",
-            "repositoryUrl": "../../git-server/repos/project.git",
+            "repositoryUrl": "replace-me",
             "github": false,
             "ci": false,
             "outputPath": "dist/apps/app-b",
@@ -226,14 +226,13 @@
           }
         },
         "build": {
-          "executor": "@nrwl/node:package",
+          "executor": "@nrwl/node:webpack",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/libs/common-lib",
             "tsConfig": "libs/common-lib/tsconfig.lib.json",
             "packageJson": "libs/common-lib/package.json",
-            "main": "libs/common-lib/src/index.ts",
-            "assets": ["libs/common-lib/*.md"]
+            "main": "libs/common-lib/src/index.ts"
           }
         },
         "semantic-release": {
@@ -241,7 +240,7 @@
           "options": {
             "dryRun": false,
             "buildTarget": "common-lib:build",
-            "repositoryUrl": "../../git-server/repos/project.git",
+            "repositoryUrl": "replace-me",
             "github": false,
             "ci": false,
             "outputPath": "dist/libs/common-lib",
