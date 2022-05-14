@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'lib-a-dependency',
   preset: '../../jest.preset.js',
   globals: {

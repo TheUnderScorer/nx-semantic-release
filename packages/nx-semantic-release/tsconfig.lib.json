@@ -5,10 +5,8 @@
     "outDir": "../../dist/out-tsc",
     "declaration": true,
     "types": ["node"],
-    "files": [
-      "./src/typings/semantic-release-plugin-decorators.d.ts"
-    ]
+    "files": ["./src/typings/semantic-release-plugin-decorators.d.ts"]
   },
-  "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/tests"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/tests", "jest.config.ts"],
   "include": ["**/*.ts"]
 }

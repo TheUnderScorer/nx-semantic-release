@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'common-lib',
   preset: '../../jest.preset.js',
   globals: {

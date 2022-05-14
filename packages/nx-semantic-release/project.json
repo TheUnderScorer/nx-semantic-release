@@ -1,5 +1,4 @@
 {
-  "root": "packages/nx-semantic-release",
   "sourceRoot": "packages/nx-semantic-release/src",
   "projectType": "library",
   "targets": {
@@ -14,7 +13,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/nx-semantic-release"],
       "options": {
-        "jestConfig": "packages/nx-semantic-release/jest.config.js",
+        "jestConfig": "packages/nx-semantic-release/jest.config.ts",
         "passWithNoTests": true
       }
     },
