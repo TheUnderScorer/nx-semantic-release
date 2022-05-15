@@ -1,39 +1,27 @@
-import * as path from 'path';
+import { logger } from '@nrwl/devkit';
 import * as fs from 'fs';
-import { logger, ProjectConfiguration, Workspace } from '@nrwl/devkit';
-import {
-  remoteGitPath,
-  testProjects,
-} from '../packages/nx-semantic-release/src/tests/constants';
+import * as path from 'path';
+import { remoteGitPath } from '../packages/nx-semantic-release/src/tests/constants';
 
-const workspaceJsonDistPath = path.resolve(
+const configDistPath = path.resolve(
   __dirname,
-  '../test-repos/app/workspace.dist.json'
+  '../test-repos/app/nxrelease.config.dist.js'
 );
-
-const workspaceJsonPath = path.resolve(
+const configPath = path.resolve(
   __dirname,
-  '../test-repos/app/workspace.json'
+  '../test-repos/app/nxrelease.config.js'
 );
-
-fs.copyFileSync(workspaceJsonDistPath, workspaceJsonPath);
-
-logger.info(`Created workspace.json file at ${workspaceJsonPath}`);
-
-const workspace = JSON.parse(
-  fs.readFileSync(workspaceJsonPath, 'utf8')
-) as Workspace;
+const config = require(configDistPath);
 
 const repositoryUrl = `file://${path.resolve(remoteGitPath)}`;
 
+config.repositoryUrl = repositoryUrl;
+
 logger.info(`Remote repository url: ${repositoryUrl}`);
 
-testProjects.forEach((projectName) => {
-  const project = workspace.projects[projectName] as ProjectConfiguration;
-
-  project.targets!['semantic-release'].options.repositoryUrl = repositoryUrl;
-});
-
-fs.writeFileSync(workspaceJsonPath, JSON.stringify(workspace, null, 2));
+fs.writeFileSync(
+  configPath,
+  `module.exports = ${JSON.stringify(config, null, 2)}`
+);
 
 logger.info(`Test workspace is ready 😎`);
