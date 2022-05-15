@@ -56,7 +56,6 @@
           "options": {
             "dryRun": false,
             "buildTarget": "app-a:build",
-            "repositoryUrl": "replace-me",
             "github": false,
             "ci": false,
             "outputPath": "dist/apps/app-a",
@@ -121,7 +120,6 @@
           "options": {
             "dryRun": false,
             "buildTarget": "app-b:build",
-            "repositoryUrl": "replace-me",
             "github": false,
             "ci": false,
             "outputPath": "dist/apps/app-b",
@@ -187,7 +185,6 @@
           "options": {
             "dryRun": false,
             "buildTarget": "app-c:build",
-            "repositoryUrl": "replace-me",
             "github": false,
             "ci": false,
             "outputPath": "dist/apps/app-b",
@@ -240,7 +237,6 @@
           "options": {
             "dryRun": false,
             "buildTarget": "common-lib:build",
-            "repositoryUrl": "replace-me",
             "github": false,
             "ci": false,
             "outputPath": "dist/libs/common-lib",
