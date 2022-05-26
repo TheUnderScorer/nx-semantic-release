@@ -191,8 +191,6 @@ After cloning repo run:
 npm install
 ```
 
-It will also automatically setup test workspace at `test-repos/app` directory.
-
 In order to run tests run:
 
 ```shell
