@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.10.0...nx-semantic-release-v1.11.0) (2022-05-27)
+
+
+### Features
+
+* Introduce [only] flag for including only selected projects for given commit ([f0c4021](https://github.com/TheUnderScorer/nx-semantic-release/commit/f0c40219f4ac7a7a59741bf7b94ac760e360307c))
+
 # [1.10.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.9.1...nx-semantic-release-v1.10.0) (2022-05-14)
 
 
