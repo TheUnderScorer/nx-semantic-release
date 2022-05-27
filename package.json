@@ -23,7 +23,7 @@
     "start": "nx build nx-semantic-release --watch",
     "build": "nx build nx-semantic-release",
     "test": "nx test nx-semantic-release --runInBand",
-    "test:skip-cache": "npm run test --skip-nx-cache",
+    "test:skip-cache": "npm run test -- --skip-nx-cache",
     "lint": "nx lint nx-semantic-release",
     "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",
