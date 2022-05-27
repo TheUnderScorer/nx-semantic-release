@@ -154,7 +154,7 @@ describe('Semantic release', () => {
 
   describe('Independent mode', () => {
     it('should release package if itself or dependencies were changed - app-a', async () => {
-      await exec('npx nx run app-a:semantic-release', {
+      await exec('npx nx run app-a:semantic-release --skip-nx-cache', {
         verbose: true,
         env: removeCiEnv(),
       });
@@ -163,7 +163,7 @@ describe('Semantic release', () => {
     });
 
     it('should release package if itself or dependencies were changed - common-lib', async () => {
-      await exec('npx nx run common-lib:semantic-release', {
+      await exec('npx nx run common-lib:semantic-release --skip-nx-cache', {
         verbose: true,
         env: removeCiEnv(),
       });
@@ -172,7 +172,7 @@ describe('Semantic release', () => {
     });
 
     it('should release package if itself or dependencies were changed - app-b', async () => {
-      await exec('npx nx run app-b:semantic-release', {
+      await exec('npx nx run app-b:semantic-release --skip-nx-cache', {
         verbose: true,
         env: removeCiEnv(),
       });
@@ -182,7 +182,7 @@ describe('Semantic release', () => {
 
     it('should support parallel releases with --parallel=1 flag', async () => {
       await exec(
-        'npx nx run-many --target=semantic-release --all --parallel=1',
+        'npx nx run-many --target=semantic-release --all --parallel=1 --skip-nx-cache',
         {
           verbose: true,
           env: removeCiEnv(),
@@ -194,9 +194,8 @@ describe('Semantic release', () => {
       await checkCommonLib();
     });
 
-    // TODO Add config file (nx-semantic-release.json)
     it('should support passing writerOpts and parserOpts', async () => {
-      await exec('npx nx run app-c:semantic-release', {
+      await exec('npx nx run app-c:semantic-release --skip-nx-cache', {
         verbose: true,
         env: removeCiEnv(),
       });
