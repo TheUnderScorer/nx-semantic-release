@@ -151,7 +151,9 @@ You can skip commits for given project using `[skip $PROJECT_NAME]` in its body.
 
 During analysis this commit will be skipped for release pipeline for my-app.
 You can also use `[skip all]` to skip commit for all projects.
+
 ---
+
 Alternatively you can include only particular projects in given commit by using `[only $PROJECT_NAME]`. Ex:
 
 ```
