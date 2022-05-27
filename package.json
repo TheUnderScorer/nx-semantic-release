@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=12.13.1"
+    "node": ">=14"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.base.json",
