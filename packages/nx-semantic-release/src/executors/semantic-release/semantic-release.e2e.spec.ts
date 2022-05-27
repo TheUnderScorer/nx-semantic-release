@@ -63,6 +63,7 @@ async function checkCommonLib() {
       'add app-a libs',
       'update test.txt',
       'update test.txt again',
+      'add test-only.txt',
     ],
   });
 }
@@ -96,6 +97,7 @@ async function checkAppB() {
       'update test.txt',
       'update test.txt again',
       'add rest',
+      'add test-only.txt',
     ],
     shouldNotContain: ['add app-a', 'add app-a libs'],
   });
@@ -134,6 +136,7 @@ async function checkAppA() {
       'update test.txt',
       'update test.txt again',
       'add description',
+      'add test-only.txt',
     ],
   });
 }
@@ -191,7 +194,6 @@ describe('Semantic release', () => {
       await checkCommonLib();
     });
 
-    // TODO Add config file (nx-semantic-release.json)
     it('should support passing writerOpts and parserOpts', async () => {
       await exec('npx nx run app-c:semantic-release', {
         verbose: true,

@@ -12,18 +12,13 @@
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
-    "nx.json": "*"
+    "nx.json": "*",
+    "test-only.txt": "*"
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
         "parallel": 1,
         "strictlyOrderedTargets": [
           "build",

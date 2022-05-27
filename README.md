@@ -150,8 +150,16 @@ You can skip commits for given project using `[skip $PROJECT_NAME]` in its body.
 ```
 
 During analysis this commit will be skipped for release pipeline for my-app.
+You can also use `[skip all]` to skip commit for all projects.
+---
+Alternatively you can include only particular projects in given commit by using `[only $PROJECT_NAME]`. Ex:
 
-You can also use `[skip all]` to skip commit for all projects..
+```
+  feat: update something
+
+  [only my-app]
+```
+During analysis this commit will be included only for release pipeline for my-app.
 
 ## CI/CD
 
@@ -190,8 +198,6 @@ After cloning repo run:
 ```shell
 npm install
 ```
-
-It will also automatically setup test workspace at `test-repos/app` directory.
 
 In order to run tests run:
 

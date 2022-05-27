@@ -15,7 +15,13 @@
       "options": {
         "jestConfig": "packages/nx-semantic-release/jest.config.ts",
         "passWithNoTests": true
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "self"
+        }
+      ]
     },
     "build": {
       "executor": "@nrwl/js:tsc",

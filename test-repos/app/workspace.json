@@ -229,7 +229,8 @@
             "outputPath": "dist/libs/common-lib",
             "tsConfig": "libs/common-lib/tsconfig.lib.json",
             "packageJson": "libs/common-lib/package.json",
-            "main": "libs/common-lib/src/index.ts"
+            "main": "libs/common-lib/src/index.ts",
+            "generatePackageJson": true
           }
         },
         "semantic-release": {
