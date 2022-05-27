@@ -21,7 +21,7 @@ export async function isCommitAffectingProjects({
   verbose,
   graph,
   projectName,
-}: CommitAffectingProjectsParams) {
+}: CommitAffectingProjectsParams): Promise<boolean> {
   if (shouldSkipCommit(commit, projectName)) {
     if (verbose) {
       context.logger.log(`ℹ️ Commit ${commit.subject} is skipped`);
@@ -59,11 +59,29 @@ export async function isCommitAffectingProjects({
   return isAffected;
 }
 
-const shouldSkipCommit = (commit: Pick<Commit, 'body'>, projectName: string) =>
-  commit.body.includes(`[skip ${projectName}]`) ||
-  commit.body.includes(`[skip all]`);
+export function shouldSkipCommit(
+  commit: Pick<Commit, 'body'>,
+  projectName: string
+): boolean {
+  const onlyMatchRegex = /\[only (.*?)]/g;
 
-async function listAffectedFilesInCommit(commit: Pick<Commit, 'commit'>) {
+  const skipMatches = [`[skip ${projectName}]`, '[skip all]'];
+  const onlyMatches = Array.from(commit.body.matchAll(onlyMatchRegex));
+
+  const hasOnlyMatch =
+    onlyMatches.length &&
+    !onlyMatches.some((match) => match[1] === projectName);
+
+  const hasSkipMatch = skipMatches.some((skipMatch) =>
+    commit.body.includes(skipMatch)
+  );
+
+  return Boolean(hasSkipMatch || hasOnlyMatch);
+}
+
+async function listAffectedFilesInCommit(
+  commit: Pick<Commit, 'commit'>
+): Promise<string[]> {
   const files = await exec(`git show --name-status ${commit.commit.short}`);
 
   return files

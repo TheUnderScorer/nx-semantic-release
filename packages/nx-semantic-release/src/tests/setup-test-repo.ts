@@ -65,6 +65,9 @@ const setupCommands: Array<string | (() => Promise<void>)> = [
   addDescriptionToPkgJson,
   'git add apps/app-a/package.json',
   'git commit -m "feat: add description\n\n[skip app-a]"',
+  'echo "Test123456" > test-only.txt',
+  'git add test-only.txt',
+  'git commit -m "feat: add test-only.txt\n\n[only app-b]"',
   `git remote add origin ${remoteGitPath}`,
   'git push origin master',
 ];
