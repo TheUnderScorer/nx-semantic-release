@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "app-a": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/app-a",
       "sourceRoot": "apps/app-a/src",
       "projectType": "application",
@@ -67,6 +68,7 @@
       "tags": []
     },
     "app-b": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/app-b",
       "sourceRoot": "apps/app-b/src",
       "projectType": "application",
@@ -132,6 +134,7 @@
       "tags": []
     },
     "app-c": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/app-c",
       "sourceRoot": "apps/app-c/src",
       "projectType": "application",
@@ -203,6 +206,7 @@
       "tags": []
     },
     "common-lib": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/common-lib",
       "sourceRoot": "libs/common-lib/src",
       "projectType": "library",
@@ -249,6 +253,7 @@
       "tags": []
     },
     "lib-a": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/lib-a",
       "sourceRoot": "libs/lib-a/src",
       "projectType": "library",
@@ -272,6 +277,7 @@
       "tags": []
     },
     "lib-a-dependency": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/lib-a-dependency",
       "sourceRoot": "libs/lib-a-dependency/src",
       "projectType": "library",
@@ -294,5 +300,6 @@
       },
       "tags": []
     }
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

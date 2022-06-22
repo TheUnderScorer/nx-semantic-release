@@ -20,29 +20,18 @@
       "runner": "nx/tasks-runners/default",
       "options": {
         "parallel": 1,
-        "strictlyOrderedTargets": [
-          "build",
-          "semantic-release"
-        ]
+        "strictlyOrderedTargets": ["build", "semantic-release"]
       }
     }
   },
-  "cli": {
-    "defaultCollection": "@nrwl/node"
-  },
   "defaultProject": "app-a",
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ],
-    "semantic-release": [
-      {
-        "target": "semantic-release",
-        "projects": "dependencies"
-      }
-    ]
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    },
+    "semantic-release": {
+      "dependsOn": ["^semantic-release"]
+    }
   }
 }
