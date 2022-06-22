@@ -13,7 +13,6 @@ const requiredOptions: SemanticReleaseOptions = {
   changelog: true,
   changelogFile: '',
   commitMessage: '',
-  git: true,
   github: true,
   npm: true,
 };

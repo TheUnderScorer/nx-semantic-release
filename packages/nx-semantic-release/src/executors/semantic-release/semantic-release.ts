@@ -12,7 +12,6 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   github: boolean;
   buildTarget?: string;
   changelog: boolean;
-  git: boolean;
   changelogFile: string;
   outputPath?: string;
   commitMessage: string;
