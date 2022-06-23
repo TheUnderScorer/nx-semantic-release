@@ -89,7 +89,7 @@ export const resolvePlugins = (
         assets: [
           // Git requires relative paths from project root in a posix format
           path
-            .relative(context.cwd, options.changelogFile)
+            .relative(context.cwd, options.changelogFile as string)
             .split(path.sep)
             .join(path.posix.sep),
           path

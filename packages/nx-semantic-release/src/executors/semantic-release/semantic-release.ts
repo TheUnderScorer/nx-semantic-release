@@ -11,10 +11,10 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   npm: boolean;
   github: boolean;
   buildTarget?: string;
-  changelog: boolean;
-  changelogFile: string;
+  changelog?: boolean;
+  changelogFile?: string;
   outputPath?: string;
-  commitMessage: string;
+  commitMessage?: string;
   gitAssets?: string[];
   packageJsonDir?: string;
   parserOpts?: Record<string, unknown>;
