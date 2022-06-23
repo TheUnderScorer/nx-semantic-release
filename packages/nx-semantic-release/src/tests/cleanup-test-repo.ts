@@ -3,6 +3,7 @@ import fs from 'fs';
 import { remoteGitPath, commitToRevertTo, testRepoPath } from './constants';
 import { getTestRepoCommits } from './git';
 import { exec } from '../utils/exec';
+import { isError } from 'remeda';
 
 async function revertToLastCommit() {
   const testRepoCommits = getTestRepoCommits();
@@ -41,7 +42,9 @@ export const cleanupTestRepo = async () => {
       try {
         removeRemoteDockerRepo();
       } catch (error) {
-        console.error(`Failed to remove remote: ${error.message}`);
+        if (isError(error)) {
+          console.error(`Failed to remove remote: ${error.message}`);
+        }
       }
     }
   } finally {
