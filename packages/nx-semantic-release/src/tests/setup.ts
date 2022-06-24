@@ -1,5 +1,6 @@
 import path from 'path';
 
+// We need to remove certain env values that are set by CI, they are interfering with semantic-release
 const ciEnvToRemove = [
   'GITHUB_EVENT_NAME',
   'GITHUB_RUN_ID',
@@ -8,6 +9,7 @@ const ciEnvToRemove = [
   'GITHUB_ACTIONS',
 ];
 
+// Note: we cannot use tmpProjPath() here, because it uses the NX_WORKSPACE_ROOT_PATH, so it will cause infinite loop
 Object.assign(process.env, {
   NX_WORKSPACE_ROOT_PATH: path.resolve(
     __dirname,
