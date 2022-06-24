@@ -70,7 +70,6 @@
     "@typescript-eslint/eslint-plugin": "5.24.0",
     "@typescript-eslint/parser": "5.24.0",
     "@zerollup/ts-transform-paths": "^1.7.18",
-    "dotenv": "^10.0.0",
     "eslint": "8.15.0",
     "eslint-config-prettier": "8.1.0",
     "gitlog": "^4.0.4",
