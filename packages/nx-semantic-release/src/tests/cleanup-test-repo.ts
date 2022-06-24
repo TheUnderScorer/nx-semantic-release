@@ -1,53 +1,17 @@
-import path from 'path';
 import fs from 'fs';
-import { remoteGitPath, commitToRevertTo, testRepoPath } from './constants';
-import { getTestRepoCommits } from './git';
-import { exec } from '../utils/exec';
-import { isError } from 'remeda';
+import { remoteGitPath } from './constants';
+import { tmpProjPath } from '@nrwl/nx-plugin/testing';
 
-async function revertToLastCommit() {
-  const testRepoCommits = getTestRepoCommits();
-  const targetCommit = testRepoCommits.find(
-    (commit) => commit.subject === commitToRevertTo
-  );
-
-  if (!targetCommit) {
-    throw new Error(`Unable to find target commit: "${commitToRevertTo}"`);
+export function removeRemoteRepoDir() {
+  if (fs.existsSync(remoteGitPath)) {
+    fs.rmSync(remoteGitPath, { recursive: true });
   }
-
-  await exec(`git reset --hard ${targetCommit.hash}`);
 }
 
-function removeRemoteDockerRepo() {
-  fs.rmSync(remoteGitPath, { recursive: true });
-}
-
-export const cleanupTestRepo = async () => {
-  const currentCwd = process.cwd();
-
-  process.chdir(testRepoPath);
-
-  try {
-    const gitPath = path.resolve('.git');
-
-    if (fs.existsSync(gitPath)) {
-      try {
-        await revertToLastCommit();
-      } catch (error) {
-        console.error(error);
-      }
-
-      fs.rmSync(gitPath, { recursive: true });
-
-      try {
-        removeRemoteDockerRepo();
-      } catch (error) {
-        if (isError(error)) {
-          console.error(`Failed to remove remote: ${error.message}`);
-        }
-      }
-    }
-  } finally {
-    process.chdir(currentCwd);
+export function cleanupTestRepo() {
+  if (fs.existsSync(tmpProjPath())) {
+    fs.rmSync(tmpProjPath(), { recursive: true });
   }
-};
+
+  removeRemoteRepoDir();
+}

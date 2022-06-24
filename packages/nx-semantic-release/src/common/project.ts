@@ -25,8 +25,10 @@ export const getProject = (context: GetProjectContext) =>
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   context.workspace.projects[context.projectName!];
 
-export const getProjectRoot = (project: ProjectConfiguration, cwd: string) =>
-  path.join(cwd, project.root);
+export const getProjectRoot = (
+  project: ProjectConfiguration | string,
+  cwd: string
+) => path.join(cwd, typeof project === 'string' ? project : project.root);
 
 export const getDefaultProjectRoot = (context: GetProjectContext) =>
   getProjectRoot(getProject(context), context.cwd);

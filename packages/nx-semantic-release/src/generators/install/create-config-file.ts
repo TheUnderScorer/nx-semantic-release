@@ -1,15 +1,15 @@
 import { writeJsonFile } from '@nrwl/devkit';
 import { SemanticReleaseOptions } from '../../executors/semantic-release/semantic-release';
-import { InstallGeneratorOptions } from './generator';
+import { InstallGeneratorOptions } from './install';
 
-export const generatedConfigFileName = '.nxrelease.json';
+export const generatedConfigFileName = '.nxreleaserc.json';
 
 export function createConfigFile(options: InstallGeneratorOptions) {
   const config: SemanticReleaseOptions = {
-    changelog: false,
+    changelog: options.changelog,
     npm: true,
     github: options.github,
-    releaseRules: options.repositoryUrl,
+    repositoryUrl: options.repositoryUrl,
     branches: [options.baseBranch],
   };
 

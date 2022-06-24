@@ -1,7 +1,19 @@
 import path from 'path';
 import { getProject, getProjectDependencies, getProjectRoot } from './project';
 import { readTestAppWorkspace } from '../tests/utils';
-import { testRepoPath } from '../tests/constants';
+import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { setupTestRepo } from '../tests/setup-test-repo';
+import { cleanupTestRepo } from '../tests/cleanup-test-repo';
+
+beforeAll(async () => {
+  cleanupTestRepo();
+
+  await setupTestRepo();
+});
+
+afterAll(async () => {
+  cleanupTestRepo();
+});
 
 describe('getProjectDependencies', () => {
   it.each<{ projectName: string; expectedDependencies: string[] }>([
@@ -28,9 +40,9 @@ describe('getProjectRoot', () => {
   it('should return correct project root', () => {
     const workspace = readTestAppWorkspace();
 
-    const result = getProjectRoot(workspace.projects['app-a'], testRepoPath);
+    const result = getProjectRoot(workspace.projects['app-a'], tmpProjPath());
 
-    expect(result).toEqual(path.join(testRepoPath, '/apps/app-a'));
+    expect(result).toEqual(path.join(tmpProjPath(), '/apps/app-a'));
   });
 });
 
@@ -40,7 +52,7 @@ describe('getProject', () => {
 
     expect(
       getProject({
-        cwd: testRepoPath,
+        cwd: tmpProjPath(),
         workspace,
         projectName: 'app-a',
       })

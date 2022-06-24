@@ -1,13 +1,8 @@
 import {
-  ensureNxProject,
-  getCwd,
   readJson,
   runNxCommandAsync,
-  runPackageManagerInstall,
   tmpProjPath,
-  updateFile,
 } from '@nrwl/nx-plugin/testing';
-import path from 'path';
 import { PackageJson } from 'type-fest';
 import { generatedConfigFileName } from './create-config-file';
 import {
@@ -16,42 +11,23 @@ import {
 } from './enforce-commit-deps';
 import fs from 'fs';
 import { SemanticReleaseOptions } from '../../executors/semantic-release/semantic-release';
+import { setupTestNxWorkspace } from '../../tests/setup-test-nx-workspace';
 
-// TODO Use testing utils for semantic-release executor as well
 const defaultExpectedConfig: SemanticReleaseOptions = {
-  changelog: false,
+  changelog: true,
   npm: true,
   github: true,
-  releaseRules: 'test',
+  repositoryUrl: 'test',
   branches: ['master'],
 };
 
 describe('Installer', () => {
   beforeAll(() => {
-    ensureNxProject(
-      '@theunderscorer/nx-semantic-release',
-      'dist/packages/nx-semantic-release'
-    );
-
-    updateFile('package.json', (contents) => {
-      const pkg = JSON.parse(contents) as PackageJson;
-
-      pkg.devDependencies = {
-        ...pkg.devDependencies,
-        '@theunderscorer/nx-semantic-release': `file:${path.resolve(
-          getCwd(),
-          'dist/packages/nx-semantic-release'
-        )}`,
-      };
-
-      return JSON.stringify(pkg, null, 2);
-    });
-
-    runPackageManagerInstall();
+    setupTestNxWorkspace();
   });
 
-  afterAll(() => {
-    runNxCommandAsync('reset');
+  afterAll(async () => {
+    await runNxCommandAsync('reset');
   });
 
   it('should create example', async () => {

@@ -1,13 +1,15 @@
 import { defaultOptions } from './default-options';
 import {
-  SemanticReleaseOptions,
   applyTokens,
   resolveOptions,
+  SemanticReleaseOptions,
 } from './semantic-release';
 import { readTestAppWorkspace } from '../../tests/utils';
-import { testRepoPath } from '../../tests/constants';
 import { ExecutorContext } from '@nrwl/devkit';
 import path from 'path';
+import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { cleanupTestRepo } from '../../tests/cleanup-test-repo';
+import { setupTestRepo } from '../../tests/setup-test-repo';
 
 const requiredOptions: SemanticReleaseOptions = {
   changelog: true,
@@ -17,13 +19,25 @@ const requiredOptions: SemanticReleaseOptions = {
   npm: true,
 };
 
-const mockContext: ExecutorContext = {
-  cwd: testRepoPath,
-  root: testRepoPath,
-  workspace: readTestAppWorkspace(),
-  isVerbose: false,
-  projectName: 'app-a',
-};
+let mockContext: ExecutorContext;
+
+beforeAll(async () => {
+  cleanupTestRepo();
+
+  await setupTestRepo();
+
+  mockContext = {
+    cwd: tmpProjPath(),
+    root: tmpProjPath(),
+    workspace: readTestAppWorkspace(),
+    isVerbose: false,
+    projectName: 'app-a',
+  };
+});
+
+afterAll(() => {
+  cleanupTestRepo();
+});
 
 describe('applyTokens', () => {
   let mockOptions: SemanticReleaseOptions;
@@ -43,10 +57,10 @@ describe('applyTokens', () => {
     const results = applyTokens(mockOptions, mockContext);
 
     expect(results.changelogFile).toEqual(
-      `${path.join(testRepoPath, 'apps/app-a')}/CHANGELOG.md`
+      `${path.join(tmpProjPath(), 'apps/app-a')}/CHANGELOG.md`
     );
     expect(results.packageJsonDir).toEqual(
-      `${path.join(testRepoPath, 'apps/app-a')}/src`
+      `${path.join(tmpProjPath(), 'apps/app-a')}/src`
     );
   });
 
@@ -61,30 +75,40 @@ describe('applyTokens', () => {
     const results = applyTokens(mockOptions, mockContext);
 
     expect(results.commitMessage).toEqual(
-      `release app-a in ${path.join(testRepoPath, 'apps/app-a')}`
+      `release app-a in ${path.join(tmpProjPath(), 'apps/app-a')}`
     );
   });
 });
 
 describe('resolveOptions', () => {
-  const cosmicOptions: SemanticReleaseOptions = {
-    ...requiredOptions,
-    dryRun: true,
-    option1: 'fake1Cosmic',
-    option2: 'fake2Cosmic',
-  };
-  const projectOptions: SemanticReleaseOptions = {
-    ...requiredOptions,
-    ci: false,
-    option1: 'fake1Proj',
-    option3: 'fake3Proj',
-  };
-  const resolvedOptions = resolveOptions(
-    defaultOptions,
-    cosmicOptions,
-    projectOptions,
-    mockContext
-  );
+  let cosmicOptions: SemanticReleaseOptions;
+
+  let projectOptions: SemanticReleaseOptions;
+
+  let resolvedOptions: SemanticReleaseOptions;
+
+  beforeAll(() => {
+    cosmicOptions = {
+      ...requiredOptions,
+      dryRun: true,
+      option1: 'fake1Cosmic',
+      option2: 'fake2Cosmic',
+    };
+
+    projectOptions = {
+      ...requiredOptions,
+      ci: false,
+      option1: 'fake1Proj',
+      option3: 'fake3Proj',
+    };
+
+    resolvedOptions = resolveOptions(
+      defaultOptions,
+      cosmicOptions,
+      projectOptions,
+      mockContext
+    );
+  });
 
   it('should return options from defaultOptions', () => {
     expect(cosmicOptions.tagFormat).toBeUndefined();

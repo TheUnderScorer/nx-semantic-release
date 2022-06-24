@@ -1,29 +1,19 @@
 import { setupTestRepo } from '../../tests/setup-test-repo';
 import { cleanupTestRepo } from '../../tests/cleanup-test-repo';
-import { testRepoPath } from '../../tests/constants';
-import { exec } from '../../utils/exec';
 import { getCommitTag, getTestRepoCommits } from '../../tests/git';
 import {
   readTestAppChangelog,
   readTestAppPackageJson,
 } from '../../tests/files';
 import { assertReleaseNotes } from '../../tests/release-notes';
-import { TestApp, TestRepoCommit } from '../../tests/types';
-import { omit } from 'remeda';
-import fs from 'fs';
-import path from 'path';
+import { TestReleasableProject, TestRepoCommit } from '../../tests/types';
 import { PackageJson } from 'type-fest';
+import { readJson, runNxCommandAsync } from '@nrwl/nx-plugin/testing';
 
-const removeCiEnv = () =>
-  omit(process.env, [
-    'GITHUB_EVENT_NAME',
-    'GITHUB_RUN_ID',
-    'GITHUB_REPOSITORY',
-    'GITHUB_WORKSPACE',
-    'GITHUB_ACTIONS',
-  ]);
-
-const findReleaseCommit = (app: TestApp, commits: TestRepoCommit[]) => {
+const findReleaseCommit = (
+  app: TestReleasableProject,
+  commits: TestRepoCommit[]
+) => {
   const match = [`chore(${app})`, 'release'];
 
   const result = commits.find((commit) =>
@@ -31,7 +21,6 @@ const findReleaseCommit = (app: TestApp, commits: TestRepoCommit[]) => {
   );
 
   if (!result) {
-    console.log(commits.map((commit) => commit.subject));
     throw new Error(`Could not find release commit for ${app}`);
   }
 
@@ -73,13 +62,7 @@ async function checkAppB() {
   const releaseCommit = findReleaseCommit('app-b', commits);
   const commonLibReleaseCommit = findReleaseCommit('common-lib', commits);
 
-  const packageJson = JSON.parse(
-    fs
-      .readFileSync(
-        path.join(testRepoPath, 'apps', 'app-b', 'stuff', 'package.json')
-      )
-      .toString()
-  ) as PackageJson;
+  const packageJson = readJson<PackageJson>('apps/app-b/stuff/package.json');
   const tag = await getCommitTag(releaseCommit.hash);
   const commonLibTag = await getCommitTag(commonLibReleaseCommit.hash);
 
@@ -116,10 +99,10 @@ async function checkAppA() {
   expect(commonLibTag).toEqual('common-lib-v1.0.0');
 
   const pkg = readTestAppPackageJson('app-a');
-  const buildPkg = readTestAppPackageJson('app-a', 'build');
+  const builtLibPkg = readTestAppPackageJson('common-lib', 'build');
 
   expect(pkg.version).toEqual('1.0.0');
-  expect(buildPkg.version).toEqual('1.0.0');
+  expect(builtLibPkg.version).toEqual('1.0.0');
 
   const changelog = readTestAppChangelog('app-a');
 
@@ -143,7 +126,7 @@ async function checkAppA() {
 
 describe('Semantic release', () => {
   beforeEach(async () => {
-    process.chdir(testRepoPath);
+    cleanupTestRepo();
 
     await setupTestRepo();
   });
@@ -154,39 +137,26 @@ describe('Semantic release', () => {
 
   describe('Independent mode', () => {
     it('should release package if itself or dependencies were changed - app-a', async () => {
-      await exec('npx nx run app-a:semantic-release', {
-        verbose: true,
-        env: removeCiEnv(),
-      });
+      await runNxCommandAsync('run app-a:semantic-release');
 
       await checkAppA();
     });
 
     it('should release package if itself or dependencies were changed - common-lib', async () => {
-      await exec('npx nx run common-lib:semantic-release', {
-        verbose: true,
-        env: removeCiEnv(),
-      });
+      await runNxCommandAsync('run common-lib:semantic-release');
 
       await checkCommonLib();
     });
 
     it('should release package if itself or dependencies were changed - app-b', async () => {
-      await exec('npx nx run app-b:semantic-release', {
-        verbose: true,
-        env: removeCiEnv(),
-      });
+      await runNxCommandAsync('run app-b:semantic-release');
 
       await checkAppB();
     });
 
     it('should support parallel releases with --parallel=1 flag', async () => {
-      await exec(
-        'npx nx run-many --target=semantic-release --all --parallel=1',
-        {
-          verbose: true,
-          env: removeCiEnv(),
-        }
+      await runNxCommandAsync(
+        'run-many --target=semantic-release --all --parallel=1'
       );
 
       await checkAppA();
@@ -195,10 +165,7 @@ describe('Semantic release', () => {
     });
 
     it('should support passing writerOpts and parserOpts', async () => {
-      await exec('npx nx run app-c:semantic-release', {
-        verbose: true,
-        env: removeCiEnv(),
-      });
+      await runNxCommandAsync('run app-c:semantic-release');
 
       const changelog = readTestAppChangelog('app-c');
 

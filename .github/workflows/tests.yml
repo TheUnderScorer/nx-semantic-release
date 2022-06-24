@@ -36,9 +36,6 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Setup test repo
-        run: npm install --prefix test-repos/app
-
       - name: Lint
         run: npm run lint
 

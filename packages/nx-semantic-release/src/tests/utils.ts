@@ -1,9 +1,7 @@
-import { readJsonFile, Workspace } from '@nrwl/devkit';
-import * as path from 'path';
-import { testRepoPath } from './constants';
+import { Workspace } from '@nrwl/devkit';
+import { readJson } from '@nrwl/nx-plugin/testing';
 
-export const readTestAppWorkspace = () =>
-  readJsonFile<Workspace>(path.join(testRepoPath, 'workspace.json'));
+export const readTestAppWorkspace = () => readJson<Workspace>('workspace.json');
 
 export const wait = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));

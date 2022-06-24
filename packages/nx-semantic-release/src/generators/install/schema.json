@@ -26,6 +26,12 @@
       "default": true,
       "x-prompt": "Would you want to create github releases?"
     },
+    "changelog": {
+      "description": "Create changelog",
+      "type": "boolean",
+      "default": true,
+      "x-prompt": "Would you want to create changelog file?"
+    },
     "npm": {
       "description": "Create npm releases",
       "type": "boolean",

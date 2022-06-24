@@ -1,17 +1,29 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   remoteGitPath,
   remoteReposDirectory,
-  commitToRevertTo,
-  testRepoPath,
+  testApps,
+  testLibs,
 } from './constants';
 import { exec } from '../utils/exec';
-import { cleanupTestRepo } from './cleanup-test-repo';
 import { getTestRepoCommits } from './git';
-import { TestRepoCommit } from './types';
+import { TestReleasableProject, TestRepoCommit } from './types';
 import { wait } from './utils';
 import fs from 'fs';
-import path from 'path';
 import { PackageJson } from 'type-fest';
+import {
+  readJson,
+  runNxCommand,
+  runNxCommandAsync,
+  tmpProjPath,
+  updateFile,
+} from '@nrwl/nx-plugin/testing';
+import { NxJsonConfiguration } from 'nx/src/config/nx-json';
+import { SemanticReleaseOptions } from '../executors/semantic-release/semantic-release';
+import { ProjectConfiguration } from '@nrwl/devkit';
+import path from 'path';
+import { getStartPath } from './files';
+import { setupTestNxWorkspace } from './setup-test-nx-workspace';
 
 export interface SetupTestRepoResult {
   commits: TestRepoCommit[];
@@ -31,12 +43,12 @@ async function setupRemoteRepo() {
 }
 
 async function addDescriptionToPkgJson() {
-  const pkgPath = path.join(testRepoPath, 'apps/app-a/package.json');
-  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8')) as PackageJson;
+  const pkgPath = 'apps/app-a/package.json';
+  const pkg = readJson<PackageJson>(pkgPath);
 
   pkg.description = 'Test repo';
 
-  fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
+  updateFile(pkgPath, JSON.stringify(pkg, null, 2));
 }
 
 const setupCommands: Array<string | (() => Promise<void>)> = [
@@ -55,7 +67,7 @@ const setupCommands: Array<string | (() => Promise<void>)> = [
   'git add libs/common-lib',
   'git commit -m "feat: add common-lib"',
   'git add .',
-  `git commit -m "${commitToRevertTo}"`,
+  `git commit -m "feat: add rest"`,
   'echo "Test123" > apps/app-b/test.txt',
   'git add apps/app-b/test.txt',
   'git commit -m "feat: update test.txt"',
@@ -72,32 +84,229 @@ const setupCommands: Array<string | (() => Promise<void>)> = [
   'git push origin master',
 ];
 
-async function runCommands() {
+async function runGitCommands() {
   for (const command of setupCommands) {
     if (typeof command === 'string') {
-      await exec(command);
+      await exec(command, { cwd: tmpProjPath() });
     } else {
       await command();
     }
   }
 }
 
-export async function setupTestRepo(): Promise<SetupTestRepoResult> {
-  const currentCwd = process.cwd();
+function createPackageJsonForProjects() {
+  const appAPkgJson: PackageJson = {
+    name: 'app-a',
+    version: '0.0.1',
+    private: true,
+  };
+  const appBPkgJson: PackageJson = {
+    name: 'app-b',
+    version: '0.0.1',
+    private: true,
+  };
+  const commonLibPkgJson: PackageJson = {
+    name: '@proj/common-lib',
+    version: '0.0.1',
+    private: true,
+  };
 
-  process.chdir(testRepoPath);
+  updateFile('apps/app-a/package.json', JSON.stringify(appAPkgJson, null, 2));
+  updateFile(
+    'libs/common-lib/package.json',
+    JSON.stringify(commonLibPkgJson, null, 2)
+  );
+  updateFile(
+    'apps/app-b/stuff/package.json',
+    JSON.stringify(appBPkgJson, null, 2)
+  );
+}
 
-  try {
-    await cleanupTestRepo();
+async function bootstrapTestProjectsAndLibs() {
+  testApps.forEach((project) => {
+    runNxCommand(
+      `generate @nrwl/web:application ${project} --e2e-test-runner=none`
+    );
+  });
 
-    await runCommands();
+  testLibs.forEach((lib) => {
+    runNxCommand(`generate @nrwl/js:library ${lib}`);
+  });
+
+  createPackageJsonForProjects();
+  updateWorkspaceNxConfig();
+  linkDependencies();
+  await runNxCommandAsync(
+    `generate @theunderscorer/nx-semantic-release:install --repositoryUrl=file://${remoteGitPath} --enforceConventionalCommits=false`
+  );
+
+  configureSemanticReleaseForProject('app-a', {
+    dryRun: false,
+    buildTarget: 'build',
+    github: false,
+    ci: false,
+    outputPath: 'dist/apps/app-a',
+    commitMessage:
+      'chore(app-a): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}',
+    branches: ['*'],
+  });
+  configureSemanticReleaseForProject('app-b', {
+    dryRun: false,
+    buildTarget: 'build',
+    github: false,
+    ci: false,
+    outputPath: 'dist/apps/app-b',
+    commitMessage:
+      'chore(app-b): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}',
+    branches: ['*'],
+    packageJsonDir: '${PROJECT_DIR}/stuff',
+  });
+  configureSemanticReleaseForProject('app-c', {
+    dryRun: false,
+    buildTarget: 'build',
+    github: false,
+    ci: false,
+    outputPath: 'dist/apps/app-b',
+    commitMessage:
+      'chore(app-c): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}',
+    branches: ['*'],
+    packageJsonDir: '${PROJECT_DIR}/stuff',
+    parserOpts: {
+      noteKeywords: ['CHANGE'],
+    },
+    writerOpts: {
+      groupBy: false,
+    },
+  });
+  configureSemanticReleaseForProject('common-lib', {
+    executor: '@theunderscorer/nx-semantic-release:semantic-release',
+    options: {
+      dryRun: false,
+      buildTarget: 'build',
+      github: false,
+      ci: false,
+      outputPath: 'dist/libs/common-lib',
+      commitMessage:
+        'chore(common-lib): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}',
+      branches: ['*'],
+    },
+  });
+}
+
+function updateWorkspaceNxConfig() {
+  const nxJson = readJson<NxJsonConfiguration>('nx.json');
+
+  nxJson.implicitDependencies = {
+    ...nxJson.implicitDependencies,
+    'test-only.txt': '*',
+  };
+
+  nxJson.targetDefaults = {
+    build: {
+      dependsOn: ['^build'],
+    },
+    'semantic-release': {
+      dependsOn: ['^semantic-release'],
+    },
+  };
+
+  updateFile('nx.json', JSON.stringify(nxJson, null, 2));
+}
+
+function linkDependencies() {
+  updateFile(
+    'apps/app-a/src/main.ts',
+    `
+    import { libA } from '@proj/lib-a';
+
+    console.log(libA());
+    console.log('Hello world!');
+  `
+  );
+
+  updateFile(
+    'apps/app-b/src/main.ts',
+    `
+      import { commonLib } from '@proj/common-lib';
+
+      commonLib();
+
+      console.log('Hello World!');
+  `
+  );
+
+  updateFile(
+    'libs/lib-a/src/lib/lib-a.ts',
+    `
+      import { libADependency } from '@proj/lib-a-dependency';
+
+      export function libA(): string {
+        console.log('Running libA()...');
+
+        libADependency();
+
+        return 'lib-a';
+      }
+  `
+  );
+
+  updateFile(
+    'libs/lib-a-dependency/src/lib/lib-a-dependency.ts',
+    `
+      import { commonLib } from '@proj/common-lib';
+
+      export function libADependency(): string {
+        commonLib();
+
+        return 'lib-a-dependency';
+      }
+  `
+  );
+}
+
+function configureSemanticReleaseForProject(
+  project: TestReleasableProject,
+  options: Partial<SemanticReleaseOptions>
+) {
+  const filePath = path.join(
+    getStartPath(project, 'project'),
+    project,
+    'project.json'
+  );
+
+  let projectConfiguration = readJson<ProjectConfiguration>(filePath);
+
+  projectConfiguration = {
+    ...projectConfiguration,
+    targets: {
+      ...projectConfiguration.targets,
+      'semantic-release': {
+        executor: '@theunderscorer/nx-semantic-release:semantic-release',
+        options,
+      },
+    },
+  };
+
+  updateFile(filePath, JSON.stringify(projectConfiguration, null, 2));
+}
+
+export async function setupTestRepo(
+  withGit = true
+): Promise<SetupTestRepoResult> {
+  setupTestNxWorkspace();
+  await bootstrapTestProjectsAndLibs();
+
+  if (withGit) {
+    await runGitCommands();
 
     const commits = getTestRepoCommits();
 
     return {
       commits,
     };
-  } finally {
-    process.chdir(currentCwd);
   }
+
+  return {
+    commits: [],
+  };
 }
