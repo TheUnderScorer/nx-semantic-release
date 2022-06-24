@@ -20,5 +20,5 @@ Object.assign(process.env, {
 });
 
 ciEnvToRemove.forEach((key) => {
-  delete process.env[key];
+  process.env[key] = undefined;
 });
