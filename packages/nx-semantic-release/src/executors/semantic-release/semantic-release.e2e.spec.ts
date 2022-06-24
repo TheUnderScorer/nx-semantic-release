@@ -10,6 +10,13 @@ import { TestReleasableProject, TestRepoCommit } from '../../tests/types';
 import { PackageJson } from 'type-fest';
 import { readJson, runNxCommandAsync } from '@nrwl/nx-plugin/testing';
 
+const wrappedRunNxCommandAsync = async (command: string) => {
+  const result = await runNxCommandAsync(command);
+
+  console.log(result.stdout);
+  console.log(result.stderr);
+};
+
 const findReleaseCommit = (
   app: TestReleasableProject,
   commits: TestRepoCommit[]
@@ -137,25 +144,25 @@ describe('Semantic release', () => {
 
   describe('Independent mode', () => {
     it('should release package if itself or dependencies were changed - app-a', async () => {
-      await runNxCommandAsync('run app-a:semantic-release');
+      await wrappedRunNxCommandAsync('run app-a:semantic-release');
 
       await checkAppA();
     });
 
     it('should release package if itself or dependencies were changed - common-lib', async () => {
-      await runNxCommandAsync('run common-lib:semantic-release');
+      await wrappedRunNxCommandAsync('run common-lib:semantic-release');
 
       await checkCommonLib();
     });
 
     it('should release package if itself or dependencies were changed - app-b', async () => {
-      await runNxCommandAsync('run app-b:semantic-release');
+      await wrappedRunNxCommandAsync('run app-b:semantic-release');
 
       await checkAppB();
     });
 
     it('should support parallel releases with --parallel=1 flag', async () => {
-      await runNxCommandAsync(
+      await wrappedRunNxCommandAsync(
         'run-many --target=semantic-release --all --parallel=1'
       );
 
@@ -165,7 +172,7 @@ describe('Semantic release', () => {
     });
 
     it('should support passing writerOpts and parserOpts', async () => {
-      await runNxCommandAsync('run app-c:semantic-release');
+      await wrappedRunNxCommandAsync('run app-c:semantic-release');
 
       const changelog = readTestAppChangelog('app-c');
 
