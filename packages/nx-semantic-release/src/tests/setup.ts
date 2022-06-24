@@ -7,6 +7,8 @@ const ciEnvToRemove = [
   'GITHUB_REPOSITORY',
   'GITHUB_WORKSPACE',
   'GITHUB_ACTIONS',
+  'GITHUB_EVENT_PATH',
+  'GITHUB_SHA',
 ];
 
 // Note: we cannot use tmpProjPath() here, because it uses the NX_WORKSPACE_ROOT_PATH, so it will cause infinite loop
