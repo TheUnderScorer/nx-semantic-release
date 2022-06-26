@@ -8,13 +8,28 @@ import {
 import { assertReleaseNotes } from '../../tests/release-notes';
 import { TestReleasableProject, TestRepoCommit } from '../../tests/types';
 import { PackageJson } from 'type-fest';
-import { readJson, runNxCommandAsync } from '@nrwl/nx-plugin/testing';
+import { readJson, tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { exec } from '../../utils/exec';
+import { omit } from 'remeda';
 
-const wrappedRunNxCommandAsync = async (command: string) => {
-  const result = await runNxCommandAsync(command);
+// We need to remove certain env values that are set by CI, they are interfering with semantic-release
+const ciEnvToRemove = [
+  'GITHUB_EVENT_NAME',
+  'GITHUB_RUN_ID',
+  'GITHUB_REPOSITORY',
+  'GITHUB_WORKSPACE',
+  'GITHUB_ACTIONS',
+  'GITHUB_EVENT_PATH',
+  'GITHUB_SHA',
+];
 
-  console.log(result.stdout);
-  console.log(result.stderr);
+const safeRunNxCommandAsync = async (command: string) => {
+  const cwd = tmpProjPath();
+
+  await exec(`npx nx ${command}`, {
+    cwd,
+    env: omit(process.env, ciEnvToRemove),
+  });
 };
 
 const findReleaseCommit = (
@@ -144,25 +159,25 @@ describe('Semantic release', () => {
 
   describe('Independent mode', () => {
     it('should release package if itself or dependencies were changed - app-a', async () => {
-      await wrappedRunNxCommandAsync('run app-a:semantic-release');
+      await safeRunNxCommandAsync('run app-a:semantic-release');
 
       await checkAppA();
     });
 
     it('should release package if itself or dependencies were changed - common-lib', async () => {
-      await wrappedRunNxCommandAsync('run common-lib:semantic-release');
+      await safeRunNxCommandAsync('run common-lib:semantic-release');
 
       await checkCommonLib();
     });
 
     it('should release package if itself or dependencies were changed - app-b', async () => {
-      await wrappedRunNxCommandAsync('run app-b:semantic-release');
+      await safeRunNxCommandAsync('run app-b:semantic-release');
 
       await checkAppB();
     });
 
     it('should support parallel releases with --parallel=1 flag', async () => {
-      await wrappedRunNxCommandAsync(
+      await safeRunNxCommandAsync(
         'run-many --target=semantic-release --all --parallel=1'
       );
 
@@ -172,7 +187,7 @@ describe('Semantic release', () => {
     });
 
     it('should support passing writerOpts and parserOpts', async () => {
-      await wrappedRunNxCommandAsync('run app-c:semantic-release');
+      await safeRunNxCommandAsync('run app-c:semantic-release');
 
       const changelog = readTestAppChangelog('app-c');
 
