@@ -194,16 +194,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-## Development
 
-After cloning repo run:
-
-```shell
-npm install
-```
-
-In order to run tests run:
-
-```shell
-npm run test
-```
