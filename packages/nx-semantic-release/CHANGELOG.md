@@ -1,3 +1,12 @@
+# [1.12.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.11.0...nx-semantic-release-v1.12.0) (2022-06-26)
+
+
+### Features
+
+* Introduce @theunderscorer/nx-semantic-release:install generator ([22aaec8](https://github.com/TheUnderScorer/nx-semantic-release/commit/22aaec88b3ffb7e42764d38bf32e30bb9995cb39))
+* remove "git" option ([9191bae](https://github.com/TheUnderScorer/nx-semantic-release/commit/9191bae9f1673f68f4c5c146300eea8f3004f25b))
+* Support latest nx version (14.3.6) ([31b897c](https://github.com/TheUnderScorer/nx-semantic-release/commit/31b897cbd36881918910ab7a53bb58d9baa17edb))
+
 # [1.11.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.10.0...nx-semantic-release-v1.11.0) (2022-05-27)
 
 
