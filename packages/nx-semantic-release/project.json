@@ -1,4 +1,5 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-semantic-release/src",
   "projectType": "library",
   "targets": {
@@ -34,6 +35,7 @@
         "main": "packages/nx-semantic-release/src/index.ts",
         "assets": [
           "packages/nx-semantic-release/*.md",
+          "packages/nx-semantic-release/**/files/*",
           "packages/nx-semantic-release/builders.json",
           {
             "input": "packages/nx-semantic-release",
@@ -42,6 +44,11 @@
             "output": "/"
           }
         ]
+      },
+      "configurations": {
+        "watch": {
+          "watch": true
+        }
       }
     },
     "semantic-release": {

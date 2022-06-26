@@ -13,6 +13,6 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/nx-semantic-release',
-  setupFilesAfterEnv: ['./src/tests/setup.ts'],
+  setupFiles: ['./src/tests/setup.ts'],
   testTimeout: 100000,
 };

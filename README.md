@@ -9,6 +9,7 @@ Run:
 
 ```shell
 npm install -D @theunderscorer/nx-semantic-release
+nx g @theunderscorer/nx-semantic-release:install
 ```
 
 For now this package supports only <b>Independent</b> versioning mode, synced mode is planned to be added soon.
@@ -193,16 +194,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-## Development
 
-After cloning repo run:
-
-```shell
-npm install
-```
-
-In order to run tests run:
-
-```shell
-npm run test
-```

@@ -22,5 +22,8 @@
     "type": "git",
     "url": "https://github.com/TheUnderScorer/nx-semantic-release"
   },
-  "builders": "./builders.json"
+  "license": "MIT",
+  "builders": "./builders.json",
+  "executors": "./builders.json",
+  "generators": "./generators.json"
 }

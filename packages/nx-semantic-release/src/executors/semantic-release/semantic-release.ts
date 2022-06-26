@@ -1,21 +1,21 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext, parseTargetString, runExecutor } from '@nrwl/devkit';
 import { cosmiconfigSync } from 'cosmiconfig';
 import release from 'semantic-release';
 import { setExecutorContext } from '../../config';
 import { resolvePlugins } from './plugins';
 import { getDefaultProjectRoot } from '../../common/project';
-import { exec } from '../../utils/exec';
 import { defaultOptions } from './default-options';
+import { ExecutorOptions } from '../../types';
+import { unwrapExecutorOptions } from '../../utils/executor';
 
 export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   npm: boolean;
   github: boolean;
   buildTarget?: string;
-  changelog: boolean;
-  git: boolean;
-  changelogFile: string;
+  changelog?: boolean;
+  changelogFile?: string;
   outputPath?: string;
-  commitMessage: string;
+  commitMessage?: string;
   gitAssets?: string[];
   packageJsonDir?: string;
   parserOpts?: Record<string, unknown>;
@@ -26,7 +26,7 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
 };
 
 export async function semanticRelease(
-  projectOptions: SemanticReleaseOptions,
+  projectOptions: ExecutorOptions<SemanticReleaseOptions>,
   context: ExecutorContext
 ) {
   const cosmicOptions: SemanticReleaseOptions =
@@ -35,14 +35,25 @@ export async function semanticRelease(
   const resolvedOptions = resolveOptions(
     defaultOptions,
     cosmicOptions,
-    projectOptions,
+    unwrapExecutorOptions(projectOptions),
     context
   );
 
   if (resolvedOptions.buildTarget) {
-    await exec(`npx nx run ${resolvedOptions.buildTarget}`, {
-      verbose: true,
-    });
+    const params = extractBuildTargetParams(
+      resolvedOptions.buildTarget,
+      context
+    );
+
+    const result = await runExecutor(params, {}, context);
+
+    for await (const output of result) {
+      if (!output.success) {
+        throw new Error(
+          `Failed to run build target ${params.project}:${params.target}`
+        );
+      }
+    }
   }
 
   setExecutorContext(context);
@@ -60,10 +71,24 @@ export async function semanticRelease(
   };
 }
 
-export const applyTokens = (
+function extractBuildTargetParams(
+  buildTarget: string,
+  context: ExecutorContext
+) {
+  if (buildTarget.includes(':')) {
+    return parseTargetString(buildTarget);
+  }
+
+  return {
+    project: context.projectName as string,
+    target: buildTarget,
+  };
+}
+
+export function applyTokens(
   options: SemanticReleaseOptions,
   context: ExecutorContext
-) => {
+) {
   const PROJECT_DIR = getDefaultProjectRoot(context);
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const PROJECT_NAME = context.projectName!;
@@ -88,14 +113,14 @@ export const applyTokens = (
     options.gitAssets = options.gitAssets.map((asset) => replaceTokens(asset));
 
   return options;
-};
+}
 
-export const resolveOptions = (
+export function resolveOptions(
   defaultOptions: SemanticReleaseOptions,
   cosmicOptions: SemanticReleaseOptions,
   projectOptions: SemanticReleaseOptions,
   context: ExecutorContext
-) => {
+) {
   const mergedOptions = {
     ...defaultOptions,
     ...cosmicOptions,
@@ -103,4 +128,4 @@ export const resolveOptions = (
   };
 
   return applyTokens(mergedOptions, context);
-};
+}

@@ -1,13 +1,15 @@
 import gitlog from 'gitlog';
-import { testRepoPath } from './constants';
 import { TestRepoCommit } from './types';
 import { exec } from '../utils/exec';
+import { tmpProjPath } from '@nrwl/nx-plugin/testing';
 
 export const getTestRepoCommits = (): TestRepoCommit[] =>
   gitlog({
-    repo: testRepoPath,
+    repo: tmpProjPath(),
     fields: ['hash', 'subject', 'abbrevHash'],
   });
 
 export const getCommitTag = (commitId: string) =>
-  exec(`git describe --tags ${commitId}`);
+  exec(`git describe --tags ${commitId}`, {
+    cwd: tmpProjPath(),
+  });

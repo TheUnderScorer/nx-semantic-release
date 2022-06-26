@@ -1,31 +1,31 @@
-import { TestApp } from './types';
+import { TestReleasableProject } from './types';
 import path from 'path';
-import { testRepoPath } from './constants';
-import { readFileSync } from 'fs';
-import { PackageJson } from 'type-fest';
+import { readFile, readJson } from '@nrwl/nx-plugin/testing';
 
-const getStartPath = (app: TestApp, source: 'project' | 'build' = 'project') =>
+export const getStartPath = (
+  app: TestReleasableProject,
+  source: 'project' | 'build' = 'project'
+) =>
   path.join(
-    testRepoPath,
     source === 'build' ? 'dist' : '',
     app === 'common-lib' ? 'libs' : 'apps'
   );
 
 export const readTestAppPackageJson = (
-  app: TestApp,
+  app: TestReleasableProject,
   source: 'project' | 'build' = 'project'
 ) => {
   const pkgPath = path.join(getStartPath(app, source), app, 'package.json');
 
-  return JSON.parse(readFileSync(pkgPath).toString()) as PackageJson;
+  return readJson(pkgPath);
 };
 
-export const readTestAppChangelog = (app: TestApp) => {
+export const readTestAppChangelog = (app: TestReleasableProject) => {
   const changelogPath = path.join(
     getStartPath(app, 'project'),
     app,
     'CHANGELOG.md'
   );
 
-  return readFileSync(changelogPath).toString();
+  return readFile(changelogPath);
 };

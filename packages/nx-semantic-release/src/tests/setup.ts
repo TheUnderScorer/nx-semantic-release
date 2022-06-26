@@ -1,13 +1,9 @@
-import { testRepoPath } from './constants';
-import { config } from 'dotenv';
 import path from 'path';
 
-const envPath = path.resolve(__dirname, '../../../../.env');
-
-config({
-  path: envPath,
-});
-
+// Note: we cannot use tmpProjPath() here, because it uses the NX_WORKSPACE_ROOT_PATH, so it will cause infinite loop
 Object.assign(process.env, {
-  NX_WORKSPACE_ROOT_PATH: testRepoPath,
+  NX_WORKSPACE_ROOT_PATH: path.resolve(
+    __dirname,
+    '../../../../tmp/nx-e2e/proj'
+  ),
 });

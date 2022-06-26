@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "title": "@theunderscorer/nx-semantic-release installator",
+  "type": "object",
+  "cli": "nx",
+  "properties": {
+    "baseBranch": {
+      "description": "Configure base branch",
+      "type": "string",
+      "default": "master"
+    },
+    "enforceConventionalCommits": {
+      "description": "Install & configure commitlint and husky.",
+      "type": "boolean",
+      "default": true,
+      "x-prompt": "Would you want to enforce conventional commits?"
+    },
+    "repositoryUrl": {
+      "description": "Remote repository url",
+      "type": "string",
+      "x-prompt": "What is the remote repository url? (example: https://github.com/TheUnderScorer/nx-semantic-release)"
+    },
+    "github": {
+      "description": "Create github releases",
+      "type": "boolean",
+      "default": true,
+      "x-prompt": "Would you want to create github releases?"
+    },
+    "changelog": {
+      "description": "Create changelog",
+      "type": "boolean",
+      "default": true,
+      "x-prompt": "Would you want to create changelog file?"
+    },
+    "npm": {
+      "description": "Create npm releases",
+      "type": "boolean",
+      "default": true,
+      "x-prompt": "Would you want to create npm releases?"
+    }
+  },
+  "required": ["repositoryUrl"]
+}

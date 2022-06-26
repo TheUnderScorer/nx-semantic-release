@@ -1,4 +1,4 @@
-import { testProjects } from './constants';
+import { testReleasableProjects } from './constants';
 
 export interface TestRepoCommit {
   hash: string;
@@ -6,4 +6,4 @@ export interface TestRepoCommit {
   abbrevHash: string;
 }
 
-export type TestApp = typeof testProjects[number];
+export type TestReleasableProject = typeof testReleasableProjects[number];
