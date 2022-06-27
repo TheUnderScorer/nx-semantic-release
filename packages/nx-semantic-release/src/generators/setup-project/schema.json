@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "title": "@theunderscorer/nx-semantic-release setup generator for project",
+  "type": "object",
+  "cli": "nx",
+  "properties": {
+    "projectName": {
+      "type": "string",
+      "description": "The name of the project",
+      "alias": "p",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "github": {
+      "description": "Create github releases for this project",
+      "type": "boolean",
+      "default": true,
+      "x-prompt": "Would you want to create github releases?"
+    },
+    "changelog": {
+      "description": "Create changelog",
+      "type": "boolean",
+      "default": true,
+      "x-prompt": "Would you want to create changelog file for this project?"
+    },
+    "npm": {
+      "description": "Create npm releases",
+      "type": "boolean",
+      "default": true,
+      "x-prompt": "Would you want to create npm releases for this project?"
+    },
+    "tagFormat": {
+      "description": "Tag format to use.",
+      "type": "string",
+      "default": "${PROJECT_NAME}-v${VERSION}",
+      "x-prompt": "What tag format would you like to use for this project. Hint: you can use ${PROJECT_NAME} and ${VERSION} tokens here."
+    }
+  },
+  "required": ["projectName"]
+}

@@ -1,12 +1,13 @@
 import { ExecutorContext, parseTargetString, runExecutor } from '@nrwl/devkit';
 import { cosmiconfigSync } from 'cosmiconfig';
 import release from 'semantic-release';
-import { setExecutorContext } from '../../config';
+import { setExecutorContext } from '../../semantic-release-plugin';
 import { resolvePlugins } from './plugins';
-import { getDefaultProjectRoot } from '../../common/project';
 import { defaultOptions } from './default-options';
 import { ExecutorOptions } from '../../types';
 import { unwrapExecutorOptions } from '../../utils/executor';
+import { applyTokensToSemanticReleaseOptions } from '../../config/apply-tokens';
+import { getDefaultProjectRoot } from '../../common/project';
 
 export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   npm: boolean;
@@ -60,9 +61,14 @@ export async function semanticRelease(
 
   const plugins = resolvePlugins(resolvedOptions, context);
 
+  const tagFormat = resolvedOptions.tagFormat
+    ? parseTag(resolvedOptions.tagFormat)
+    : resolvedOptions.tagFormat;
+
   await release({
     extends: '@theunderscorer/nx-semantic-release',
     ...resolvedOptions,
+    tagFormat,
     plugins,
   });
 
@@ -85,36 +91,6 @@ function extractBuildTargetParams(
   };
 }
 
-export function applyTokens(
-  options: SemanticReleaseOptions,
-  context: ExecutorContext
-) {
-  const PROJECT_DIR = getDefaultProjectRoot(context);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const PROJECT_NAME = context.projectName!;
-
-  const replaceTokens = (value: string): string => {
-    return value
-      .replace('${PROJECT_DIR}', PROJECT_DIR)
-      .replace('${PROJECT_NAME}', PROJECT_NAME);
-  };
-
-  [
-    'buildTarget',
-    'changelogFile',
-    'commitMessage',
-    'packageJsonDir',
-    'tagFormat',
-  ].forEach((option) => {
-    if (options[option]) options[option] = replaceTokens(options[option]);
-  });
-
-  if (options.gitAssets?.length)
-    options.gitAssets = options.gitAssets.map((asset) => replaceTokens(asset));
-
-  return options;
-}
-
 export function resolveOptions(
   defaultOptions: SemanticReleaseOptions,
   cosmicOptions: SemanticReleaseOptions,
@@ -127,5 +103,13 @@ export function resolveOptions(
     ...projectOptions,
   };
 
-  return applyTokens(mergedOptions, context);
+  return applyTokensToSemanticReleaseOptions(mergedOptions, {
+    projectName: context.projectName as string,
+    projectDir: getDefaultProjectRoot(context),
+  });
+}
+
+// Replace our token that is used for consistency with token required by semantic-release
+export function parseTag(tag: string) {
+  return tag.replace('${VERSION}', (match) => match.toLowerCase());
 }
