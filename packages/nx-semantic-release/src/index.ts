@@ -1,1 +1,1 @@
-export * from './config';
+export * from './semantic-release-plugin';

@@ -6,48 +6,10 @@ import {
   readTestAppPackageJson,
 } from '../../tests/files';
 import { assertReleaseNotes } from '../../tests/release-notes';
-import { TestReleasableProject, TestRepoCommit } from '../../tests/types';
 import { PackageJson } from 'type-fest';
-import { readJson, tmpProjPath } from '@nrwl/nx-plugin/testing';
-import { exec } from '../../utils/exec';
-import { omit } from 'remeda';
-
-// We need to remove certain env values that are set by CI, they are interfering with semantic-release
-const ciEnvToRemove = [
-  'GITHUB_EVENT_NAME',
-  'GITHUB_RUN_ID',
-  'GITHUB_REPOSITORY',
-  'GITHUB_WORKSPACE',
-  'GITHUB_ACTIONS',
-  'GITHUB_EVENT_PATH',
-  'GITHUB_SHA',
-];
-
-const safeRunNxCommandAsync = async (command: string) => {
-  const cwd = tmpProjPath();
-
-  await exec(`npx nx ${command}`, {
-    cwd,
-    env: omit(process.env, ciEnvToRemove),
-  });
-};
-
-const findReleaseCommit = (
-  app: TestReleasableProject,
-  commits: TestRepoCommit[]
-) => {
-  const match = [`chore(${app})`, 'release'];
-
-  const result = commits.find((commit) =>
-    match.every((part) => commit.subject.includes(part))
-  );
-
-  if (!result) {
-    throw new Error(`Could not find release commit for ${app}`);
-  }
-
-  return result;
-};
+import { readJson } from '@nrwl/nx-plugin/testing';
+import { safeRunNxCommandAsync } from '../../tests/utils';
+import { findReleaseCommit } from '../../tests/find-release-commit';
 
 async function checkCommonLib() {
   const commits = getTestRepoCommits();

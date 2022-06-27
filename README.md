@@ -3,6 +3,10 @@
 [nx](https://nx.dev/) plugin for automated releases, powered
 by [semantic-release](https://github.com/semantic-release/semantic-release)
 
+## How it works
+
+Under the hood, it uses project graph from nx to analyze commits for every configured project and filters out these commits that doesn't affect given project or it's dependencies.
+
 ## Installation
 
 Run:
@@ -26,6 +30,8 @@ configuration looks like this:
   }
 }
 ```
+
+> Hint: You can also use our generator `nx g @theunderscorer/nx-semantic-release:setup-project $PROJECT_NAME` to generate this configuration.
 
 After running this, the executor will do the following:
 

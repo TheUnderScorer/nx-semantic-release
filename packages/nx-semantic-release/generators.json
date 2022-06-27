@@ -7,6 +7,11 @@
       "factory": "./src/generators/install/generator",
       "schema": "./src/generators/install/schema.json",
       "description": "@theunderscorer/nx-semantic-release installator"
+    },
+    "setup-project": {
+      "factory": "./src/generators/setup-project/generator",
+      "schema": "./src/generators/setup-project/schema.json",
+      "description": "@theunderscorer/nx-semantic-release executor for setting up releases for project"
     }
   }
 }

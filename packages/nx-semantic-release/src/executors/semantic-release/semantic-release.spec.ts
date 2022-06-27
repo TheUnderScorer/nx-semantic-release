@@ -1,86 +1,52 @@
 import { defaultOptions } from './default-options';
 import {
-  applyTokens,
+  parseTag,
   resolveOptions,
   SemanticReleaseOptions,
 } from './semantic-release';
-import { readTestAppWorkspace } from '../../tests/utils';
-import { ExecutorContext } from '@nrwl/devkit';
-import path from 'path';
 import { tmpProjPath } from '@nrwl/nx-plugin/testing';
 import { cleanupTestRepo } from '../../tests/cleanup-test-repo';
 import { setupTestRepo } from '../../tests/setup-test-repo';
+import { ExecutorContext } from '@nrwl/devkit';
+import { readTestAppWorkspace } from '../../tests/utils';
 
-const requiredOptions: SemanticReleaseOptions = {
-  changelog: true,
-  changelogFile: '',
-  commitMessage: '',
-  github: true,
-  npm: true,
-};
+describe('parseTag', () => {
+  it('should return correct tag', () => {
+    const result = parseTag('${PROJECT_NAME}-v${VERSION}');
 
-let mockContext: ExecutorContext;
-
-beforeAll(async () => {
-  cleanupTestRepo();
-
-  await setupTestRepo();
-
-  mockContext = {
-    cwd: tmpProjPath(),
-    root: tmpProjPath(),
-    workspace: readTestAppWorkspace(),
-    isVerbose: false,
-    projectName: 'app-a',
-  };
-});
-
-afterAll(() => {
-  cleanupTestRepo();
-});
-
-describe('applyTokens', () => {
-  let mockOptions: SemanticReleaseOptions;
-
-  beforeAll(() => {
-    mockOptions = {
-      ...requiredOptions,
-      buildTarget: '${PROJECT_NAME}:build',
-      changelogFile: '${PROJECT_DIR}/CHANGELOG.md',
-      commitMessage: 'release ${PROJECT_NAME} in ${PROJECT_DIR}',
-      packageJsonDir: '${PROJECT_DIR}/src',
-      tagFormat: '${PROJECT_NAME}-v${version}',
-    };
-  });
-
-  it('should return options with ${PROJECT_DIR} tokens replaced', () => {
-    const results = applyTokens(mockOptions, mockContext);
-
-    expect(results.changelogFile).toEqual(
-      `${path.join(tmpProjPath(), 'apps/app-a')}/CHANGELOG.md`
-    );
-    expect(results.packageJsonDir).toEqual(
-      `${path.join(tmpProjPath(), 'apps/app-a')}/src`
-    );
-  });
-
-  it('should return options with ${PROJECT_NAME} tokens replaced', () => {
-    const results = applyTokens(mockOptions, mockContext);
-
-    expect(results.buildTarget).toEqual('app-a:build');
-    expect(results.tagFormat).toEqual('app-a-v${version}');
-  });
-
-  it('should return options with multiple tokens replaced', () => {
-    const results = applyTokens(mockOptions, mockContext);
-
-    expect(results.commitMessage).toEqual(
-      `release app-a in ${path.join(tmpProjPath(), 'apps/app-a')}`
-    );
+    expect(result).toEqual('${PROJECT_NAME}-v${version}');
   });
 });
 
 describe('resolveOptions', () => {
+  const requiredOptions: SemanticReleaseOptions = {
+    changelog: true,
+    changelogFile: '',
+    commitMessage: '',
+    github: true,
+    npm: true,
+  };
+
+  let mockContext: ExecutorContext;
+
+  beforeAll(async () => {
+    cleanupTestRepo();
+
+    await setupTestRepo();
+
+    mockContext = {
+      cwd: tmpProjPath(),
+      root: tmpProjPath(),
+      workspace: readTestAppWorkspace(),
+      isVerbose: false,
+      projectName: 'app-a',
+    };
+  });
+
+  afterAll(() => {
+    cleanupTestRepo();
+  });
+
   let cosmicOptions: SemanticReleaseOptions;
 
   let projectOptions: SemanticReleaseOptions;
