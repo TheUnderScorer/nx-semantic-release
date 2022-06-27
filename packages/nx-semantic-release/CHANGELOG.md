@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.12.0...nx-semantic-release-v1.13.0) (2022-06-27)
+
+
+### Features
+
+* Introduce @theunderscorer/nx-semantic-release:setup-project generator ([8d31901](https://github.com/TheUnderScorer/nx-semantic-release/commit/8d31901d2ac17018ac9f97b615199696938fbcfc))
+
 # [1.12.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.11.0...nx-semantic-release-v1.12.0) (2022-06-26)
 
 
