@@ -1,3 +1,15 @@
+## [1.14.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.13.0...nx-semantic-release-v1.14.0) (2022-07-15)
+
+
+### Features
+
+* support "preset" and "presetConfig" configuration ([de27b64](https://github.com/TheUnderScorer/nx-semantic-release/commit/de27b64f0db21daf0670be77ed21bfce3d823cf8))
+
+
+### Build System
+
+* **deps:** update and freeze dependencies ([7902b33](https://github.com/TheUnderScorer/nx-semantic-release/commit/7902b3360a76b3976f7c610f4753af2910181114))
+
 # [1.13.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.12.0...nx-semantic-release-v1.13.0) (2022-06-27)
 
 
