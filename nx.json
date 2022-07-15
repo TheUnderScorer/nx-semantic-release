@@ -5,10 +5,7 @@
   },
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "package.json": "*",
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
