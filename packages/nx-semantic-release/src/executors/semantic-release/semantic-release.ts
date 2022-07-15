@@ -24,6 +24,8 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   linkCompare?: boolean;
   linkReferences?: boolean;
   releaseRules?: string | { release: string; [key: string]: unknown }[];
+  preset?: string;
+  presetConfig?: Record<string, unknown>;
 };
 
 export async function semanticRelease(

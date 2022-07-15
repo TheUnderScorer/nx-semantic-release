@@ -6,6 +6,15 @@
   "type": "object",
   "cli": "nx",
   "properties": {
+    "preset": {
+      "description": "Conventional commits Preset to use for the release.",
+      "type": "string",
+      "default": "angular"
+    },
+    "presetConfig": {
+      "description": "Conventional commits preset configuration to use for the release.",
+      "type": "object"
+    },
     "dryRun": {
       "description": "See what commands would be run, without committing to git or updating files.",
       "type": "boolean"

@@ -58,6 +58,8 @@ export const resolvePlugins = (
       {
         parserOpts: options.parserOpts,
         releaseRules: options.releaseRules,
+        preset: options.preset,
+        presetConfig: options.presetConfig,
       },
     ],
     [
@@ -67,6 +69,8 @@ export const resolvePlugins = (
         linkReferences: options.linkReferences,
         parserOpts: options.parserOpts,
         writerOpts: options.writerOpts,
+        preset: options.preset,
+        presetConfig: options.presetConfig,
       },
     ],
 
