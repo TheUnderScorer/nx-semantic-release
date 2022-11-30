@@ -16,7 +16,7 @@ npm install -D @theunderscorer/nx-semantic-release
 nx g @theunderscorer/nx-semantic-release:install
 ```
 
-For now this package supports only <b>Independent</b> versioning mode, synced mode is planned to be added soon.
+For now this package supports only <b>[Independent](https://lerna.js.org/docs/api-reference/configuration#version)</b> versioning mode, synced mode is planned to be added soon.
 
 ## Usage
 
