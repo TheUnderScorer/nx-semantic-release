@@ -9,7 +9,7 @@ import path from 'path';
 
 type GetProjectContext = Pick<
   ExecutorContext,
-  'workspace' | 'projectName' | 'cwd'
+  'projectName' | 'cwd' | 'projectsConfigurations'
 >;
 
 export const getProjectDependencies = async (projectName: string) => {
@@ -21,9 +21,10 @@ export const getProjectDependencies = async (projectName: string) => {
   };
 };
 
-export const getProject = (context: GetProjectContext) =>
+export const getProject = (context: GetProjectContext) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  context.workspace.projects[context.projectName!];
+  return context.projectsConfigurations!.projects[context.projectName!];
+};
 
 export const getProjectRoot = (
   project: ProjectConfiguration | string,
