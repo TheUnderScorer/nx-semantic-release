@@ -51,41 +51,22 @@ async function addDescriptionToPkgJson() {
   updateFile(pkgPath, JSON.stringify(pkg, null, 2));
 }
 
-const setupCommands: Array<string | (() => Promise<void>)> = [
-  setupRemoteRepo,
-  'git init',
-  'git config user.email "test@example.com"',
-  'git config user.name "Test"',
-  'git add apps/app-a',
-  'git commit -m "feat: add app-a"',
-  'git add apps/app-b',
-  'git commit -m "feat: add app-b"',
-  'git add apps/app-c',
-  'git commit -m "feat: add app-c" -m "CHANGE: Test"',
-  'git add libs/lib-a libs/lib-a-dependency',
-  'git commit -m "feat: add app-a libs"',
-  'git add libs/common-lib',
-  'git commit -m "feat: add common-lib"',
-  'git add .',
-  `git commit -m "feat: add rest"`,
-  'echo "Test123" > apps/app-b/test.txt',
-  'git add apps/app-b/test.txt',
-  'git commit -m "feat: update test.txt"',
-  'echo "Test123456" > apps/app-b/test.txt',
-  'git add apps/app-b/test.txt',
-  'git commit -m "feat: update test.txt again"',
-  addDescriptionToPkgJson,
-  'git add apps/app-a/package.json',
-  'git commit -m "feat: add description\n\n[skip app-a]"',
-  'echo "Test123456" > test-only.txt',
-  'git add test-only.txt',
-  'git commit -m "feat: add test-only.txt\n\n[only app-b]"',
-  `git remote add origin ${remoteGitPath}`,
-  'git push origin master',
-];
+async function initGit() {
+  await setupRemoteRepo();
 
-async function runGitCommands() {
-  for (const command of setupCommands) {
+  await runCommandsInTestProj([
+    'git init',
+    'git config user.email "test@example.com"',
+    'git config user.name "Test"',
+    'git add .',
+    'git commit -m "chore: init"',
+  ]);
+}
+
+export async function runCommandsInTestProj(
+  commands: Array<string | (() => Promise<void>)>
+) {
+  for (const command of commands) {
     if (typeof command === 'string') {
       await exec(command, { cwd: tmpProjPath() });
     } else {
@@ -149,6 +130,13 @@ async function bootstrapTestProjectsAndLibs() {
     commitMessage:
       'chore(app-a): release ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}',
     branches: ['*'],
+    releaseRules: [
+      {
+        type: 'feat',
+        scope: 'release-test',
+        release: false,
+      },
+    ],
   });
   configureSemanticReleaseForProject('app-b', {
     dryRun: false,
@@ -294,10 +282,42 @@ export async function setupTestRepo(
   withGit = true
 ): Promise<SetupTestRepoResult> {
   setupTestNxWorkspace();
+
+  if (withGit) {
+    await initGit();
+  }
+
   await bootstrapTestProjectsAndLibs();
 
   if (withGit) {
-    await runGitCommands();
+    await runCommandsInTestProj([
+      'git add apps/app-a',
+      'git commit -m "feat: add app-a"',
+      'git add apps/app-b',
+      'git commit -m "feat: add app-b"',
+      'git add apps/app-c',
+      'git commit -m "feat: add app-c" -m "CHANGE: Test"',
+      'git add libs/lib-a libs/lib-a-dependency',
+      'git commit -m "feat: add app-a libs"',
+      'git add libs/common-lib',
+      'git commit -m "feat: add common-lib"',
+      'git add .',
+      `git commit -m "feat: add rest"`,
+      'echo "Test123" > apps/app-b/test.txt',
+      'git add apps/app-b/test.txt',
+      'git commit -m "feat: update test.txt"',
+      'echo "Test123456" > apps/app-b/test.txt',
+      'git add apps/app-b/test.txt',
+      'git commit -m "feat: update test.txt again"',
+      addDescriptionToPkgJson,
+      'git add apps/app-a/package.json',
+      'git commit -m "feat: add description\n\n[skip app-a]"',
+      'echo "Test123456" > test-only.txt',
+      'git add test-only.txt',
+      'git commit -m "feat: add test-only.txt\n\n[only app-b]"',
+      `git remote add origin ${remoteGitPath}`,
+      'git push origin master',
+    ]);
 
     const commits = getTestRepoCommits();
 

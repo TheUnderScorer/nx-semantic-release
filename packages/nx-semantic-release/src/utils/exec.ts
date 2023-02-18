@@ -6,7 +6,9 @@ export interface ExecOptions extends cp.ExecOptions {
 
 export class ExecError extends Error {
   constructor(message: string, public stdout: string, public stderr: string) {
-    super(message);
+    const fullMessage = [message, stdout, stderr].filter(Boolean).join('\n');
+
+    super(fullMessage);
   }
 }
 

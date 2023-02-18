@@ -1,4 +1,4 @@
-import { Commit, Context } from 'semantic-release';
+import type { Commit, Context } from 'semantic-release';
 import { PluginFn } from 'semantic-release-plugin-decorators';
 import { executorContext } from './executor-context';
 import { ExecutorContext } from '@nrwl/devkit';

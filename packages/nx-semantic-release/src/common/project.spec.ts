@@ -48,14 +48,14 @@ describe('getProjectRoot', () => {
 
 describe('getProject', () => {
   it('should return project from workspace', () => {
-    const workspace = readTestAppWorkspace();
+    const projectsConfigurations = readTestAppWorkspace();
 
     expect(
       getProject({
         cwd: tmpProjPath(),
-        workspace,
+        projectsConfigurations,
         projectName: 'app-a',
       })
-    ).toEqual(workspace.projects['app-a']);
+    ).toEqual(projectsConfigurations.projects['app-a']);
   });
 });
