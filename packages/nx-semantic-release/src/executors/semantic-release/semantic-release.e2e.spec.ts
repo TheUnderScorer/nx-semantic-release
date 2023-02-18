@@ -118,8 +118,8 @@ describe('Semantic release', () => {
     await setupTestRepo();
   });
 
-  afterEach(async () => {
-    await cleanupTestRepo();
+  afterEach(() => {
+    cleanupTestRepo();
   });
 
   describe('Independent mode', () => {
