@@ -7,24 +7,30 @@ import { PackageJson } from 'type-fest';
 import path from 'path';
 
 export function setupTestNxWorkspace() {
-  const distPath = path.resolve(
-    __dirname,
-    '../../../..',
-    'dist/packages/nx-semantic-release'
-  );
+  try {
+    const distPath = path.resolve(
+      __dirname,
+      '../../../..',
+      'dist/packages/nx-semantic-release'
+    );
 
-  ensureNxProject('@theunderscorer/nx-semantic-release', distPath);
+    ensureNxProject('@theunderscorer/nx-semantic-release', distPath);
 
-  updateFile('package.json', (contents) => {
-    const pkg = JSON.parse(contents) as PackageJson;
+    updateFile('package.json', (contents) => {
+      const pkg = JSON.parse(contents) as PackageJson;
 
-    pkg.devDependencies = {
-      ...pkg.devDependencies,
-      '@theunderscorer/nx-semantic-release': `file:${distPath}`,
-    };
+      pkg.devDependencies = {
+        ...pkg.devDependencies,
+        '@theunderscorer/nx-semantic-release': `file:${distPath}`,
+      };
 
-    return JSON.stringify(pkg, null, 2);
-  });
+      return JSON.stringify(pkg, null, 2);
+    });
 
-  runPackageManagerInstall();
+    runPackageManagerInstall();
+  } catch (error) {
+    console.error('Failed to setup test Nx workspace', error);
+
+    throw error;
+  }
 }
