@@ -1,4 +1,7 @@
-import { setupTestRepo } from '../../tests/setup-test-repo';
+import {
+  runCommandsInTestProj,
+  setupTestRepo,
+} from '../../tests/setup-test-repo';
 import { cleanupTestRepo } from '../../tests/cleanup-test-repo';
 import { getCommitTag, getTestRepoCommits } from '../../tests/git';
 import {
@@ -146,6 +149,24 @@ describe('Semantic release', () => {
       await checkAppA();
       await checkAppB();
       await checkCommonLib();
+    });
+
+    it('should support passing false to release in releaseRules and respect it', async () => {
+      await safeRunNxCommandAsync('run app-a:semantic-release');
+
+      await runCommandsInTestProj([
+        'echo "no-release-test" > apps/app-a/no-release-test.txt',
+        'git add apps/app-a/no-release-test.txt',
+        'git commit -m "feat(release-test): update no-release-test.txt"',
+      ]);
+
+      await safeRunNxCommandAsync('run app-a:semantic-release');
+
+      const changelog = readTestAppChangelog('app-a');
+      const pkg = readTestAppPackageJson('app-a');
+
+      expect(changelog).not.toContain('update no-release-test.txt');
+      expect(pkg.version).toEqual('1.0.0');
     });
 
     it('should support passing writerOpts and parserOpts', async () => {

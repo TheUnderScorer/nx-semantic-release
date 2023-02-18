@@ -57,11 +57,22 @@
           "items": {
             "type": "object",
             "properties": {
+              "type": "string",
+              "scope": "string",
               "release": {
-                "type": "string"
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ]
               }
             },
-            "required": ["release"]
+            "required": [
+              "release"
+            ]
           }
         }
       ]
@@ -182,7 +193,9 @@
               }
             },
             "additionalProperties": false,
-            "required": ["name"]
+            "required": [
+              "name"
+            ]
           }
         ]
       },
