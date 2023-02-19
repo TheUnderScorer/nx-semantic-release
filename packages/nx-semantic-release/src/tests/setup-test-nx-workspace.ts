@@ -1,6 +1,7 @@
 import {
   ensureNxProject,
   runPackageManagerInstall,
+  tmpProjPath,
   updateFile,
 } from '@nrwl/nx-plugin/testing';
 import { PackageJson } from 'type-fest';
@@ -8,6 +9,8 @@ import path from 'path';
 
 export function setupTestNxWorkspace() {
   try {
+    console.info('Setting up at test nx workspace at:', tmpProjPath());
+
     const distPath = path.resolve(
       __dirname,
       '../../../..',
