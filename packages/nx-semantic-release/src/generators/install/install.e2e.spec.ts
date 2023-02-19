@@ -23,14 +23,14 @@ const defaultExpectedConfig: SemanticReleaseOptions = {
 };
 
 describe('Installer', () => {
-  beforeAll(() => {
-    cleanupTestRepo();
+  beforeAll(async () => {
+    await cleanupTestRepo();
 
     setupTestNxWorkspace();
   });
 
-  afterAll(() => {
-    cleanupTestRepo();
+  afterAll(async () => {
+    await cleanupTestRepo();
   });
 
   it('should create example', async () => {

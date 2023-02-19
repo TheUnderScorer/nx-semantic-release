@@ -27,7 +27,7 @@ function assertProjectConfiguration(
 
 describe('Setup project', () => {
   beforeEach(async () => {
-    cleanupTestRepo();
+    await cleanupTestRepo();
 
     await setupTestRepo();
   });

@@ -1,21 +1,26 @@
-import fs from 'fs';
+import fs from 'fs-extra';
 import { remoteGitPath } from './constants';
 import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { rimraf } from 'rimraf';
 
-function rmIfExists(dirPath: string) {
+async function rmIfExists(dirPath: string) {
   if (fs.existsSync(dirPath)) {
-    fs.rmSync(dirPath, { recursive: true });
+    try {
+      await rimraf(dirPath);
+    } catch (error) {
+      console.warn('Failed to remove directory:', dirPath, error);
+    }
   }
 }
 
-export function removeRemoteRepoDir() {
-  rmIfExists(remoteGitPath);
+export async function removeRemoteRepoDir() {
+  await rmIfExists(remoteGitPath);
 }
 
-export function cleanupTestRepo() {
+export async function cleanupTestRepo() {
   const tmpPath = tmpProjPath();
 
-  rmIfExists(tmpPath);
+  await rmIfExists(tmpPath);
 
-  removeRemoteRepoDir();
+  await removeRemoteRepoDir();
 }

@@ -29,7 +29,7 @@ describe('resolveOptions', () => {
   let mockContext: GetProjectContext;
 
   beforeAll(async () => {
-    cleanupTestRepo();
+    await cleanupTestRepo();
 
     await setupTestRepo();
 
@@ -49,8 +49,8 @@ describe('resolveOptions', () => {
     };
   });
 
-  afterAll(() => {
-    cleanupTestRepo();
+  afterAll(async () => {
+    await cleanupTestRepo();
   });
 
   let cosmicOptions: SemanticReleaseOptions;

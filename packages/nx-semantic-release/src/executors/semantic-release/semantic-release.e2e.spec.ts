@@ -113,13 +113,13 @@ async function checkAppA() {
 
 describe('Semantic release', () => {
   beforeEach(async () => {
-    cleanupTestRepo();
+    await cleanupTestRepo();
 
     await setupTestRepo();
   });
 
-  afterEach(() => {
-    cleanupTestRepo();
+  afterEach(async () => {
+    await cleanupTestRepo();
   });
 
   describe('Independent mode', () => {

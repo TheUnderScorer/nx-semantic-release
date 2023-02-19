@@ -6,13 +6,13 @@ import { tmpProjPath } from "@nrwl/nx-plugin/testing";
 
 describe("project", () => {
   beforeAll(async () => {
-    cleanupTestRepo();
+    await cleanupTestRepo();
 
     await setupTestRepo();
   });
 
-  afterAll(() => {
-    cleanupTestRepo();
+  afterAll(async () => {
+    await cleanupTestRepo();
   });
 
   const projectsConfigurations = {
