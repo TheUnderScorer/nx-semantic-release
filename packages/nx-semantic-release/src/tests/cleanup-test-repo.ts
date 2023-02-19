@@ -9,8 +9,10 @@ export function removeRemoteRepoDir() {
 }
 
 export function cleanupTestRepo() {
-  if (fs.existsSync(tmpProjPath())) {
-    fs.rmSync(tmpProjPath(), { recursive: true });
+  const tmpPath = tmpProjPath();
+
+  if (fs.existsSync(tmpPath)) {
+    fs.rmSync(tmpPath, { recursive: true });
   }
 
   removeRemoteRepoDir();
