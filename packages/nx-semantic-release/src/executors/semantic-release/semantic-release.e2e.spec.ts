@@ -2,7 +2,6 @@ import {
   runCommandsInTestProj,
   setupTestRepo,
 } from '../../tests/setup-test-repo';
-import { cleanupTestRepo } from '../../tests/cleanup-test-repo';
 import { getCommitTag, getTestRepoCommits } from '../../tests/git';
 import {
   readTestAppChangelog,
@@ -113,13 +112,7 @@ async function checkAppA() {
 
 describe('Semantic release', () => {
   beforeEach(async () => {
-    await cleanupTestRepo();
-
     await setupTestRepo();
-  });
-
-  afterEach(async () => {
-    await cleanupTestRepo();
   });
 
   describe('Independent mode', () => {

@@ -5,6 +5,7 @@ import { ExecutorContext } from '@nrwl/devkit';
 import { getProjectDependencies } from '../common/project';
 import { isCommitAffectingProjects } from '../common/git';
 import { promiseFilter } from '../utils/promise-filter';
+import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 
 export const getCommitsForProject =
   (verbose?: boolean) =>
@@ -39,7 +40,10 @@ async function filterCommits(
 ) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const projectName = executorContext.projectName!;
-  const { dependencies, graph } = await getProjectDependencies(projectName);
+  const { dependencies, graph } = await getProjectDependencies(
+    projectName,
+    await createProjectGraphAsync()
+  );
   const allDeps = [...dependencies, projectName];
 
   if (verbose) {

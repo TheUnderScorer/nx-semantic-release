@@ -1,4 +1,3 @@
-import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 import {
   ExecutorContext,
   ProjectConfiguration,
@@ -12,9 +11,10 @@ export type GetProjectContext = Pick<
   'projectName' | 'cwd' | 'projectsConfigurations' | 'projectGraph'
 >;
 
-export const getProjectDependencies = async (projectName: string) => {
-  const graph = await createProjectGraphAsync();
-
+export const getProjectDependencies = async (
+  projectName: string,
+  graph: ProjectGraph
+) => {
   return {
     dependencies: getRecursiveDependencies(projectName, graph),
     graph,

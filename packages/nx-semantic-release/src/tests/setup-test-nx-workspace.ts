@@ -1,8 +1,11 @@
 import { ensureNxProject, tmpProjPath } from '@nrwl/nx-plugin/testing';
 import fs from 'fs-extra';
+import { cleanupTestRepo } from './cleanup-test-repo';
 
 export async function setupTestNxWorkspace() {
   try {
+    await cleanupTestRepo();
+
     console.info('Setting up at test nx workspace at:', tmpProjPath());
 
     const distPath = 'dist/packages/nx-semantic-release';

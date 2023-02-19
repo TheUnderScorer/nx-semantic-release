@@ -5,7 +5,6 @@ import {
   SemanticReleaseOptions,
 } from './semantic-release';
 import { tmpProjPath } from '@nrwl/nx-plugin/testing';
-import { cleanupTestRepo } from '../../tests/cleanup-test-repo';
 import { setupTestRepo } from '../../tests/setup-test-repo';
 import { GetProjectContext } from '../../common/project';
 
@@ -29,8 +28,6 @@ describe('resolveOptions', () => {
   let mockContext: GetProjectContext;
 
   beforeAll(async () => {
-    await cleanupTestRepo();
-
     await setupTestRepo();
 
     const projPath = tmpProjPath();
@@ -47,10 +44,6 @@ describe('resolveOptions', () => {
         },
       },
     };
-  });
-
-  afterAll(async () => {
-    await cleanupTestRepo();
   });
 
   let cosmicOptions: SemanticReleaseOptions;

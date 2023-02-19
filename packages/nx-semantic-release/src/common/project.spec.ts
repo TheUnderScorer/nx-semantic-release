@@ -1,20 +1,8 @@
 import path from "path";
 import { getProject, GetProjectContext, getProjectDependencies, getProjectRoot } from "./project";
-import { cleanupTestRepo } from "../tests/cleanup-test-repo";
-import { setupTestRepo } from "../tests/setup-test-repo";
 import { tmpProjPath } from "@nrwl/nx-plugin/testing";
 
 describe("project", () => {
-  beforeAll(async () => {
-    await cleanupTestRepo();
-
-    await setupTestRepo();
-  });
-
-  afterAll(async () => {
-    await cleanupTestRepo();
-  });
-
   const projectsConfigurations = {
     version: 1,
     projects: {
@@ -39,7 +27,18 @@ describe("project", () => {
         expectedDependencies: []
       }
     ])("should return correct dependencies", async (data) => {
-      const result = await getProjectDependencies(data.projectName);
+      const result = await getProjectDependencies(data.projectName, {
+        nodes: {},
+        externalNodes: {},
+        dependencies: {
+          [data.projectName]: data.expectedDependencies.map((dependency) => ({
+            type: "static",
+            target: dependency,
+            source: data.projectName
+          }))
+        }
+      });
+
 
       expect(result.dependencies).toEqual(data.expectedDependencies);
     });

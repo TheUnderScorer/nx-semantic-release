@@ -12,7 +12,6 @@ import {
 import fs from 'fs';
 import { SemanticReleaseOptions } from '../../executors/semantic-release/semantic-release';
 import { setupTestNxWorkspace } from '../../tests/setup-test-nx-workspace';
-import { cleanupTestRepo } from '../../tests/cleanup-test-repo';
 
 const defaultExpectedConfig: SemanticReleaseOptions = {
   changelog: true,
@@ -24,13 +23,7 @@ const defaultExpectedConfig: SemanticReleaseOptions = {
 
 describe('Installer', () => {
   beforeAll(async () => {
-    await cleanupTestRepo();
-
     await setupTestNxWorkspace();
-  });
-
-  afterAll(async () => {
-    await cleanupTestRepo();
   });
 
   it('should create example', async () => {
