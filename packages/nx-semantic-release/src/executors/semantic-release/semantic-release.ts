@@ -1,14 +1,14 @@
 import { ExecutorContext, parseTargetString, runExecutor } from '@nrwl/devkit';
 import { cosmiconfigSync } from 'cosmiconfig';
-import { Options as BaseSemanticReleaseOptions } from 'semantic-release';
 import type release from 'semantic-release';
+import { Options as BaseSemanticReleaseOptions } from 'semantic-release';
 import { setExecutorContext } from '../../semantic-release-plugin';
 import { resolvePlugins } from './plugins';
 import { defaultOptions } from './default-options';
 import { ExecutorOptions } from '../../types';
 import { unwrapExecutorOptions } from '../../utils/executor';
 import { applyTokensToSemanticReleaseOptions } from '../../config/apply-tokens';
-import { getDefaultProjectRoot } from '../../common/project';
+import { getDefaultProjectRoot, GetProjectContext } from '../../common/project';
 
 export type SemanticReleaseOptions = Omit<
   BaseSemanticReleaseOptions,
@@ -113,7 +113,7 @@ export function resolveOptions(
   defaultOptions: SemanticReleaseOptions,
   cosmicOptions: SemanticReleaseOptions,
   projectOptions: SemanticReleaseOptions,
-  context: ExecutorContext
+  context: GetProjectContext
 ) {
   const mergedOptions = {
     ...defaultOptions,

@@ -7,9 +7,9 @@ import {
 import { filter, map, pipe } from 'remeda';
 import path from 'path';
 
-type GetProjectContext = Pick<
+export type GetProjectContext = Pick<
   ExecutorContext,
-  'projectName' | 'cwd' | 'projectsConfigurations'
+  'projectName' | 'cwd' | 'projectsConfigurations' | 'projectGraph'
 >;
 
 export const getProjectDependencies = async (projectName: string) => {

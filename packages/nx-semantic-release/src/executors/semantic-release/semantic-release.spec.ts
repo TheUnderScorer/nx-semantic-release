@@ -7,8 +7,7 @@ import {
 import { tmpProjPath } from '@nrwl/nx-plugin/testing';
 import { cleanupTestRepo } from '../../tests/cleanup-test-repo';
 import { setupTestRepo } from '../../tests/setup-test-repo';
-import { ExecutorContext } from '@nrwl/devkit';
-import { readTestAppWorkspace } from '../../tests/utils';
+import { GetProjectContext } from '../../common/project';
 
 describe('parseTag', () => {
   it('should return correct tag', () => {
@@ -27,19 +26,26 @@ describe('resolveOptions', () => {
     npm: true,
   };
 
-  let mockContext: ExecutorContext;
+  let mockContext: GetProjectContext;
 
   beforeAll(async () => {
     cleanupTestRepo();
 
     await setupTestRepo();
 
+    const projPath = tmpProjPath();
+
     mockContext = {
-      cwd: tmpProjPath(),
-      root: tmpProjPath(),
-      workspace: readTestAppWorkspace(),
-      isVerbose: false,
+      cwd: projPath,
       projectName: 'app-a',
+      projectsConfigurations: {
+        version: 1,
+        projects: {
+          'app-a': {
+            root: 'root',
+          },
+        },
+      },
     };
   });
 
