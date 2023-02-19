@@ -2,18 +2,20 @@ import fs from 'fs';
 import { remoteGitPath } from './constants';
 import { tmpProjPath } from '@nrwl/nx-plugin/testing';
 
-export function removeRemoteRepoDir() {
-  if (fs.existsSync(remoteGitPath)) {
-    fs.rmSync(remoteGitPath, { recursive: true });
+function rmIfExists(dirPath: string) {
+  if (fs.existsSync(dirPath)) {
+    fs.rmSync(dirPath, { recursive: true });
   }
+}
+
+export function removeRemoteRepoDir() {
+  rmIfExists(remoteGitPath);
 }
 
 export function cleanupTestRepo() {
   const tmpPath = tmpProjPath();
 
-  if (fs.existsSync(tmpPath)) {
-    fs.rmSync(tmpPath, { recursive: true });
-  }
+  rmIfExists(tmpPath);
 
   removeRemoteRepoDir();
 }
