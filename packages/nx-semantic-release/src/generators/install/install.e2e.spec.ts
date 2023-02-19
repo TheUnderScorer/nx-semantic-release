@@ -26,7 +26,7 @@ describe('Installer', () => {
   beforeAll(async () => {
     await cleanupTestRepo();
 
-    setupTestNxWorkspace();
+    await setupTestNxWorkspace();
   });
 
   afterAll(async () => {

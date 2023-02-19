@@ -1,13 +1,13 @@
 import {
   ensureNxProject,
-  runPackageManagerInstall,
   tmpProjPath,
   updateFile,
 } from '@nrwl/nx-plugin/testing';
 import { PackageJson } from 'type-fest';
 import path from 'path';
+import { runCommandsInTestProj } from './setup-test-repo';
 
-export function setupTestNxWorkspace() {
+export async function setupTestNxWorkspace() {
   try {
     console.info('Setting up at test nx workspace at:', tmpProjPath());
 
@@ -30,7 +30,7 @@ export function setupTestNxWorkspace() {
       return JSON.stringify(pkg, null, 2);
     });
 
-    runPackageManagerInstall(false);
+    await runCommandsInTestProj(['npm install']);
   } catch (error) {
     console.error('Failed to setup test Nx workspace', error);
 

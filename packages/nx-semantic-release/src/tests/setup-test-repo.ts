@@ -280,7 +280,7 @@ function configureSemanticReleaseForProject(
 export async function setupTestRepo(
   withGit = true
 ): Promise<SetupTestRepoResult> {
-  setupTestNxWorkspace();
+  await setupTestNxWorkspace();
 
   if (withGit) {
     await initGit();
