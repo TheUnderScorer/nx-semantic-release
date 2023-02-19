@@ -1,5 +1,4 @@
-import { tmpProjPath } from '@nrwl/nx-plugin/testing';
-
 Object.assign(process.env, {
-  NX_WORKSPACE_ROOT_PATH: tmpProjPath(),
+  // Note: We can't use tmpProjPath() here, because it can cause infinite loop
+  NX_WORKSPACE_ROOT_PATH: `${process.cwd()}/tmp/nx-e2e/proj`,
 });
