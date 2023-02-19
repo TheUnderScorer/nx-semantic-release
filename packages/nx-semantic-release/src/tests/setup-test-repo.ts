@@ -38,7 +38,6 @@ async function setupRemoteRepo() {
 
   await exec(`git init --bare project.git`, {
     cwd: remoteReposDirectory,
-    verbose: true,
   });
 }
 
