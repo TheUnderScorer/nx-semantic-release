@@ -30,7 +30,7 @@ export function setupTestNxWorkspace() {
       return JSON.stringify(pkg, null, 2);
     });
 
-    runPackageManagerInstall();
+    runPackageManagerInstall(true);
   } catch (error) {
     console.error('Failed to setup test Nx workspace', error);
 
