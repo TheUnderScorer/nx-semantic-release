@@ -7,7 +7,7 @@ config();
 async function main() {
   logger.log('Starting package release...');
 
-  await exec('npm run build', {
+  await exec('npm run build:skip-cache', {
     verbose: true,
   });
 
