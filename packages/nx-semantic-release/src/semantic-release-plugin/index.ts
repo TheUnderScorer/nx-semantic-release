@@ -3,20 +3,22 @@ import { getCommitsForProject } from './analyze-commits';
 
 export * from './executor-context';
 
+const wrapperName = 'nx-semantic-release';
+
 const analyzeCommits = wrapStep('analyzeCommits', getCommitsForProject(true), {
-  wrapperName: 'nx-semantic-release',
+  wrapperName,
 });
 
 const generateNotes = wrapStep('generateNotes', getCommitsForProject(false), {
-  wrapperName: 'nx-semantic-release',
+  wrapperName,
 });
 
 const success = wrapStep('success', getCommitsForProject(false), {
-  wrapperName: 'nx-semantic-release',
+  wrapperName,
 });
 
 const prepare = wrapStep('prepare', getCommitsForProject(false), {
-  wrapperName: 'nx-semantic-release',
+  wrapperName,
 });
 
 export { analyzeCommits, generateNotes, success, prepare };
