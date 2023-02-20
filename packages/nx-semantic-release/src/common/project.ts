@@ -22,8 +22,19 @@ export const getProjectDependencies = async (
 };
 
 export const getProject = (context: GetProjectContext) => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return context.projectsConfigurations!.projects[context.projectName!];
+  if (!context.projectName) {
+    throw new Error('No project name found in context.');
+  }
+
+  const project = context.projectsConfigurations?.projects[context.projectName];
+
+  if (!project) {
+    throw new Error(
+      `Project ${context.projectName} not found in configuration.`
+    );
+  }
+
+  return project;
 };
 
 export const getProjectRoot = (
