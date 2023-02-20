@@ -1,4 +1,9 @@
-import { ExecutorContext, parseTargetString, runExecutor } from '@nrwl/devkit';
+import {
+  ExecutorContext,
+  parseTargetString,
+  ProjectGraph,
+  runExecutor,
+} from '@nrwl/devkit';
 import { cosmiconfigSync } from 'cosmiconfig';
 import type release from 'semantic-release';
 import { Options as BaseSemanticReleaseOptions } from 'semantic-release';
@@ -9,6 +14,7 @@ import { ExecutorOptions } from '../../types';
 import { unwrapExecutorOptions } from '../../utils/executor';
 import { applyTokensToSemanticReleaseOptions } from '../../config/apply-tokens';
 import { getDefaultProjectRoot, GetProjectContext } from '../../common/project';
+import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 
 export type SemanticReleaseOptions = Omit<
   BaseSemanticReleaseOptions,
@@ -51,7 +57,8 @@ export async function semanticRelease(
   if (resolvedOptions.buildTarget) {
     const params = extractBuildTargetParams(
       resolvedOptions.buildTarget,
-      context
+      context,
+      context.projectGraph ?? (await createProjectGraphAsync())
     );
 
     const result = await runExecutor(params, {}, context);
@@ -97,10 +104,11 @@ function getSemanticRelease() {
 
 function extractBuildTargetParams(
   buildTarget: string,
-  context: ExecutorContext
+  context: ExecutorContext,
+  graph: ProjectGraph
 ) {
   if (buildTarget.includes(':')) {
-    return parseTargetString(buildTarget);
+    return parseTargetString(buildTarget, graph);
   }
 
   return {
