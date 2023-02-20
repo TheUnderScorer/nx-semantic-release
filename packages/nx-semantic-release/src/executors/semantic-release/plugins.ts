@@ -1,14 +1,14 @@
 import path from 'path';
 import fs from 'fs';
 import { ExecutorContext } from '@nrwl/devkit';
-import release from 'semantic-release';
+import { PluginSpec } from 'semantic-release';
 import { SemanticReleaseOptions } from './semantic-release';
 import { getDefaultProjectRoot } from '../../common/project';
 
 const getNpmPlugin = (
   context: ExecutorContext,
   options: SemanticReleaseOptions
-): release.PluginSpec[] => {
+): PluginSpec[] => {
   const packageJsonDir =
     options.packageJsonDir ?? getDefaultProjectRoot(context);
   const projectPkgPath = path.join(packageJsonDir, 'package.json');
@@ -17,7 +17,7 @@ const getNpmPlugin = (
     ? path.join(options.outputPath, 'package.json')
     : undefined;
 
-  const plugins: release.PluginSpec[] = [];
+  const plugins: PluginSpec[] = [];
 
   if (buildPkgRoot && fs.existsSync(buildPkgRoot)) {
     // Bump package.json version for built project, so that it can be published to NPM with correct version (if package is public)
@@ -51,8 +51,8 @@ export const resolvePlugins = (
     options.packageJsonDir ?? getDefaultProjectRoot(context);
   const relativeProjectPkgPath = path.relative(context.cwd, packageJsonDir);
 
-  const emptyArray = [] as unknown as release.PluginSpec;
-  const defaultPlugins: release.PluginSpec[] = [
+  const emptyArray = [] as unknown as PluginSpec;
+  const defaultPlugins: PluginSpec[] = [
     [
       '@semantic-release/commit-analyzer',
       {

@@ -1,15 +1,25 @@
-import { ExecutorContext, parseTargetString, runExecutor } from '@nrwl/devkit';
+import {
+  ExecutorContext,
+  parseTargetString,
+  ProjectGraph,
+  runExecutor,
+} from '@nrwl/devkit';
 import { cosmiconfigSync } from 'cosmiconfig';
-import release from 'semantic-release';
+import type release from 'semantic-release';
+import { Options as BaseSemanticReleaseOptions } from 'semantic-release';
 import { setExecutorContext } from '../../semantic-release-plugin';
 import { resolvePlugins } from './plugins';
 import { defaultOptions } from './default-options';
 import { ExecutorOptions } from '../../types';
 import { unwrapExecutorOptions } from '../../utils/executor';
 import { applyTokensToSemanticReleaseOptions } from '../../config/apply-tokens';
-import { getDefaultProjectRoot } from '../../common/project';
+import { getDefaultProjectRoot, GetProjectContext } from '../../common/project';
+import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 
-export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
+export type SemanticReleaseOptions = Omit<
+  BaseSemanticReleaseOptions,
+  'extends'
+> & {
   npm: boolean;
   github: boolean;
   buildTarget?: string;
@@ -23,7 +33,9 @@ export type SemanticReleaseOptions = Omit<release.Options, 'extends'> & {
   writerOpts?: Record<string, unknown>;
   linkCompare?: boolean;
   linkReferences?: boolean;
-  releaseRules?: string | { release: string; [key: string]: unknown }[];
+  releaseRules?:
+    | string
+    | { release: string | boolean; [key: string]: unknown }[];
   preset?: string;
   presetConfig?: Record<string, unknown>;
 };
@@ -45,7 +57,8 @@ export async function semanticRelease(
   if (resolvedOptions.buildTarget) {
     const params = extractBuildTargetParams(
       resolvedOptions.buildTarget,
-      context
+      context,
+      context.projectGraph ?? (await createProjectGraphAsync())
     );
 
     const result = await runExecutor(params, {}, context);
@@ -67,6 +80,8 @@ export async function semanticRelease(
     ? parseTag(resolvedOptions.tagFormat)
     : resolvedOptions.tagFormat;
 
+  const release = await getSemanticRelease();
+
   await release({
     extends: '@theunderscorer/nx-semantic-release',
     ...resolvedOptions,
@@ -79,12 +94,24 @@ export async function semanticRelease(
   };
 }
 
+/**
+ * @FIXME Recently semantic-release became esm only, but until NX will support plugins in ESM, we have to use this dirty hack :/
+ * */
+function getSemanticRelease() {
+  const fn = new Function(
+    'return import("semantic-release").then(m => m.default)'
+  );
+
+  return fn() as Promise<typeof release>;
+}
+
 function extractBuildTargetParams(
   buildTarget: string,
-  context: ExecutorContext
+  context: ExecutorContext,
+  graph: ProjectGraph
 ) {
   if (buildTarget.includes(':')) {
-    return parseTargetString(buildTarget);
+    return parseTargetString(buildTarget, graph);
   }
 
   return {
@@ -97,7 +124,7 @@ export function resolveOptions(
   defaultOptions: SemanticReleaseOptions,
   cosmicOptions: SemanticReleaseOptions,
   projectOptions: SemanticReleaseOptions,
-  context: ExecutorContext
+  context: GetProjectContext
 ) {
   const mergedOptions = {
     ...defaultOptions,

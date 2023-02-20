@@ -22,12 +22,8 @@ const defaultExpectedConfig: SemanticReleaseOptions = {
 };
 
 describe('Installer', () => {
-  beforeAll(() => {
-    setupTestNxWorkspace();
-  });
-
-  afterAll(async () => {
-    await runNxCommandAsync('reset');
+  beforeAll(async () => {
+    await setupTestNxWorkspace();
   });
 
   it('should create example', async () => {

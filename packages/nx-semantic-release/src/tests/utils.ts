@@ -1,9 +1,11 @@
-import { Workspace } from '@nrwl/devkit';
+import { ProjectsConfigurations } from '@nrwl/devkit';
 import { readJson, tmpProjPath } from '@nrwl/nx-plugin/testing';
 import { exec } from '../utils/exec';
+import { execSync } from 'child_process';
 import { omit } from 'remeda';
 
-export const readTestAppWorkspace = () => readJson<Workspace>('workspace.json');
+export const readTestAppWorkspace = () =>
+  readJson<ProjectsConfigurations>('workspace.json');
 
 export const wait = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -22,6 +24,15 @@ export const safeRunNxCommandAsync = async (command: string) => {
   const cwd = tmpProjPath();
 
   await exec(`npx nx ${command}`, {
+    cwd,
+    env: omit(process.env, ciEnvToRemove),
+  });
+};
+
+export const safeRunNxCommand = (command: string) => {
+  const cwd = tmpProjPath();
+
+  execSync(`npx nx ${command}`, {
     cwd,
     env: omit(process.env, ciEnvToRemove),
   });

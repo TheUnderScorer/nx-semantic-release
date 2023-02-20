@@ -1,4 +1,6 @@
 {
+  "version": 2,
+  "outputCapture": "direct-nodejs",
   "$schema": "http://json-schema.org/schema",
   "$id": "theunderscorer-semantic-release",
   "title": "NX Semantic Release",
@@ -55,11 +57,22 @@
           "items": {
             "type": "object",
             "properties": {
+              "type": "string",
+              "scope": "string",
               "release": {
-                "type": "string"
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ]
               }
             },
-            "required": ["release"]
+            "required": [
+              "release"
+            ]
           }
         }
       ]
@@ -180,7 +193,9 @@
               }
             },
             "additionalProperties": false,
-            "required": ["name"]
+            "required": [
+              "name"
+            ]
           }
         ]
       },

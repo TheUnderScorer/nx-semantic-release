@@ -6,7 +6,6 @@ import {
 import { ProjectConfiguration, TargetConfiguration } from '@nrwl/devkit';
 import { SemanticReleaseOptions } from '../../executors/semantic-release/semantic-release';
 import { TestReleasableProject } from '../../tests/types';
-import { cleanupTestRepo } from '../../tests/cleanup-test-repo';
 import { setupTestRepo } from '../../tests/setup-test-repo';
 import { safeRunNxCommandAsync } from '../../tests/utils';
 import { getCommitTag, getTestRepoCommits } from '../../tests/git';
@@ -27,13 +26,7 @@ function assertProjectConfiguration(
 
 describe('Setup project', () => {
   beforeEach(async () => {
-    cleanupTestRepo();
-
     await setupTestRepo();
-  });
-
-  afterEach(async () => {
-    await cleanupTestRepo();
   });
 
   it('should setup project', async () => {

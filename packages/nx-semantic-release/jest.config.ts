@@ -1,3 +1,5 @@
+import path from 'path';
+
 /* eslint-disable */
 export default {
   displayName: 'nx-semantic-release',
@@ -13,6 +15,6 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/nx-semantic-release',
-  setupFiles: ['./src/tests/setup.ts'],
+  setupFiles: [path.resolve(__dirname, './src/tests/setup.ts')],
   testTimeout: 100000,
 };

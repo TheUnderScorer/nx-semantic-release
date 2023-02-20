@@ -1,4 +1,3 @@
-import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 import {
   ExecutorContext,
   ProjectConfiguration,
@@ -7,23 +6,25 @@ import {
 import { filter, map, pipe } from 'remeda';
 import path from 'path';
 
-type GetProjectContext = Pick<
+export type GetProjectContext = Pick<
   ExecutorContext,
-  'workspace' | 'projectName' | 'cwd'
+  'projectName' | 'cwd' | 'projectsConfigurations' | 'projectGraph'
 >;
 
-export const getProjectDependencies = async (projectName: string) => {
-  const graph = await createProjectGraphAsync();
-
+export const getProjectDependencies = async (
+  projectName: string,
+  graph: ProjectGraph
+) => {
   return {
     dependencies: getRecursiveDependencies(projectName, graph),
     graph,
   };
 };
 
-export const getProject = (context: GetProjectContext) =>
+export const getProject = (context: GetProjectContext) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  context.workspace.projects[context.projectName!];
+  return context.projectsConfigurations!.projects[context.projectName!];
+};
 
 export const getProjectRoot = (
   project: ProjectConfiguration | string,

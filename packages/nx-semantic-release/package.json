@@ -7,11 +7,11 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/exec": "^6.0.2",
+    "@semantic-release/changelog": "^6.0.2",
+    "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^8.0.2",
-    "@semantic-release/npm": "^8.0.3"
+    "@semantic-release/github": "^8.0.7",
+    "@semantic-release/npm": "^9.0.2"
   },
   "private": false,
   "author": {
@@ -21,6 +21,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/TheUnderScorer/nx-semantic-release"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   },
   "license": "MIT",
   "builders": "./builders.json",

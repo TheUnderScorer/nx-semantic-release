@@ -1,4 +1,4 @@
-import { Commit, Context } from 'semantic-release';
+import type { Commit, Context } from 'semantic-release';
 import { ProjectGraph } from '@nrwl/devkit';
 import { exec } from '../utils/exec';
 import { calculateFileChanges } from '@nrwl/workspace/src/core/file-utils';

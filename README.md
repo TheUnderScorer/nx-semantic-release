@@ -20,7 +20,7 @@ For now this package supports only <b>Independent</b> versioning mode, synced mo
 
 ## Usage
 
-In order to release your projects, add this executor to your configuration file (ex. `workspace.json`), bare minimal
+In order to release your projects, add this executor to your configuration file (ex. `project.json`), bare minimal
 configuration looks like this:
 
 ```json
@@ -53,9 +53,9 @@ Options can be configured in 3 ways:
 
 1. **cli**: Passing them on the cli command
 2. **config file:** Including them in a global `nxrelease` config file in the root of your monorepo (see below)
-3. **project:** Within the options section of the executor for each project (`workspace.json`)
+3. **project:** Within the options section of the executor for each project (`project.json`)
 
-Multiple configurations are fully supported, allowing for global configuration options in the config file and then project specific overrides in the `workspaces.json`. Options merged in the following order of precedence:
+Multiple configurations are fully supported, allowing for global configuration options in the config file and then project specific overrides in the `project.json`. Options merged in the following order of precedence:
 
 ```
 cli flags > project > config file > defaults
