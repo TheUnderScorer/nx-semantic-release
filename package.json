@@ -20,6 +20,7 @@
     "nx": "nx",
     "start": "nx build nx-semantic-release --watch",
     "build": "nx build nx-semantic-release",
+    "build:skip-cache": "nx build nx-semantic-release --skip-nx-cache",
     "test": "nx test nx-semantic-release --runInBand",
     "lint": "nx lint nx-semantic-release",
     "e2e": "nx e2e",
