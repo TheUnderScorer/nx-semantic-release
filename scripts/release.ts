@@ -12,6 +12,7 @@ async function main() {
   });
 
   await exec('npm link dist/packages/nx-semantic-release');
+  await exec('npm install');
 
   await exec('nx run nx-semantic-release:semantic-release --verbose', {
     verbose: true,
