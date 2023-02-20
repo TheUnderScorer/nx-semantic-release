@@ -55,6 +55,10 @@
     "semantic-release": {
       "executor": "@theunderscorer/nx-semantic-release:semantic-release",
       "options": {
+        "branches": [
+          "master",
+          { "name": "beta", "prerelease": true }
+        ],
         "buildTarget": "nx-semantic-release:build",
         "repositoryUrl": "https://github.com/TheUnderScorer/nx-semantic-release",
         "github": true,
