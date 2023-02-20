@@ -94,6 +94,9 @@ export async function semanticRelease(
   };
 }
 
+/**
+ * @FIXME Recently semantic-release became esm only, but until NX will support plugins in ESM, we have to use this dirty hack :/
+ * */
 function getSemanticRelease() {
   const fn = new Function(
     'return import("semantic-release").then(m => m.default)'
