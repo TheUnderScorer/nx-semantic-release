@@ -32,7 +32,7 @@ jobs:
         run: npm ci
 
       - name: Link package
-        run: npm run build && npm link dist/packages/nx-semantic-release && npm ls @theunderscorer/nx-semantic-release
+        run: npm run build:skip-cache && npm link dist/packages/nx-semantic-release && npm ls @theunderscorer/nx-semantic-release
 
       - name: Print versions
         run: |
