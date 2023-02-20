@@ -1,3 +1,22 @@
+## [2.0.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.14.0...nx-semantic-release-v2.0.0) (2023-02-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* this package requires node version >= 16 from now on
+
+### Features
+
+* set minimal required node version to 16 ([390b2af](https://github.com/TheUnderScorer/nx-semantic-release/commit/390b2af17ee01c20ac68a08c67a9e49c0205bf76))
+* support setting `release` to `false` in `releaseRules` ([8b6df0e](https://github.com/TheUnderScorer/nx-semantic-release/commit/8b6df0ea770860d56e34eaec470b9d39a32fcea9))
+
+
+### Build System
+
+* **deps:** add @nrwl/tao as dependency ([3da27fc](https://github.com/TheUnderScorer/nx-semantic-release/commit/3da27fc7283ecb7ccf75e0ae179e81a4e147a4e0))
+* **deps:** update nx ([3b28226](https://github.com/TheUnderScorer/nx-semantic-release/commit/3b2822685d0a6c1dff33d0115f14f2dee0512ee4))
+* **deps:** update semantic-release to 20.1.0 ([aa41541](https://github.com/TheUnderScorer/nx-semantic-release/commit/aa4154160feaf97b443dfb4cd702518991c63ef7))
+
 ## [1.14.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.13.0...nx-semantic-release-v1.14.0) (2022-07-15)
 
 
