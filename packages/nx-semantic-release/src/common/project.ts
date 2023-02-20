@@ -8,36 +8,54 @@ import path from 'path';
 
 export type GetProjectContext = Pick<
   ExecutorContext,
-  'projectName' | 'cwd' | 'projectsConfigurations' | 'projectGraph'
+  | 'projectName'
+  | 'cwd'
+  | 'projectsConfigurations'
+  | 'projectGraph'
+  | 'workspace'
 >;
 
-export const getProjectDependencies = async (
+export async function getProjectDependencies(
   projectName: string,
   graph: ProjectGraph
-) => {
+) {
   return {
     dependencies: getRecursiveDependencies(projectName, graph),
     graph,
   };
-};
+}
 
-export const getProject = (context: GetProjectContext) => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return context.projectsConfigurations!.projects[context.projectName!];
-};
+export function getProject(context: GetProjectContext) {
+  if (!context.projectName) {
+    throw new Error('No project name found in context.');
+  }
 
-export const getProjectRoot = (
+  const project =
+    context.projectsConfigurations?.projects[context.projectName] ??
+    context.workspace?.projects[context.projectName];
+
+  if (!project) {
+    throw new Error(`Project ${context.projectName} not found in workspace`);
+  }
+
+  return project;
+}
+
+export function getProjectRoot(
   project: ProjectConfiguration | string,
   cwd: string
-) => path.join(cwd, typeof project === 'string' ? project : project.root);
+) {
+  return path.join(cwd, typeof project === 'string' ? project : project.root);
+}
 
-export const getDefaultProjectRoot = (context: GetProjectContext) =>
-  getProjectRoot(getProject(context), context.cwd);
+export function getDefaultProjectRoot(context: GetProjectContext) {
+  return getProjectRoot(getProject(context), context.cwd);
+}
 
-export const getRecursiveDependencies = (
+export function getRecursiveDependencies(
   projectName: string,
   graph: ProjectGraph
-): string[] => {
+): string[] {
   const deps = graph.dependencies[projectName];
 
   if (!deps) {
@@ -55,4 +73,4 @@ export const getRecursiveDependencies = (
         return [...acc, ...targetDeps];
       }, filteredDeps)
   );
-};
+}

@@ -34,6 +34,12 @@ jobs:
       - name: Link package
         run: npm run build && npm link dist/packages/nx-semantic-release && npm ls @theunderscorer/nx-semantic-release
 
+      - name: Print versions
+        run: |
+          echo "Node.js version: $(node -v)"
+          echo "NPM version: $(npm -v)"
+          echo "NX version: $(nx --version)"
+
       - name: Release
         run: npm run release
         env:
