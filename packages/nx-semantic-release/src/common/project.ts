@@ -15,17 +15,17 @@ export type GetProjectContext = Pick<
   | 'workspace'
 >;
 
-export const getProjectDependencies = async (
+export async function getProjectDependencies(
   projectName: string,
   graph: ProjectGraph
-) => {
+) {
   return {
     dependencies: getRecursiveDependencies(projectName, graph),
     graph,
   };
-};
+}
 
-export const getProject = (context: GetProjectContext) => {
+export function getProject(context: GetProjectContext) {
   if (!context.projectName) {
     throw new Error('No project name found in context.');
   }
@@ -39,20 +39,23 @@ export const getProject = (context: GetProjectContext) => {
   }
 
   return project;
-};
+}
 
-export const getProjectRoot = (
+export function getProjectRoot(
   project: ProjectConfiguration | string,
   cwd: string
-) => path.join(cwd, typeof project === 'string' ? project : project.root);
+) {
+  return path.join(cwd, typeof project === 'string' ? project : project.root);
+}
 
-export const getDefaultProjectRoot = (context: GetProjectContext) =>
-  getProjectRoot(getProject(context), context.cwd);
+export function getDefaultProjectRoot(context: GetProjectContext) {
+  return getProjectRoot(getProject(context), context.cwd);
+}
 
-export const getRecursiveDependencies = (
+export function getRecursiveDependencies(
   projectName: string,
   graph: ProjectGraph
-): string[] => {
+): string[] {
   const deps = graph.dependencies[projectName];
 
   if (!deps) {
@@ -70,4 +73,4 @@ export const getRecursiveDependencies = (
         return [...acc, ...targetDeps];
       }, filteredDeps)
   );
-};
+}
