@@ -31,8 +31,8 @@ export function getProject(context: GetProjectContext) {
   }
 
   const project =
-    context.projectsConfigurations?.projects[context.projectName] ??
-    context.workspace?.projects[context.projectName];
+    context.projectsConfigurations?.projects?.[context.projectName] ??
+    context.workspace?.projects?.[context.projectName];
 
   if (!project) {
     throw new Error(`Project ${context.projectName} not found in workspace`);
