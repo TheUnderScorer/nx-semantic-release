@@ -8,7 +8,11 @@ import path from 'path';
 
 export type GetProjectContext = Pick<
   ExecutorContext,
-  'projectName' | 'cwd' | 'projectsConfigurations' | 'projectGraph'
+  | 'projectName'
+  | 'cwd'
+  | 'projectsConfigurations'
+  | 'projectGraph'
+  | 'workspace'
 >;
 
 export const getProjectDependencies = async (
@@ -26,12 +30,12 @@ export const getProject = (context: GetProjectContext) => {
     throw new Error('No project name found in context.');
   }
 
-  const project = context.projectsConfigurations?.projects[context.projectName];
+  const project =
+    context.projectsConfigurations?.projects[context.projectName] ??
+    context.workspace?.projects[context.projectName];
 
   if (!project) {
-    throw new Error(
-      `Project ${context.projectName} not found in configuration.`
-    );
+    throw new Error(`Project ${context.projectName} not found in workspace`);
   }
 
   return project;
