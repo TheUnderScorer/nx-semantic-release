@@ -38,7 +38,7 @@ jobs:
         run: |
           echo "Node.js version: $(node -v)"
           echo "NPM version: $(npm -v)"
-          echo "NX version: $(nx --version)"
+          echo "NX version: $(npx nx --version)"
 
       - name: Release
         run: npm run release
