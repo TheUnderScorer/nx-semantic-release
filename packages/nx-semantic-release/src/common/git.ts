@@ -1,4 +1,5 @@
 import type { Commit, Context } from 'semantic-release';
+import process from 'process';
 import { ProjectGraph } from '@nrwl/devkit';
 import { exec } from '../utils/exec';
 import { calculateFileChanges } from '@nrwl/workspace/src/core/file-utils';
@@ -82,12 +83,27 @@ export function shouldSkipCommit(
 async function listAffectedFilesInCommit(
   commit: Pick<Commit, 'commit'>
 ): Promise<string[]> {
+  // eg. /code/Repo/frontend/
+  const cwd = process.cwd() + '/';
+  // eg. /code/Repo/
+  const repositoryRoot = await exec('git rev-parse --show-toplevel') + '/';
+  // Matches the start of a path from the git root to the nx root
+  const nxPathPart = new RegExp(`^${cwd.substring(repositoryRoot.length)}`);
+
   const files = await exec(`git show --name-status ${commit.commit.short}`);
 
   return files
     .toString()
     .split('\n')
+    .map((line) => line?.split('\t')?.[1])
     .filter(Boolean)
-    .map((line) => line.split('\t')[1])
-    .filter(Boolean);
+    .filter((filePath: string) => {
+      // only include files inside the nx root
+      return filePath.match(nxPathPart);
+    })
+    .map((filePath: string) => {
+        // The filepaths start from the root of the git repository, but
+        // in our case we want them to start from the nx root.
+        return filePath.replace(nxPathPart, '');
+    });
 }
