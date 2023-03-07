@@ -95,8 +95,7 @@ async function listAffectedFilesInCommit(
   return files
     .toString()
     .split('\n')
-    .filter(Boolean)
-    .map((line) => line.split('\t')[1])
+    .map((line) => line?.split('\t')?.[1])
     .filter(Boolean)
     .filter((filePath: string) => {
       // only include files inside the nx root
