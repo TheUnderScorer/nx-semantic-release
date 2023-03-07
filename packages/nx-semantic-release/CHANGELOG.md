@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.0.0...nx-semantic-release-v2.0.1) (2023-03-07)
+
+
+### Bug Fixes
+
+* Support nested nx repositories ([83fc543](https://github.com/TheUnderScorer/nx-semantic-release/commit/83fc5435edb9673bf0bde4ebc18b2d9a049803ea))
+
 ## [2.0.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v1.14.0...nx-semantic-release-v2.0.0) (2023-02-20)
 
 
