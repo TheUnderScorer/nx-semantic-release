@@ -86,7 +86,10 @@ export const resolvePlugins = (
       : emptyArray),
     ...(options.npm ? getNpmPlugin(context, options) : emptyArray),
     ...(options.plugins ?? []),
-    [
+  ];
+
+  if (options.git) {
+    defaultPlugins.push([
       '@semantic-release/git',
       {
         message: options.commitMessage,
@@ -103,8 +106,8 @@ export const resolvePlugins = (
           ...(options.gitAssets ?? []),
         ],
       },
-    ],
-  ];
+    ]);
+  }
 
   if (options.github) {
     defaultPlugins.push('@semantic-release/github');
