@@ -7,6 +7,8 @@ by [semantic-release](https://github.com/semantic-release/semantic-release)
 
 Under the hood, it uses project graph from nx to analyze commits for every configured project and filters out these commits that doesn't affect given project or it's dependencies.
 
+<a href="https://www.buymeacoffee.com/theunderscorer" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 ## Installation
 
 Run:
