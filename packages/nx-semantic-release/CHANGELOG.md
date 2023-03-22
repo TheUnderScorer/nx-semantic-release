@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.0.1...nx-semantic-release-v2.1.0) (2023-03-22)
+
+
+### Features
+
+* Allow disabling @semantic-release/git plugin ([d515817](https://github.com/TheUnderScorer/nx-semantic-release/commit/d515817a02cb0dcfbec4f641e8998edd59017f56))
+
 ## [2.0.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.0.0...nx-semantic-release-v2.0.1) (2023-03-07)
 
 
