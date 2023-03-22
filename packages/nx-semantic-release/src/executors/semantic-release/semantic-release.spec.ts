@@ -23,6 +23,7 @@ describe('resolveOptions', () => {
     commitMessage: '',
     github: true,
     npm: true,
+    git: true,
   };
 
   let mockContext: GetProjectContext;
