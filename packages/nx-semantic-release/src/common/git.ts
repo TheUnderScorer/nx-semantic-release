@@ -65,17 +65,20 @@ export function shouldSkipCommit(
   projectName: string
 ): boolean {
   const onlyMatchRegex = /\[only (.*?)]/g;
+  const skipMatchRegex = /\[skip (.*?)]/g;
 
-  const skipMatches = [`[skip ${projectName}]`, '[skip all]'];
+  const skipAll = '[skip all]';
+  const skipMatches = Array.from(commit.body.matchAll(skipMatchRegex));
   const onlyMatches = Array.from(commit.body.matchAll(onlyMatchRegex));
 
   const hasOnlyMatch =
     onlyMatches.length &&
-    !onlyMatches.some((match) => match[1] === projectName);
+    !onlyMatches.some((match) =>  match[1].split(',').map(project => project.trim()).some((project) => project === projectName));
 
-  const hasSkipMatch = skipMatches.some((skipMatch) =>
-    commit.body.includes(skipMatch)
-  );
+  const hasSkipMatch = 
+    commit.body.includes(skipAll) ||
+    skipMatches.length &&
+    skipMatches.some((match) =>  match[1].split(',').map(project => project.trim()).some((project) => project === projectName));
 
   return Boolean(hasSkipMatch || hasOnlyMatch);
 }

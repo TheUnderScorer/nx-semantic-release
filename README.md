@@ -117,7 +117,7 @@ $ nx semantic-release app-c --repositoryUrl "https://github.com/TheUnderScorer/n
 | repositoryUrl  | string             | repositoryUrl                                                                  | no       | The URL of the repository to release from.                                                                                                                                                                                                                                                                                      |
 | tagFormat      | string             | ${PROJECT_NAME}-v${version}                                                    | no       | Tag format to use. You can refer to [semantic-release configuration](https://github.com/semantic-release/semantic-release/blob/master/docs/usage/configuration.md#tagformat)                                                                                                                                                    |
 | npm            | boolean            | true                                                                           | no       | Whether to bump package.json version and publish to registry (if package is public).                                                                                                                                                                                                                                            |
-| git            | boolean            | true                                                                           | no       | Whether to create git commit and tag. See more in [@semantic-release/git](https://github.com/semantic-release/git).                                                                                                                                                                                                                                                                                               |
+| git            | boolean            | true                                                                           | no       | Whether to create git commit and tag. See more in [@semantic-release/git](https://github.com/semantic-release/git).                                                                                                                                                                                                             |
 | github         | boolean            | true                                                                           | no       | Whether to create github release.                                                                                                                                                                                                                                                                                               |
 | buildTarget    | string             |                                                                                | no       | The target of the build command. If your package is public and you want to release it to npm as part of release, you have to provide it. Plugin will use it to build your package and set version in package.json before releasing it to npm registry.                                                                          |
 | outputPath     | string             |                                                                                | no       | The path to the output directory. Provide that if your package is public and you want to publish it into npm.                                                                                                                                                                                                                   |
@@ -151,16 +151,17 @@ want to publish released package to npm registry.
 
 ## Skipping commits
 
-You can skip commits for given project using `[skip $PROJECT_NAME]` in its body. Ex:
+You can skip commits for given projects using `[skip $PROJECT_NAME]` in its body. Ex:
 
 ```
   feat: update something
 
-  [skip my-app]
+  [skip my-app1]
+  [skip my-app2]
 ```
 
-During analysis this commit will be skipped for release pipeline for my-app.
-You can also use `[skip all]` to skip commit for all projects.
+During analysis this commit will be skipped for release pipeline for `my-app1`, `my-app2`.
+You can also use `[skip all]` to skip commit for all projects or **one single** `[skip my-app1, my-app2]` to skip commits related to `my-app1`, `my-app2` at once.
 
 ---
 
@@ -169,9 +170,12 @@ Alternatively you can include only particular projects in given commit by using 
 ```
   feat: update something
 
-  [only my-app]
+  [only my-app1]
+  [only my-app2]
 ```
-During analysis this commit will be included only for release pipeline for my-app.
+During analysis this commit will be included only for release pipeline for `my-app`, `my-app2`.
+You can also use **one single** `[skip my-app1, my-app2]` to skip commits related to `my-app1`, `my-app2` at once.
+
 
 ## CI/CD
 
