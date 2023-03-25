@@ -3,6 +3,7 @@ import { SemanticReleaseOptions } from '../executors/semantic-release/semantic-r
 export interface ConfigTokensDict {
   projectDir: string;
   projectName: string;
+  workspaceDir: string;
 }
 
 export function applyTokensToSemanticReleaseOptions(
@@ -12,7 +13,8 @@ export function applyTokensToSemanticReleaseOptions(
   const replaceTokens = (value: string): string => {
     return value
       .replace('${PROJECT_DIR}', tokens.projectDir)
-      .replace('${PROJECT_NAME}', tokens.projectName);
+      .replace('${PROJECT_NAME}', tokens.projectName)
+      .replace('${WORKSPACE_DIR}', tokens.workspaceDir);
   };
 
   [

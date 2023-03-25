@@ -15,6 +15,7 @@ const requiredOptions: SemanticReleaseOptions = {
 const mockTokens: ConfigTokensDict = {
   projectDir: 'apps/app-a',
   projectName: 'app-a',
+  workspaceDir: '.',
 };
 
 describe('applyTokensToSemanticReleaseOptions', () => {
@@ -28,7 +29,7 @@ describe('applyTokensToSemanticReleaseOptions', () => {
       commitMessage: 'release ${PROJECT_NAME} in ${PROJECT_DIR}',
       packageJsonDir: '${PROJECT_DIR}/src',
       tagFormat: '${PROJECT_NAME}-v${version}',
-      outputPath: '${PROJECT_DIR}/../../dist/apps/${PROJECT_NAME}'
+      outputPath: '${WORKSPACE_DIR}/dist/apps/${PROJECT_NAME}'
     };
   });
 
@@ -52,6 +53,15 @@ describe('applyTokensToSemanticReleaseOptions', () => {
     expect(results.tagFormat).toEqual('app-a-v${version}');
   });
 
+  it('should return options with ${WORKSPACE_DIR} tokens replaced', () => {
+    const results = applyTokensToSemanticReleaseOptions(
+      mockOptions,
+      mockTokens
+    );
+
+    expect(results.outputPath).toEqual(`./dist/apps/app-a`);
+  });
+
   it('should return options with multiple tokens replaced', () => {
     const results = applyTokensToSemanticReleaseOptions(
       mockOptions,
@@ -59,6 +69,6 @@ describe('applyTokensToSemanticReleaseOptions', () => {
     );
 
     expect(results.commitMessage).toEqual(`release app-a in apps/app-a`);
-    expect(results.outputPath).toEqual(`apps/app-a/../../dist/apps/app-a`);
+    expect(results.outputPath).toEqual(`./dist/apps/app-a`);
   });
 });

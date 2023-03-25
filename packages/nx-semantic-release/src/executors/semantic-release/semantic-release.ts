@@ -3,6 +3,7 @@ import {
   parseTargetString,
   ProjectGraph,
   runExecutor,
+  workspaceRoot
 } from '@nrwl/devkit';
 import { cosmiconfigSync } from 'cosmiconfig';
 import type release from 'semantic-release';
@@ -135,6 +136,7 @@ export function resolveOptions(
   return applyTokensToSemanticReleaseOptions(mergedOptions, {
     projectName: context.projectName as string,
     projectDir: getDefaultProjectRoot(context),
+    workspaceDir: workspaceRoot
   });
 }
 
