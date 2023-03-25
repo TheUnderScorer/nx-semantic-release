@@ -140,7 +140,7 @@ $ nx semantic-release app-c --repositoryUrl "https://github.com/TheUnderScorer/n
 | ${PROJECT_DIR}  | Resolves to the current project direcory (ex. `/Users/theunderscorer/nx-monorepo/apps/app-a`) |
 | ${PROJECT_NAME} | Resolves to the current project name (ex. `app-a`)                                            |
 
-The following options support tokens: `buildTarget`, `changelogFile`, `commitMessage`, `gitAssets`, `packageJsonDir`, and `tagFormat`.
+The following options support tokens: `buildTarget`, `changelogFile`, `commitMessage`, `gitAssets`, `packageJsonDir`, `outputPath` and `tagFormat`.
 
 You may see other tokens like `${nextRelease.version}`, those are tokens that are replaced by semantic-release itself.
 

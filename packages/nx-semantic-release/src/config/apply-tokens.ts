@@ -21,6 +21,7 @@ export function applyTokensToSemanticReleaseOptions(
     'commitMessage',
     'packageJsonDir',
     'tagFormat',
+    'outputPath'
   ].forEach((option) => {
     if (options[option]) options[option] = replaceTokens(options[option]);
   });

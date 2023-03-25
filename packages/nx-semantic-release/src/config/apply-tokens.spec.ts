@@ -28,6 +28,7 @@ describe('applyTokensToSemanticReleaseOptions', () => {
       commitMessage: 'release ${PROJECT_NAME} in ${PROJECT_DIR}',
       packageJsonDir: '${PROJECT_DIR}/src',
       tagFormat: '${PROJECT_NAME}-v${version}',
+      outputPath: '${PROJECT_DIR}/../../dist/apps/${PROJECT_NAME}'
     };
   });
 
@@ -58,5 +59,6 @@ describe('applyTokensToSemanticReleaseOptions', () => {
     );
 
     expect(results.commitMessage).toEqual(`release app-a in apps/app-a`);
+    expect(results.outputPath).toEqual(`apps/app-a/../../dist/apps/app-a`);
   });
 });
