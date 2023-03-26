@@ -29,7 +29,21 @@ describe('applyTokensToSemanticReleaseOptions', () => {
       commitMessage: 'release ${PROJECT_NAME} in ${PROJECT_DIR}',
       packageJsonDir: '${PROJECT_DIR}/src',
       tagFormat: '${PROJECT_NAME}-v${version}',
-      outputPath: '${WORKSPACE_DIR}/dist/apps/${PROJECT_NAME}'
+      outputPath: '${WORKSPACE_DIR}/dist/apps/${PROJECT_NAME}',
+      plugins: [
+        '@fake/plugin-without-options1', 
+        [
+          '@semantic-release/exec',
+          {
+            prepareCmd: 'cp LICENSE dist/packages/${PROJECT_NAME}',
+            execCwd: '${WORKSPACE_DIR}',
+            fakeStringArrayOption: ['${WORKSPACE_DIR}/src', '${WORKSPACE_DIR}/dist'],
+            fakeBooleanOption: true,
+            fakeNumberOption: 10
+          }
+        ],
+        '@fake/plugin-without-options2', 
+    ]
     };
   });
 
@@ -70,5 +84,28 @@ describe('applyTokensToSemanticReleaseOptions', () => {
 
     expect(results.commitMessage).toEqual(`release app-a in apps/app-a`);
     expect(results.outputPath).toEqual(`./dist/apps/app-a`);
+  });
+
+
+  it('should replace tokens in plugins options of type string or string[]', () => {
+    const results = applyTokensToSemanticReleaseOptions(
+      mockOptions,
+      mockTokens
+    );
+
+    expect(results.plugins).toEqual([
+      '@fake/plugin-without-options1', 
+      [
+        '@semantic-release/exec',
+        {
+          prepareCmd: 'cp LICENSE dist/packages/app-a',
+          execCwd: '.',
+          fakeStringArrayOption: ['./src', './dist'],
+          fakeBooleanOption: true,
+          fakeNumberOption: 10
+        }
+      ],
+      '@fake/plugin-without-options2', 
+  ]);
   });
 });

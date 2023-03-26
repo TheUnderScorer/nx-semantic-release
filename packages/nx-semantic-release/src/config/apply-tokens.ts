@@ -31,5 +31,26 @@ export function applyTokensToSemanticReleaseOptions(
   if (options.gitAssets?.length)
     options.gitAssets = options.gitAssets.map((asset) => replaceTokens(asset));
 
+  if (options.plugins?.length) {  // replace token in plugin's (string, string[]) options (when provided)
+    options.plugins = options.plugins.map((plugin) => {
+      if (typeof plugin === 'string') {
+        return plugin; // no option provided, no replacement necessary
+      }
+      else {
+        const [pluginName, pluginOptions] = plugin;
+        const newPluginOptions = Object.entries(pluginOptions).reduce(
+          (newOptions, [key, value]) => ({
+            ...newOptions,
+            [key]: typeof value === 'string' ?
+              replaceTokens(value) :
+              (Array.isArray(value) ? value.map(v => typeof v === 'string' ? replaceTokens(v) : v) : value),
+          }),
+          {}
+        );
+        return [pluginName, newPluginOptions];
+      }
+    })
+  }
+
   return options;
 }

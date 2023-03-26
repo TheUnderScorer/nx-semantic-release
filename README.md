@@ -142,9 +142,29 @@ $ nx semantic-release app-c --repositoryUrl "https://github.com/TheUnderScorer/n
 | ${WORKSPACE_DIR}| Resolves to the current workspace direcory (ex. `/Users/theunderscorer/nx-monorepo`)          |
 
 
-The following options support tokens: `buildTarget`, `changelogFile`, `commitMessage`, `gitAssets`, `packageJsonDir`, `outputPath` and `tagFormat`.
+The following options support tokens: `buildTarget`, `changelogFile`, `commitMessage`, `gitAssets`, `packageJsonDir`, `outputPath`, `plugins`'s options<sup>*</sup>, and `tagFormat`.
 
 You may see other tokens like `${nextRelease.version}`, those are tokens that are replaced by semantic-release itself.
+
+> <sup>*</sup>: The replacement of tokens in `plugins` only occurs for plugins which are specified with options, using [semantic-release's syntax](https://semantic-release.gitbook.io/semantic-release/usage/plugins#plugin-options-configuration)
+> For example:
+> ```
+> plugins: [
+>             '@fake/plugin-without-options1', 
+>             [
+>               '@semantic-release/exec',
+>               {
+>                 prepareCmd: 'cp ${WORKSPACE_DIR}/src ${WORKSPACE_DIR}/dist',
+>                 execCwd: '${WORKSPACE_DIR}',
+>                 fakeStringArrayOption: ['${WORKSPACE_DIR}/src', '${WORKSPACE_DIR}/dist'],
+>                 fakeBooleanOption: true,
+>                 fakeNumberOption: 10
+>               }
+>             ],
+>             '@fake/plugin-without-options2', 
+>         ]
+> ```
+> In above example, tokens will be replaced only for `@semantic-release/exec` plugin, and only for its `string|string[]` options, others will be left untouched.
 
 ### Build target
 

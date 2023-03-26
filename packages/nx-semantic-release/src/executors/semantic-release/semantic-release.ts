@@ -7,7 +7,7 @@ import {
 } from '@nrwl/devkit';
 import { cosmiconfigSync } from 'cosmiconfig';
 import type release from 'semantic-release';
-import { Options as BaseSemanticReleaseOptions } from 'semantic-release';
+import { Options as BaseSemanticReleaseOptions, PluginSpec } from 'semantic-release';
 import { setExecutorContext } from '../../semantic-release-plugin';
 import { resolvePlugins } from './plugins';
 import { defaultOptions } from './default-options';
@@ -39,6 +39,7 @@ export type SemanticReleaseOptions = Omit<
     | { release: string | boolean; [key: string]: unknown }[];
   preset?: string;
   presetConfig?: Record<string, unknown>;
+  plugins?: PluginSpec[]
 };
 
 export async function semanticRelease(
