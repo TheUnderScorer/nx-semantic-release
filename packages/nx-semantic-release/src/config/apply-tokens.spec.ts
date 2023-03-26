@@ -35,7 +35,7 @@ describe('applyTokensToSemanticReleaseOptions', () => {
         [
           '@semantic-release/exec',
           {
-            prepareCmd: 'cp LICENSE dist/packages/${PROJECT_NAME}',
+            prepareCmd: 'cp LICENSE dist/packages/${PROJECT_NAME} && cp README.md dist/packages/${PROJECT_NAME}',
             execCwd: '${WORKSPACE_DIR}',
             fakeStringArrayOption: ['${WORKSPACE_DIR}/src', '${WORKSPACE_DIR}/dist'],
             fakeBooleanOption: true,
@@ -98,7 +98,7 @@ describe('applyTokensToSemanticReleaseOptions', () => {
       [
         '@semantic-release/exec',
         {
-          prepareCmd: 'cp LICENSE dist/packages/app-a',
+          prepareCmd: 'cp LICENSE dist/packages/app-a && cp README.md dist/packages/app-a',
           execCwd: '.',
           fakeStringArrayOption: ['./src', './dist'],
           fakeBooleanOption: true,

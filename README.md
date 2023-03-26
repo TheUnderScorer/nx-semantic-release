@@ -154,7 +154,7 @@ You may see other tokens like `${nextRelease.version}`, those are tokens that ar
 >             [
 >               '@semantic-release/exec',
 >               {
->                 prepareCmd: 'cp ${WORKSPACE_DIR}/src ${WORKSPACE_DIR}/dist',
+>                 prepareCmd: 'cp LICENSE dist/packages/${PROJECT_NAME} && cp README.md dist/packages/${PROJECT_NAME}',
 >                 execCwd: '${WORKSPACE_DIR}',
 >                 fakeStringArrayOption: ['${WORKSPACE_DIR}/src', '${WORKSPACE_DIR}/dist'],
 >                 fakeBooleanOption: true,
