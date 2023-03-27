@@ -1,3 +1,17 @@
+## [2.2.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.1.0...nx-semantic-release-v2.2.0) (2023-03-27)
+
+
+### Features
+
+* add `${WORKSPACE_DIR}` token that resolves to workspace directory ([11b1c60](https://github.com/TheUnderScorer/nx-semantic-release/commit/11b1c600eed0a2478c7d582cc395884c86b6e145))
+* replace tokens in `outputPath` option ([10508ae](https://github.com/TheUnderScorer/nx-semantic-release/commit/10508aea18297c3741242466a968a9001ccc1759))
+* replace tokens in `plugins`' options of type `string | string[]` ([57f00f5](https://github.com/TheUnderScorer/nx-semantic-release/commit/57f00f5db5e9f9ec8ce1e7ecf9b0fbf61b86fe38))
+
+
+### Bug Fixes
+
+* replace all occurences of a token in an option, not only the first one ([320877a](https://github.com/TheUnderScorer/nx-semantic-release/commit/320877ab70ceaac58bfc37cfa5de4b7265284cbf))
+
 ## [2.1.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.0.1...nx-semantic-release-v2.1.0) (2023-03-22)
 
 
