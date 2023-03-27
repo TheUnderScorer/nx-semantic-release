@@ -20,6 +20,7 @@ import { ExecutorOptions } from '../../types';
 import { unwrapExecutorOptions } from '../../utils/executor';
 import { applyTokensToSemanticReleaseOptions } from '../../config/apply-tokens';
 import { getDefaultProjectRoot, GetProjectContext } from '../../common/project';
+import { readCachedProjectConfiguration } from "nx/src/project-graph/project-graph";
 
 export type SemanticReleaseOptions = Omit<
   BaseSemanticReleaseOptions,
@@ -77,6 +78,10 @@ export async function semanticRelease(
         );
       }
     }
+
+    //TODO Fix
+    const projectConfig = readCachedProjectConfiguration(params.project);
+    resolvedOptions.outputPath = resolvedOptions.outputPath ?? path.join(workspaceRoot, projectConfig.targets?.[params.target]?.options?.outputPath);
   }
 
   setExecutorContext(context);
