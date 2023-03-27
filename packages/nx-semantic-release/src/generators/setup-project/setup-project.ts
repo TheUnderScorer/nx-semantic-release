@@ -3,6 +3,7 @@ import {
   Tree,
   updateProjectConfiguration,
   readProjectConfiguration,
+  workspaceRoot
 } from '@nrwl/devkit';
 import { executors } from '../../../builders.json';
 import { name } from '../../../package.json';
@@ -26,6 +27,7 @@ export async function setupProject(
   const semanticReleaseConfig = applyTokensToSemanticReleaseOptions(options, {
     projectName,
     projectDir: projectConfig.root,
+    workspaceDir: workspaceRoot
   });
 
   updateProjectConfiguration(tree, projectName, {
