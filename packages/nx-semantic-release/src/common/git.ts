@@ -33,7 +33,8 @@ export async function isCommitAffectingProjects({
 
   const affectedFiles = await listAffectedFilesInCommit(commit);
   const fileChanges = calculateFileChanges(affectedFiles, [], { projects });
-  const filteredGraph = filterAffected(graph, fileChanges);
+  const filteredGraph = await filterAffected(graph, fileChanges)
+
 
   const isAffected = projects.some((project) =>
     Boolean(filteredGraph.nodes[project])
@@ -73,12 +74,22 @@ export function shouldSkipCommit(
 
   const hasOnlyMatch =
     onlyMatches.length &&
-    !onlyMatches.some((match) =>  match[1].split(',').map(project => project.trim()).some((project) => project === projectName));
+    !onlyMatches.some((match) =>
+      match[1]
+        .split(',')
+        .map((project) => project.trim())
+        .some((project) => project === projectName)
+    );
 
-  const hasSkipMatch = 
+  const hasSkipMatch =
     commit.body.includes(skipAll) ||
-    skipMatches.length &&
-    skipMatches.some((match) =>  match[1].split(',').map(project => project.trim()).some((project) => project === projectName));
+    (skipMatches.length &&
+      skipMatches.some((match) =>
+        match[1]
+          .split(',')
+          .map((project) => project.trim())
+          .some((project) => project === projectName)
+      ));
 
   return Boolean(hasSkipMatch || hasOnlyMatch);
 }
@@ -89,7 +100,7 @@ async function listAffectedFilesInCommit(
   // eg. /code/Repo/frontend/
   const cwd = process.cwd() + '/';
   // eg. /code/Repo/
-  const repositoryRoot = await exec('git rev-parse --show-toplevel') + '/';
+  const repositoryRoot = (await exec('git rev-parse --show-toplevel')) + '/';
   // Matches the start of a path from the git root to the nx root
   const nxPathPart = new RegExp(`^${cwd.substring(repositoryRoot.length)}`);
 
@@ -105,8 +116,8 @@ async function listAffectedFilesInCommit(
       return filePath.match(nxPathPart);
     })
     .map((filePath: string) => {
-        // The filepaths start from the root of the git repository, but
-        // in our case we want them to start from the nx root.
-        return filePath.replace(nxPathPart, '');
+      // The filepaths start from the root of the git repository, but
+      // in our case we want them to start from the nx root.
+      return filePath.replace(nxPathPart, '');
     });
 }
