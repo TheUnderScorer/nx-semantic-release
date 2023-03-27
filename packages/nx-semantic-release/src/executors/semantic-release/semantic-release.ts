@@ -15,7 +15,8 @@ import { ExecutorOptions } from '../../types';
 import { unwrapExecutorOptions } from '../../utils/executor';
 import { applyTokensToSemanticReleaseOptions } from '../../config/apply-tokens';
 import { getDefaultProjectRoot, GetProjectContext } from '../../common/project';
-import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
+import { createProjectGraphAsync, readCachedProjectConfiguration } from '@nrwl/workspace/src/core/project-graph';
+import { join } from 'path';
 
 export type SemanticReleaseOptions = Omit<
   BaseSemanticReleaseOptions,
@@ -72,6 +73,9 @@ export async function semanticRelease(
         );
       }
     }
+
+    const projectConfig = readCachedProjectConfiguration(params.project);
+    resolvedOptions.outputPath = resolvedOptions.outputPath ?? join(workspaceRoot, projectConfig.targets?.[params.target]?.options?.outputPath);
   }
 
   setExecutorContext(context);
