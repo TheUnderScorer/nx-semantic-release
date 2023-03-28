@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.2.0...nx-semantic-release-v2.2.1) (2023-03-28)
+
+
+### Bug Fixes
+
+* await filterAffected ([54f42ad](https://github.com/TheUnderScorer/nx-semantic-release/commit/54f42ad8118f19769c9ebccec6af06321a26e35e))
+
 ## [2.2.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.1.0...nx-semantic-release-v2.2.0) (2023-03-27)
 
 
