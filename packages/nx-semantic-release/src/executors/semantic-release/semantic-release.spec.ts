@@ -1,12 +1,26 @@
+
 import { defaultOptions } from './default-options';
 import {
   parseTag,
   resolveOptions,
+  semanticRelease as semanticReleaseExecutor,
+  getSemanticRelease,
   SemanticReleaseOptions,
 } from './semantic-release';
 import { tmpProjPath } from '@nx/plugin/testing';
 import { setupTestRepo } from '../../tests/setup-test-repo';
 import { GetProjectContext } from '../../common/project';
+import { ExecutorContext, workspaceRoot } from '@nrwl/devkit';
+import {readCachedProjectConfiguration } from '@nrwl/workspace/src/core/project-graph';
+import { join } from 'path';
+
+jest.mock('./semantic-release.ts', () => ({
+  ...(jest.requireActual('./semantic-release')),
+  getSemanticRelease: jest.fn()
+}))
+jest.mock('@nrwl/workspace/src/core/project-graph');
+
+
 
 describe('parseTag', () => {
   it('should return correct tag', () => {
@@ -105,4 +119,76 @@ describe('resolveOptions', () => {
     expect(cosmicOptions.option3).toBeUndefined();
     expect(resolvedOptions.option3).toEqual('fake3Proj');
   });
+});
+
+describe('semanticRelease', () => {
+
+  const projPath = tmpProjPath();
+
+  const options: SemanticReleaseOptions = {
+    ...defaultOptions,
+    changelog: true,
+    changelogFile: '',
+    commitMessage: '',
+    github: true,
+    npm: true,
+    git: true,
+    buildTarget: 'app-a:build'
+  };
+
+  const mockContext: ExecutorContext = {
+    root: '/root',
+    projectName: 'app-a',
+    targetName: 'build',
+    configurationName: 'production',
+    cwd: projPath,
+    isVerbose: false,
+    projectsConfigurations: {
+      version: 2,
+      projects: {
+        'app-a': {
+          root: '/apps/app-a',
+          targets: {
+            build: { // fake build target, that does nothing meaningful, other than declaring an outputPath, that points to built artifacts
+              executor: 'nx:run-commands',
+              options: {
+                command: 'echo "build done!"',
+                outputPath: 'dist/apps/app-a',
+                cwd: projPath
+              }
+            }
+          },
+        }
+      },
+    },
+  };
+
+  const mockRelease = jest.fn(()=>Promise.resolve({}))
+
+
+  beforeEach(async () => {
+    (
+      readCachedProjectConfiguration as jest.Mock //we need to mock it, otherwise it will return _this_ plugin workspace config instead
+    ).mockImplementation(() => mockContext.projectsConfigurations?.projects['app-a']);
+
+    (getSemanticRelease as jest.Mock).mockResolvedValue(mockRelease);
+
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it.only('should run executor and infer "outputhPath" from "buildTarget" options', async () => {
+
+    await semanticReleaseExecutor(options, mockContext);
+
+    expect(mockRelease).toHaveBeenCalledWith(expect.objectContaining({
+      ...options,
+      outputPath: `${join(workspaceRoot, 'dist/apps/app-a')}`
+    }))
+
+  });
+
+
 });

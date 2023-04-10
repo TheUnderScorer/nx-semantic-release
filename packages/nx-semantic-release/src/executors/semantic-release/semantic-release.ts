@@ -81,7 +81,7 @@ export async function semanticRelease(
 
     //TODO Fix
     const projectConfig = readCachedProjectConfiguration(params.project);
-    resolvedOptions.outputPath = resolvedOptions.outputPath ?? path.join(workspaceRoot, projectConfig.targets?.[params.target]?.options?.outputPath);
+    resolvedOptions.outputPath = resolvedOptions.outputPath ?? join(workspaceRoot, projectConfig.targets?.[params.target]?.options?.outputPath ?? '');
   }
 
   setExecutorContext(context);
