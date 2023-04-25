@@ -198,6 +198,15 @@ Alternatively you can include only particular projects in given commit by using 
 During analysis this commit will be included only for release pipeline for `my-app`, `my-app2`.
 You can also use **one single** `[skip my-app1, my-app2]` to skip commits related to `my-app1`, `my-app2` at once.
 
+## Releasing multiple apps/libraries at once
+
+You can release multiple apps/libraries at once by using `nx run-many`:
+
+```shell
+npx nx run-many --target=semantic-release --parallel=false
+```
+> Note: `--parallel=false` is required to run tasks sequentially, otherwise `nx run-many` will run tasks in parallel and semantic-release will fail.
+
 
 ## CI/CD
 
