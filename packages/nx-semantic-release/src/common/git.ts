@@ -2,7 +2,7 @@ import type { Commit, Context } from 'semantic-release';
 import process from 'process';
 import { ProjectGraph } from '@nx/devkit';
 import { exec } from '../utils/exec';
-import { calculateFileChanges } from '@nx/workspace/src/core/file-utils';
+import { calculateFileChanges } from 'nx/src/project-graph/file-utils';
 import { filterAffected } from 'nx/src/project-graph/affected/affected-project-graph';
 
 interface CommitAffectingProjectsParams {

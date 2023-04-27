@@ -18,7 +18,7 @@ import { ExecutorOptions } from '../../types';
 import { unwrapExecutorOptions } from '../../utils/executor';
 import { applyTokensToSemanticReleaseOptions } from '../../config/apply-tokens';
 import { getDefaultProjectRoot, GetProjectContext } from '../../common/project';
-import { createProjectGraphAsync } from '@nx/workspace/src/core/project-graph';
+import { createProjectGraphAsync } from '@nx/devkit';
 
 export type SemanticReleaseOptions = Omit<
   BaseSemanticReleaseOptions,
