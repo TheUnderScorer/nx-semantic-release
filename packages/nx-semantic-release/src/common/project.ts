@@ -2,7 +2,7 @@ import {
   ExecutorContext,
   ProjectConfiguration,
   ProjectGraph,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { filter, map, pipe } from 'remeda';
 import path from 'path';
 

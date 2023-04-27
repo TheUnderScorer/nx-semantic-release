@@ -5,14 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/nx-semantic-release/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/nx-semantic-release"],
       "options": {
         "jestConfig": "packages/nx-semantic-release/jest.config.ts",
@@ -20,13 +20,12 @@
       },
       "dependsOn": [
         {
-          "target": "build",
-          "projects": "self"
+          "target": "build"
         }
       ]
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-semantic-release",
@@ -57,7 +56,10 @@
       "options": {
         "branches": [
           "master",
-          { "name": "beta", "prerelease": true }
+          {
+            "name": "beta",
+            "prerelease": true
+          }
         ],
         "buildTarget": "nx-semantic-release:build",
         "repositoryUrl": "https://github.com/TheUnderScorer/nx-semantic-release",

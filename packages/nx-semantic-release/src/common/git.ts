@@ -1,8 +1,8 @@
 import type { Commit, Context } from 'semantic-release';
 import process from 'process';
-import { ProjectGraph } from '@nrwl/devkit';
+import { ProjectGraph } from '@nx/devkit';
 import { exec } from '../utils/exec';
-import { calculateFileChanges } from '@nrwl/workspace/src/core/file-utils';
+import { calculateFileChanges } from '@nx/workspace/src/core/file-utils';
 import { filterAffected } from 'nx/src/project-graph/affected/affected-project-graph';
 
 interface CommitAffectingProjectsParams {
@@ -33,8 +33,7 @@ export async function isCommitAffectingProjects({
 
   const affectedFiles = await listAffectedFilesInCommit(commit);
   const fileChanges = calculateFileChanges(affectedFiles, [], { projects });
-  const filteredGraph = await filterAffected(graph, fileChanges)
-
+  const filteredGraph = await filterAffected(graph, fileChanges);
 
   const isAffected = projects.some((project) =>
     Boolean(filteredGraph.nodes[project])

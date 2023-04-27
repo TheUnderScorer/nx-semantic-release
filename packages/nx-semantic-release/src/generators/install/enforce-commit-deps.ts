@@ -3,7 +3,7 @@ import {
   readJson,
   Tree,
   updateJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import type { PackageJson } from 'type-fest';
 import { constants } from 'fs';
 

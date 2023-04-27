@@ -4,7 +4,7 @@ import {
   resolveOptions,
   SemanticReleaseOptions,
 } from './semantic-release';
-import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { tmpProjPath } from '@nx/plugin/testing';
 import { setupTestRepo } from '../../tests/setup-test-repo';
 import { GetProjectContext } from '../../common/project';
 

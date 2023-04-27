@@ -1,11 +1,11 @@
 import type { Commit, Context } from 'semantic-release';
 import { PluginFn } from 'semantic-release-plugin-decorators';
 import { executorContext } from './executor-context';
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext } from '@nx/devkit';
 import { getProjectDependencies } from '../common/project';
 import { isCommitAffectingProjects } from '../common/git';
 import { promiseFilter } from '../utils/promise-filter';
-import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
+import { createProjectGraphAsync } from '@nx/workspace/src/core/project-graph';
 
 export const getCommitsForProject =
   (verbose?: boolean) =>

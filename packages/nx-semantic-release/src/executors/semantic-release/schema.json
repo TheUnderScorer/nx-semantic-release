@@ -6,7 +6,6 @@
   "title": "NX Semantic Release",
   "description": "Automate versioning and CHANGELOG generation.",
   "type": "object",
-  "cli": "nx",
   "properties": {
     "preset": {
       "description": "Conventional commits Preset to use for the release.",

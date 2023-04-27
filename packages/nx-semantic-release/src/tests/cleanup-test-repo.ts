@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import { remoteGitPath } from './constants';
-import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { tmpProjPath } from '@nx/plugin/testing';
 import { rimraf } from 'rimraf';
 
 async function rmIfExists(dirPath: string) {

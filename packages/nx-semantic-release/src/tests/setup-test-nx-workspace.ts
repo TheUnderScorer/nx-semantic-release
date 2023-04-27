@@ -1,4 +1,4 @@
-import { ensureNxProject, tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { ensureNxProject, tmpProjPath } from '@nx/plugin/testing';
 import fs from 'fs-extra';
 import { cleanupTestRepo } from './cleanup-test-repo';
 

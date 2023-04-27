@@ -1,9 +1,5 @@
-import {
-  readJson,
-  runNxCommandAsync,
-  updateFile,
-} from '@nrwl/nx-plugin/testing';
-import { ProjectConfiguration, TargetConfiguration } from '@nrwl/devkit';
+import { readJson, runNxCommandAsync, updateFile } from '@nx/plugin/testing';
+import { ProjectConfiguration, TargetConfiguration } from '@nx/devkit';
 import { SemanticReleaseOptions } from '../../executors/semantic-release/semantic-release';
 import { TestReleasableProject } from '../../tests/types';
 import { setupTestRepo } from '../../tests/setup-test-repo';

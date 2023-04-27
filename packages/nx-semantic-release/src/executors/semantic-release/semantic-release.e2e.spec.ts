@@ -9,7 +9,7 @@ import {
 } from '../../tests/files';
 import { assertReleaseNotes } from '../../tests/release-notes';
 import { PackageJson } from 'type-fest';
-import { readJson } from '@nrwl/nx-plugin/testing';
+import { readJson } from '@nx/plugin/testing';
 import { safeRunNxCommandAsync } from '../../tests/utils';
 import { findReleaseCommit } from '../../tests/find-release-commit';
 
