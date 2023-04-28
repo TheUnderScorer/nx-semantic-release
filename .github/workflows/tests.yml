@@ -32,7 +32,7 @@ jobs:
           cache: 'npm'
 
       - name: Install npm dependencies
-        run: npm ci --force
+        run: npm ci
 
       - name: Typecheck
         run: npm run typecheck
