@@ -1,7 +1,7 @@
 import gitlog from 'gitlog';
 import { TestRepoCommit } from './types';
 import { exec } from '../utils/exec';
-import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { tmpProjPath } from '@nx/plugin/testing';
 
 export const getTestRepoCommits = (): TestRepoCommit[] =>
   gitlog({

@@ -1,4 +1,4 @@
-import { logger } from '@nrwl/devkit';
+import { logger } from '@nx/devkit';
 import { exec } from '../packages/nx-semantic-release/src/utils/exec';
 import { config } from 'dotenv';
 

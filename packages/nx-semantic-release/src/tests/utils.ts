@@ -1,5 +1,5 @@
-import { ProjectsConfigurations } from '@nrwl/devkit';
-import { readJson, tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { ProjectsConfigurations } from '@nx/devkit';
+import { readJson, tmpProjPath } from '@nx/plugin/testing';
 import { exec } from '../utils/exec';
 import { execSync } from 'child_process';
 import { omit } from 'remeda';

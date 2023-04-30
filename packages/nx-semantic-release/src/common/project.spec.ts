@@ -1,6 +1,6 @@
 import path from "path";
 import { getProject, GetProjectContext, getProjectDependencies, getProjectRoot } from "./project";
-import { tmpProjPath } from "@nrwl/nx-plugin/testing";
+import { tmpProjPath } from "@nx/plugin/testing";
 
 describe("project", () => {
   const projectsConfigurations = {

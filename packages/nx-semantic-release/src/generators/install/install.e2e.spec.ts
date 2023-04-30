@@ -1,8 +1,4 @@
-import {
-  readJson,
-  runNxCommandAsync,
-  tmpProjPath,
-} from '@nrwl/nx-plugin/testing';
+import { readJson, runNxCommandAsync, tmpProjPath } from '@nx/plugin/testing';
 import { PackageJson } from 'type-fest';
 import { generatedConfigFileName } from './create-config-file';
 import {

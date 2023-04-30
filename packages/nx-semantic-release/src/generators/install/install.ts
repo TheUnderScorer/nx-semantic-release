@@ -1,5 +1,5 @@
 import { SemanticReleaseOptions } from '../../executors/semantic-release/semantic-release';
-import { formatFiles, logger, Tree, installPackagesTask } from '@nrwl/devkit';
+import { formatFiles, logger, Tree, installPackagesTask } from '@nx/devkit';
 import { addCommitEnforceDependencies } from './enforce-commit-deps';
 import { createConfigFile } from './create-config-file';
 

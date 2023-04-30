@@ -17,10 +17,10 @@ import {
   runNxCommandAsync,
   tmpProjPath,
   updateFile,
-} from '@nrwl/nx-plugin/testing';
+} from '@nx/plugin/testing';
 import { NxJsonConfiguration } from 'nx/src/config/nx-json';
 import { SemanticReleaseOptions } from '../executors/semantic-release/semantic-release';
-import { ProjectConfiguration } from '@nrwl/devkit';
+import { ProjectConfiguration } from '@nx/devkit';
 import path from 'path';
 import { getStartPath } from './files';
 import { setupTestNxWorkspace } from './setup-test-nx-workspace';
@@ -105,12 +105,12 @@ function createPackageJsonForProjects() {
 async function bootstrapTestProjectsAndLibs() {
   testApps.forEach((project) => {
     runNxCommand(
-      `generate @nrwl/web:application ${project} --e2e-test-runner=none`
+      `generate @nx/web:application ${project} --e2e-test-runner=none`
     );
   });
 
   testLibs.forEach((lib) => {
-    runNxCommand(`generate @nrwl/js:library ${lib}`);
+    runNxCommand(`generate @nx/js:library ${lib}`);
   });
 
   createPackageJsonForProjects();

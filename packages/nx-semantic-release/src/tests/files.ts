@@ -1,6 +1,6 @@
 import { TestReleasableProject } from './types';
 import path from 'path';
-import { readFile, readJson } from '@nrwl/nx-plugin/testing';
+import { readFile, readJson } from '@nx/plugin/testing';
 
 export const getStartPath = (
   app: TestReleasableProject,

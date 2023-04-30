@@ -17,7 +17,8 @@ In order to run tests run:
 ```shell
 npm run test
 ```
-> Note: E2E tests use `@nrwl/nx-plugin` for generating test workspace. You can learn more about it [here](https://nx.dev/packages/nx-plugin).
+
+> Note: E2E tests use `@nx/plugin` for generating test workspace. You can learn more about it [here](https://nx.dev/packages/nx-plugin).
 
 ## Working with code
 
@@ -29,4 +30,4 @@ The project follows [Conventional Commits](https://conventionalcommits.org/) for
 
 ## How to publish
 
-The package is automatically published on every push to `master` branch if there are relevant changes. 
+The package is automatically published on every push to `master` branch if there are relevant changes.

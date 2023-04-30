@@ -1,4 +1,4 @@
-import { writeJsonFile } from '@nrwl/devkit';
+import { writeJsonFile } from '@nx/devkit';
 import { SemanticReleaseOptions } from '../../executors/semantic-release/semantic-release';
 import { InstallGeneratorOptions } from './install';
 

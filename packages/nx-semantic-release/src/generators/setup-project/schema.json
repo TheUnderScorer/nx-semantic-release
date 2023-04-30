@@ -2,7 +2,6 @@
   "$schema": "http://json-schema.org/schema",
   "title": "@theunderscorer/nx-semantic-release setup generator for project",
   "type": "object",
-  "cli": "nx",
   "properties": {
     "projectName": {
       "type": "string",
@@ -38,5 +37,7 @@
       "x-prompt": "What tag format would you like to use for this project. Hint: you can use ${PROJECT_NAME} and ${VERSION} tokens here."
     }
   },
-  "required": ["projectName"]
+  "required": [
+    "projectName"
+  ]
 }
