@@ -52,7 +52,7 @@
       }
     },
     "semantic-release": {
-      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "executor": "@goestav/nx-semantic-release:semantic-release",
       "options": {
         "branches": [
           "master",
@@ -62,7 +62,7 @@
           }
         ],
         "buildTarget": "nx-semantic-release:build",
-        "repositoryUrl": "https://github.com/TheUnderScorer/nx-semantic-release",
+        "repositoryUrl": "https://github.com/goestav/nx-semantic-release",
         "github": true,
         "outputPath": "dist/packages/nx-semantic-release",
         "releaseRules": [

@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -22,17 +22,17 @@ jobs:
 
       - name: Configure CI Git User
         run: |
-          git config --global user.name 'TheUnderScorer'
-          git config --global user.email 'przemyslawzydek@gmail.com'
-          git remote set-url origin https://TheUnderScorer:$GITHUB_TOKEN@github.com/TheUnderScorer/nx-semantic-release
+          git config --global user.name 'goestav'
+          git config --global user.email '27970303+goestav@users.noreply.github.com'
+          git remote set-url origin https://goestav:$GITHUB_TOKEN@github.com/goestav/nx-semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install npm dependencies
         run: npm ci
 
       - name: Link package
-        run: npm run build:skip-cache && npm link dist/packages/nx-semantic-release && npm ls @theunderscorer/nx-semantic-release
+        run: npm run build:skip-cache && npm link dist/packages/nx-semantic-release && npm ls @goestav/nx-semantic-release
 
       - name: Print versions
         run: |
@@ -43,6 +43,6 @@ jobs:
       - name: Release
         run: npm run release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

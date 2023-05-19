@@ -19,9 +19,9 @@ jobs:
 
       - name: Configure CI Git User
         run: |
-          git config --global user.name 'TheUnderScorer'
-          git config --global user.email 'przemyslawzydek@gmail.com'
-          git remote set-url origin https://TheUnderScorer:$GITHUB_TOKEN@github.com/TheUnderScorer/nx-semantic-release
+          git config --global user.name 'goestav'
+          git config --global user.email '27970303+goestav@users.noreply.github.com'
+          git remote set-url origin https://goestav:$GITHUB_TOKEN@github.com/goestav/nx-semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

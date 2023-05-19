@@ -24,7 +24,7 @@ describe('Installer', () => {
 
   it('should create example', async () => {
     await runNxCommandAsync(
-      `generate @theunderscorer/nx-semantic-release:install --repositoryUrl=test --enforceConventionalCommits=false`
+      `generate @goestav/nx-semantic-release:install --repositoryUrl=test --enforceConventionalCommits=false`
     );
 
     const config = readJson(generatedConfigFileName);
@@ -34,7 +34,7 @@ describe('Installer', () => {
   describe('--enforceConventionalCommits', () => {
     it('should setup project to enforce conventional commits', async () => {
       await runNxCommandAsync(
-        `generate @theunderscorer/nx-semantic-release:install --repositoryUrl=test --enforceConventionalCommits`
+        `generate @goestav/nx-semantic-release:install --repositoryUrl=test --enforceConventionalCommits`
       );
 
       const paths = {

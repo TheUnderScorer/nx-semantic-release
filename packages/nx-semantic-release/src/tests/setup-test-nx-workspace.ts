@@ -14,7 +14,7 @@ export async function setupTestNxWorkspace() {
       throw new Error(`Nx plugin dist folder does not exist at: ${distPath}`);
     }
 
-    ensureNxProject('@theunderscorer/nx-semantic-release', distPath);
+    ensureNxProject('@goestav/nx-semantic-release', distPath);
   } catch (error) {
     console.error('Failed to setup test Nx workspace', error);
 

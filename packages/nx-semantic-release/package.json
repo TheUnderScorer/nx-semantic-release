@@ -1,7 +1,7 @@
 {
-  "name": "@theunderscorer/nx-semantic-release",
+  "name": "@goestav/nx-semantic-release",
   "version": "2.4.0",
-  "description": "Semantic release for NX.",
+  "description": "Semantic release for NX with support for ESM.",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TheUnderScorer/nx-semantic-release"
+    "url": "https://github.com/goestav/nx-semantic-release"
   },
   "engines": {
     "node": ">=16.0.0"
