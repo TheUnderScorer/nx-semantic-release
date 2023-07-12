@@ -19,4 +19,5 @@ export const defaultOptions: SemanticReleaseOptions = {
   npm: true,
   repositoryUrl: '',
   tagFormat: '${PROJECT_NAME}-v${version}',
+  preset: 'angular'
 };

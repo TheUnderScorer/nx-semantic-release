@@ -9,8 +9,7 @@
   "properties": {
     "preset": {
       "description": "Conventional commits Preset to use for the release.",
-      "type": "string",
-      "default": "angular"
+      "type": "string"
     },
     "presetConfig": {
       "description": "Conventional commits preset configuration to use for the release.",
