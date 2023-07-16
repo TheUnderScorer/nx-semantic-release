@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.4.0...nx-semantic-release-v2.4.1) (2023-07-16)
+
+
+### Bug Fixes
+
+* Allow for `preset` to be set in project configuration file ([3fb9244](https://github.com/TheUnderScorer/nx-semantic-release/commit/3fb9244a1ae318fdee2871c672e0e61ecfaf5a16)), closes [#80](https://github.com/TheUnderScorer/nx-semantic-release/issues/80)
+
 ## [2.4.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.3.0...nx-semantic-release-v2.4.0) (2023-04-30)
 
 
