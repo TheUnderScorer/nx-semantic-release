@@ -1,4 +1,5 @@
 import {
+  createProjectGraphAsync,
   ExecutorContext,
   parseTargetString,
   ProjectGraph,
@@ -18,7 +19,6 @@ import { ExecutorOptions } from '../../types';
 import { unwrapExecutorOptions } from '../../utils/executor';
 import { applyTokensToSemanticReleaseOptions } from '../../config/apply-tokens';
 import { getDefaultProjectRoot, GetProjectContext } from '../../common/project';
-import { createProjectGraphAsync } from '@nx/devkit';
 
 export type SemanticReleaseOptions = Omit<
   BaseSemanticReleaseOptions,
@@ -26,6 +26,7 @@ export type SemanticReleaseOptions = Omit<
 > & {
   npm: boolean;
   github: boolean;
+  githubOptions?: Record<string, unknown>;
   buildTarget?: string;
   changelog?: boolean;
   changelogFile?: string;

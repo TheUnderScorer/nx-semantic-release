@@ -110,7 +110,7 @@ export const resolvePlugins = (
   }
 
   if (options.github) {
-    defaultPlugins.push('@semantic-release/github');
+    defaultPlugins.push(['@semantic-release/github', options.githubOptions]);
   }
 
   return defaultPlugins;
