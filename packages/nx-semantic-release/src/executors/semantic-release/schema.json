@@ -15,6 +15,10 @@
       "description": "Conventional commits preset configuration to use for the release.",
       "type": "object"
     },
+    "githubOptions": {
+      "description": "Options for @semantic-release/github executor",
+      "type": "object"
+    },
     "dryRun": {
       "description": "See what commands would be run, without committing to git or updating files.",
       "type": "boolean"

@@ -10,6 +10,7 @@ export const defaultOptions: SemanticReleaseOptions = {
   ],
   changelog: true,
   changelogFile: '${PROJECT_DIR}/CHANGELOG.md',
+  githubOptions: {},
   ci: true,
   commitMessage:
     'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
@@ -19,5 +20,5 @@ export const defaultOptions: SemanticReleaseOptions = {
   npm: true,
   repositoryUrl: '',
   tagFormat: '${PROJECT_NAME}-v${version}',
-  preset: 'angular'
+  preset: 'angular',
 };
