@@ -1,3 +1,10 @@
+## [2.5.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.4.1...nx-semantic-release-v2.5.0) (2023-07-16)
+
+
+### Features
+
+* support passing options for @semantic-release/github plugin ([5d3ac04](https://github.com/TheUnderScorer/nx-semantic-release/commit/5d3ac04b096e247c1279c1a75e0e47689de6b69b))
+
 ## [2.4.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.4.0...nx-semantic-release-v2.4.1) (2023-07-16)
 
 
