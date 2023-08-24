@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.6.0...nx-semantic-release-v2.6.1) (2023-08-24)
+
+
+### Bug Fixes
+
+* include missing es6-weak-map dependency ([12ad568](https://github.com/TheUnderScorer/nx-semantic-release/commit/12ad5680e49223c7f6d77b8a4608886b0f926e09))
+
 ## [2.6.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.5.0...nx-semantic-release-v2.6.0) (2023-08-24)
 
 
