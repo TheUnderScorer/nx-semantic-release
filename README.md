@@ -143,7 +143,7 @@ $ nx semantic-release app-c --repositoryUrl "https://github.com/TheUnderScorer/n
 | ${WORKSPACE_DIR}| Resolves to the current workspace direcory (ex. `/Users/theunderscorer/nx-monorepo`)          |
 
 
-The following options support tokens: `buildTarget`, `changelogFile`, `commitMessage`, `gitAssets`, `packageJsonDir`, `outputPath`, `plugins`'s options<sup>*</sup>, and `tagFormat`.
+Every available option support tokens - this included nested objects and arrays.
 
 You may see other tokens like `${nextRelease.version}`, those are tokens that are replaced by semantic-release itself.
 
