@@ -30,20 +30,36 @@ describe('applyTokensToSemanticReleaseOptions', () => {
       packageJsonDir: '${PROJECT_DIR}/src',
       tagFormat: '${PROJECT_NAME}-v${version}',
       outputPath: '${WORKSPACE_DIR}/dist/apps/${PROJECT_NAME}',
+      githubOptions: {},
       plugins: [
-        '@fake/plugin-without-options1', 
+        '@fake/plugin-without-options1',
         [
           '@semantic-release/exec',
           {
-            prepareCmd: 'cp LICENSE dist/packages/${PROJECT_NAME} && cp README.md dist/packages/${PROJECT_NAME}',
+            prepareCmd:
+              'cp LICENSE dist/packages/${PROJECT_NAME} && cp README.md dist/packages/${PROJECT_NAME}',
             execCwd: '${WORKSPACE_DIR}',
-            fakeStringArrayOption: ['${WORKSPACE_DIR}/src', '${WORKSPACE_DIR}/dist'],
+            fakeStringArrayOption: [
+              '${WORKSPACE_DIR}/src',
+              '${WORKSPACE_DIR}/dist',
+            ],
             fakeBooleanOption: true,
-            fakeNumberOption: 10
-          }
+            fakeNumberOption: 10,
+          },
         ],
-        '@fake/plugin-without-options2', 
-    ]
+        [
+          '@semantic-release/github',
+          {
+            assets: [
+              {
+                path: '${PROJECT_DIR}/dist/asset.min.css',
+                label: 'CSS distribution',
+              },
+            ],
+          },
+        ],
+        '@fake/plugin-without-options2',
+      ],
     };
   });
 
@@ -86,7 +102,6 @@ describe('applyTokensToSemanticReleaseOptions', () => {
     expect(results.outputPath).toEqual(`./dist/apps/app-a`);
   });
 
-
   it('should replace tokens in plugins options of type string or string[]', () => {
     const results = applyTokensToSemanticReleaseOptions(
       mockOptions,
@@ -94,18 +109,30 @@ describe('applyTokensToSemanticReleaseOptions', () => {
     );
 
     expect(results.plugins).toEqual([
-      '@fake/plugin-without-options1', 
+      '@fake/plugin-without-options1',
       [
         '@semantic-release/exec',
         {
-          prepareCmd: 'cp LICENSE dist/packages/app-a && cp README.md dist/packages/app-a',
+          prepareCmd:
+            'cp LICENSE dist/packages/app-a && cp README.md dist/packages/app-a',
           execCwd: '.',
           fakeStringArrayOption: ['./src', './dist'],
           fakeBooleanOption: true,
-          fakeNumberOption: 10
-        }
+          fakeNumberOption: 10,
+        },
       ],
-      '@fake/plugin-without-options2', 
-  ]);
+      [
+        '@semantic-release/github',
+        {
+          assets: [
+            {
+              path: 'apps/app-a/dist/asset.min.css',
+              label: 'CSS distribution',
+            },
+          ],
+        },
+      ],
+      '@fake/plugin-without-options2',
+    ]);
   });
 });

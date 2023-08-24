@@ -1,4 +1,5 @@
 import { SemanticReleaseOptions } from '../executors/semantic-release/semantic-release';
+import deepMap from 'deep-map';
 
 export interface ConfigTokensDict {
   projectDir: string;
@@ -17,40 +18,11 @@ export function applyTokensToSemanticReleaseOptions(
       .replaceAll('${WORKSPACE_DIR}', tokens.workspaceDir);
   };
 
-  [
-    'buildTarget',
-    'changelogFile',
-    'commitMessage',
-    'packageJsonDir',
-    'tagFormat',
-    'outputPath'
-  ].forEach((option) => {
-    if (options[option]) options[option] = replaceTokens(options[option]);
+  return deepMap<SemanticReleaseOptions>(options, (value) => {
+    if (typeof value === 'string') {
+      return replaceTokens(value);
+    }
+
+    return value;
   });
-
-  if (options.gitAssets?.length)
-    options.gitAssets = options.gitAssets.map((asset) => replaceTokens(asset));
-
-  if (options.plugins?.length) {  // replace token in plugin's (string, string[]) options (when provided)
-    options.plugins = options.plugins.map((plugin) => {
-      if (typeof plugin === 'string') {
-        return plugin; // no option provided, no replacement necessary
-      }
-      else {
-        const [pluginName, pluginOptions] = plugin;
-        const newPluginOptions = Object.entries(pluginOptions).reduce(
-          (newOptions, [key, value]) => ({
-            ...newOptions,
-            [key]: typeof value === 'string' ?
-              replaceTokens(value) :
-              (Array.isArray(value) ? value.map(v => typeof v === 'string' ? replaceTokens(v) : v) : value),
-          }),
-          {}
-        );
-        return [pluginName, newPluginOptions];
-      }
-    })
-  }
-
-  return options;
 }
