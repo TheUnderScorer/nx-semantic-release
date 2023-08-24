@@ -1,3 +1,10 @@
+## [2.6.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.5.0...nx-semantic-release-v2.6.0) (2023-08-24)
+
+
+### Features
+
+* apply tokens to every configuration field, including nested arrays and objects ([1c4b886](https://github.com/TheUnderScorer/nx-semantic-release/commit/1c4b8861037dd9da5f5e4fad6197eb1a78e2a520))
+
 ## [2.5.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.4.1...nx-semantic-release-v2.5.0) (2023-07-16)
 
 
