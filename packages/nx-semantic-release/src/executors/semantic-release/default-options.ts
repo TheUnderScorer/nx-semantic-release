@@ -13,7 +13,7 @@ export const defaultOptions: SemanticReleaseOptions = {
   githubOptions: {},
   ci: true,
   commitMessage:
-    'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
+    'chore(release): ${nextRelease.gitTag} [skip ci]\n\n${nextRelease.notes}',
   dryRun: false,
   github: true,
   git: true,
