@@ -1,3 +1,10 @@
+## [2.6.2](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.6.1...nx-semantic-release-v2.6.2) (2023-09-05)
+
+
+### Bug Fixes
+
+* change default commit message to include tag rather than only the version ([f914ab3](https://github.com/TheUnderScorer/nx-semantic-release/commit/f914ab30bdab4bda6b781525c680d47f58946302))
+
 ## [2.6.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.6.0...nx-semantic-release-v2.6.1) (2023-08-24)
 
 
