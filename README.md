@@ -208,6 +208,18 @@ npx nx run-many --target=semantic-release --parallel=false
 ```
 > Note: `--parallel=false` is required to run tasks sequentially, otherwise `nx run-many` will run tasks in parallel and semantic-release will fail.
 
+## Gitlab support
+
+In order to use this plugin on Gitlab, install `@semantic-release/gitlab@9.5.1` (>= 10.0.0 is not supported for now due to ES format) and set the following in your configuration file:
+```json
+{
+  "plugins": [
+    "@semantic-release/gitlab"
+  ],
+  "github": false,
+}
+
+```
 
 ## CI/CD
 
