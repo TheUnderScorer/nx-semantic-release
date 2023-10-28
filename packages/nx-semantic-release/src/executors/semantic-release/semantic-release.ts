@@ -1,3 +1,4 @@
+import path from "path";
 import {
   createProjectGraphAsync,
   ExecutorContext,
@@ -140,6 +141,7 @@ export function resolveOptions(
 
   return applyTokensToSemanticReleaseOptions(mergedOptions, {
     projectName: context.projectName as string,
+    relativeProjectDir: path.relative(context.cwd, getDefaultProjectRoot(context)),
     projectDir: getDefaultProjectRoot(context),
     workspaceDir: workspaceRoot,
   });
