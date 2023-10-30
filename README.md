@@ -138,6 +138,7 @@ $ nx semantic-release app-c --repositoryUrl "https://github.com/TheUnderScorer/n
 
 | Token           | Expands into                                                                                  |
 | --------------- | --------------------------------------------------------------------------------------------- |
+| ${RELATIVE PROJECT_DIR}  | Resolves to the current project relative direcory within the current workspace (ex. `apps/app-a`) |
 | ${PROJECT_DIR}  | Resolves to the current project direcory (ex. `/Users/theunderscorer/nx-monorepo/apps/app-a`) |
 | ${PROJECT_NAME} | Resolves to the current project name (ex. `app-a`)                                            |
 | ${WORKSPACE_DIR}| Resolves to the current workspace direcory (ex. `/Users/theunderscorer/nx-monorepo`)          |
