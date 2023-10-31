@@ -1,3 +1,10 @@
+## [2.7.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.6.2...nx-semantic-release-v2.7.0) (2023-10-31)
+
+
+### Features
+
+* add RELATIVE_PROJECT_DIR token ([f041755](https://github.com/TheUnderScorer/nx-semantic-release/commit/f041755e09a9a00a6dca0352f94aad2995bffaa8))
+
 ## [2.6.2](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.6.1...nx-semantic-release-v2.6.2) (2023-09-05)
 
 
