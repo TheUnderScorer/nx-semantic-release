@@ -138,9 +138,10 @@ $ nx semantic-release app-c --repositoryUrl "https://github.com/TheUnderScorer/n
 
 | Token           | Expands into                                                                                  |
 | --------------- | --------------------------------------------------------------------------------------------- |
-| ${PROJECT_DIR}  | Resolves to the current project direcory (ex. `/Users/theunderscorer/nx-monorepo/apps/app-a`) |
+| ${RELATIVE_PROJECT_DIR}  | Resolves to the current project relative directory within the current workspace (ex. `apps/app-a`) |
+| ${PROJECT_DIR}  | Resolves to the current project directory (ex. `/Users/theunderscorer/nx-monorepo/apps/app-a`) |
 | ${PROJECT_NAME} | Resolves to the current project name (ex. `app-a`)                                            |
-| ${WORKSPACE_DIR}| Resolves to the current workspace direcory (ex. `/Users/theunderscorer/nx-monorepo`)          |
+| ${WORKSPACE_DIR}| Resolves to the current workspace directory (ex. `/Users/theunderscorer/nx-monorepo`)          |
 
 
 Every available option support tokens - this included nested objects and arrays.

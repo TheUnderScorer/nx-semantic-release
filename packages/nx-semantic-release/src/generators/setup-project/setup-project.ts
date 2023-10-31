@@ -1,3 +1,4 @@
+import path from "path";
 import { SemanticReleaseOptions } from '../../executors/semantic-release/semantic-release';
 import {
   Tree,
@@ -27,6 +28,7 @@ export async function setupProject(
   const semanticReleaseConfig = applyTokensToSemanticReleaseOptions(options, {
     projectName,
     projectDir: projectConfig.root,
+    relativeProjectDir: path.relative(workspaceRoot, projectConfig.root),
     workspaceDir: workspaceRoot,
   });
 
