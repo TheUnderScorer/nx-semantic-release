@@ -14,6 +14,7 @@ const requiredOptions: SemanticReleaseOptions = {
 
 const mockTokens: ConfigTokensDict = {
   projectDir: 'apps/app-a',
+  relativeProjectDir: 'apps/app-a',
   projectName: 'app-a',
   workspaceDir: '.',
 };
