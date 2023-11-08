@@ -1,3 +1,11 @@
+## [2.7.1](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.7.0...nx-semantic-release-v2.7.1) (2023-11-08)
+
+
+### Bug Fixes
+
+* Analyze commits in batches of 2000 ([#86](https://github.com/TheUnderScorer/nx-semantic-release/issues/86)) ([a028765](https://github.com/TheUnderScorer/nx-semantic-release/commit/a02876512bbc23997c41f24ed11e2f72569b2604))
+* Update package-lock dependencies ([#87](https://github.com/TheUnderScorer/nx-semantic-release/issues/87)) ([1a03363](https://github.com/TheUnderScorer/nx-semantic-release/commit/1a033635ce3a236cb0d108b16d13fba26b5a938d))
+
 ## [2.7.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.6.2...nx-semantic-release-v2.7.0) (2023-10-31)
 
 
