@@ -288,6 +288,8 @@ export async function setupTestRepo(
 
   await bootstrapTestProjectsAndLibs();
 
+  await runCommandsInTestProj(['npm install -D ajv']);
+
   if (withGit) {
     await runCommandsInTestProj([
       'git add apps/app-a',
