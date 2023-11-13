@@ -36,7 +36,7 @@ async function setupRemoteRepo() {
     fs.mkdirSync(remoteReposDirectory, { recursive: true });
   }
 
-  await exec(`git init --bare project.git`, {
+  await exec(`git init --bare project.git -b master`, {
     cwd: remoteReposDirectory,
   });
 }
@@ -54,7 +54,7 @@ async function initGit() {
   await setupRemoteRepo();
 
   await runCommandsInTestProj([
-    'git init',
+    'git init -b master',
     'git config user.email "test@example.com"',
     'git config user.name "Test"',
     'git add .',
