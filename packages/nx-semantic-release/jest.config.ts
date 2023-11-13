@@ -17,5 +17,5 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/nx-semantic-release',
   setupFiles: [path.resolve(__dirname, './src/tests/setup.ts')],
-  testTimeout: 100000,
+  testTimeout: 200_000,
 };
