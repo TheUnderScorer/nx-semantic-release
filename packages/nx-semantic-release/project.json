@@ -43,7 +43,8 @@
             "ignore": ["**/tsconfig*.json", "project.json", "node_modules/**"],
             "output": "/"
           }
-        ]
+        ],
+        "updateBuildableProjectDepsInPackageJson": true
       },
       "configurations": {
         "watch": {
