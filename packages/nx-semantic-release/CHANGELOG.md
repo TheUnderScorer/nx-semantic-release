@@ -1,3 +1,10 @@
+## [2.10.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.9.0...nx-semantic-release-v2.10.0) (2023-12-28)
+
+
+### Features
+
+* infer the `outputPath` option from the `options.outputPath` of the specified `buildTarget` if none was provided ([6846874](https://github.com/TheUnderScorer/nx-semantic-release/commit/6846874d5c3b103e5c6aa23c6e6abb117ff00994)), closes [#52](https://github.com/TheUnderScorer/nx-semantic-release/issues/52)
+
 ## [2.9.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.8.0...nx-semantic-release-v2.9.0) (2023-12-28)
 
 
