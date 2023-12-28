@@ -1,14 +1,14 @@
-import path from "path";
+import path from 'path';
 import {
   createProjectGraphAsync,
   ExecutorContext,
+  logger,
   parseTargetString,
   ProjectGraph,
   runExecutor,
   workspaceRoot,
 } from '@nx/devkit';
 import { cosmiconfigSync } from 'cosmiconfig';
-import type release from 'semantic-release';
 import {
   Options as BaseSemanticReleaseOptions,
   PluginSpec,
@@ -20,6 +20,8 @@ import { ExecutorOptions } from '../../types';
 import { unwrapExecutorOptions } from '../../utils/executor';
 import { applyTokensToSemanticReleaseOptions } from '../../config/apply-tokens';
 import { getDefaultProjectRoot, GetProjectContext } from '../../common/project';
+import { readCachedProjectConfiguration } from 'nx/src/project-graph/project-graph';
+import { getSemanticRelease } from './get-semantic-release';
 
 export type SemanticReleaseOptions = Omit<
   BaseSemanticReleaseOptions,
@@ -77,6 +79,10 @@ export async function semanticRelease(
         );
       }
     }
+
+    if (!resolvedOptions.outputPath) {
+      inferOutputPath(params.project, params.target, resolvedOptions);
+    }
   }
 
   setExecutorContext(context);
@@ -101,15 +107,25 @@ export async function semanticRelease(
   };
 }
 
-/**
- * @FIXME Recently semantic-release became esm only, but until NX will support plugins in ESM, we have to use this dirty hack :/
- * */
-function getSemanticRelease() {
-  const fn = new Function(
-    'return import("semantic-release").then(m => m.default)'
-  );
+function inferOutputPath(
+  projectName: string,
+  target: string,
+  options: SemanticReleaseOptions
+) {
+  const projectConfig = readCachedProjectConfiguration(projectName);
 
-  return fn() as Promise<typeof release>;
+  const projectOutputPath =
+    projectConfig.targets?.[target]?.options?.outputPath ?? '';
+
+  if (projectOutputPath) {
+    const resolvedOutputPath = path.join(workspaceRoot, projectOutputPath);
+
+    logger.info(
+      `Resolved ${resolvedOutputPath} as output path for semantic-release`
+    );
+
+    options.outputPath = resolvedOutputPath;
+  }
 }
 
 function extractBuildTargetParams(
@@ -141,7 +157,10 @@ export function resolveOptions(
 
   return applyTokensToSemanticReleaseOptions(mergedOptions, {
     projectName: context.projectName as string,
-    relativeProjectDir: path.relative(context.cwd, getDefaultProjectRoot(context)),
+    relativeProjectDir: path.relative(
+      context.cwd,
+      getDefaultProjectRoot(context)
+    ),
     projectDir: getDefaultProjectRoot(context),
     workspaceDir: workspaceRoot,
   });
