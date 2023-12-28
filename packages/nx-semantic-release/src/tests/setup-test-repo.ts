@@ -104,13 +104,13 @@ function createPackageJsonForProjects() {
 
 async function bootstrapTestProjectsAndLibs() {
   testApps.forEach((project) => {
-    runNxCommand(
-      `generate @nx/web:application ${project} --directory apps/${project} --e2e-test-runner=none`
-    );
+    const command = `generate @nx/web:application apps/${project} --e2e-test-runner=none`;
+
+    runNxCommand(command);
   });
 
   testLibs.forEach((lib) => {
-    runNxCommand(`generate @nx/js:library ${lib} --directory libs/${lib}`);
+    runNxCommand(`generate @nx/js:library libs/${lib}`);
   });
 
   createPackageJsonForProjects();
@@ -183,9 +183,10 @@ async function bootstrapTestProjectsAndLibs() {
 function updateWorkspaceNxConfig() {
   const nxJson = readJson<NxJsonConfiguration>('nx.json');
 
-  nxJson.implicitDependencies = {
-    ...nxJson.implicitDependencies,
-    'test-only.txt': '*',
+  nxJson.namedInputs = {
+    ...nxJson.namedInputs,
+    sharedGlobals: ['{workspaceRoot}/test-only.txt'],
+    default: ['sharedGlobals'],
   };
 
   nxJson.targetDefaults = {
@@ -287,8 +288,6 @@ export async function setupTestRepo(
   }
 
   await bootstrapTestProjectsAndLibs();
-
-  await runCommandsInTestProj(['npm install -D ajv']);
 
   if (withGit) {
     await runCommandsInTestProj([

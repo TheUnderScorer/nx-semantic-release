@@ -29,7 +29,7 @@ describe('resolveOptions', () => {
   let mockContext: GetProjectContext;
 
   beforeAll(async () => {
-    await setupTestRepo();
+    await setupTestRepo(false);
 
     const projPath = tmpProjPath();
 

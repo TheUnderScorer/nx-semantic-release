@@ -144,7 +144,7 @@ describe('Semantic release', () => {
       await checkCommonLib();
     });
 
-    it.only('should support passing false to release in releaseRules and respect it', async () => {
+    it('should support passing false to release in releaseRules and respect it', async () => {
       await safeRunNxCommandAsync('run app-a:semantic-release');
 
       await runCommandsInTestProj([
