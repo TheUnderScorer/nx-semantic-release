@@ -1,7 +1,8 @@
-import path from "path";
+import path from 'path';
 import {
   createProjectGraphAsync,
   ExecutorContext,
+  logger,
   parseTargetString,
   ProjectGraph,
   runExecutor,
@@ -20,7 +21,7 @@ import { ExecutorOptions } from '../../types';
 import { unwrapExecutorOptions } from '../../utils/executor';
 import { applyTokensToSemanticReleaseOptions } from '../../config/apply-tokens';
 import { getDefaultProjectRoot, GetProjectContext } from '../../common/project';
-import { readCachedProjectConfiguration } from "nx/src/project-graph/project-graph";
+import { readCachedProjectConfiguration } from 'nx/src/project-graph/project-graph';
 
 export type SemanticReleaseOptions = Omit<
   BaseSemanticReleaseOptions,
@@ -79,9 +80,9 @@ export async function semanticRelease(
       }
     }
 
-    //TODO Fix
-    const projectConfig = readCachedProjectConfiguration(params.project);
-    resolvedOptions.outputPath = resolvedOptions.outputPath ?? join(workspaceRoot, projectConfig.targets?.[params.target]?.options?.outputPath ?? '');
+    if (!resolvedOptions.outputPath) {
+      inferOutputPath(params.project, params.target, resolvedOptions);
+    }
   }
 
   setExecutorContext(context);
@@ -104,6 +105,27 @@ export async function semanticRelease(
   return {
     success: true,
   };
+}
+
+function inferOutputPath(
+  projectName: string,
+  target: string,
+  options: SemanticReleaseOptions
+) {
+  const projectConfig = readCachedProjectConfiguration(projectName);
+
+  const projectOutputPath =
+    projectConfig.targets?.[target]?.options?.outputPath ?? '';
+
+  if (projectOutputPath) {
+    const resolvedOutputPath = path.join(workspaceRoot, projectOutputPath);
+
+    logger.info(
+      `Resolved ${resolvedOutputPath} as output path for semantic-release`
+    );
+
+    options.outputPath = resolvedOutputPath;
+  }
 }
 
 /**
@@ -146,7 +168,10 @@ export function resolveOptions(
 
   return applyTokensToSemanticReleaseOptions(mergedOptions, {
     projectName: context.projectName as string,
-    relativeProjectDir: path.relative(context.cwd, getDefaultProjectRoot(context)),
+    relativeProjectDir: path.relative(
+      context.cwd,
+      getDefaultProjectRoot(context)
+    ),
     projectDir: getDefaultProjectRoot(context),
     workspaceDir: workspaceRoot,
   });
