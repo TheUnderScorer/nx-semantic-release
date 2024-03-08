@@ -59,4 +59,4 @@ jobs:
         run: pnpm lint
 
       - name: Run tests
-        run: nx test nx-semantic-release --runInBand --skip-nx-cache
+        run: pnpm exec nx test nx-semantic-release --runInBand --skip-nx-cache
