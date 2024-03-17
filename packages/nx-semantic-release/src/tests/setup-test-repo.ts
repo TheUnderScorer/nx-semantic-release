@@ -109,9 +109,13 @@ async function bootstrapTestProjectsAndLibs() {
     runNxCommand(command);
   });
 
-  testLibs.forEach((lib) => {
-    runNxCommand(`generate @nx/js:library libs/${lib}`);
-  });
+  await wait(500);
+
+  for (const lib of testLibs) {
+    runNxCommand(`generate @nx/js:library libs/${lib} --unit-test-runner=none`);
+
+    await wait(500);
+  }
 
   createPackageJsonForProjects();
   updateWorkspaceNxConfig();
