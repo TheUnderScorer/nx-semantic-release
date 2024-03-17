@@ -8,7 +8,7 @@ import {
 import { tmpProjPath } from '@nx/plugin/testing';
 import { setupTestRepo } from '../../tests/setup-test-repo';
 import { GetProjectContext } from '../../common/project';
-import { ExecutorContext, workspaceRoot } from '@nrwl/devkit';
+import { ExecutorContext, workspaceRoot } from '@nx/devkit';
 import { join } from 'path';
 
 describe('parseTag', () => {

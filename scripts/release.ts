@@ -7,12 +7,12 @@ config();
 async function main() {
   logger.log('Starting package release...');
 
-  await exec('npm run build:skip-cache', {
+  await exec('pnpm build:skip-cache', {
     verbose: true,
   });
 
-  await exec('npm link dist/packages/nx-semantic-release');
-  await exec('npm install');
+  await exec('pnpm link dist/packages/nx-semantic-release');
+  await exec('pnpm install');
 
   await exec('nx run nx-semantic-release:semantic-release --verbose', {
     verbose: true,
