@@ -84,7 +84,6 @@ export const resolvePlugins = (
           ],
         ]
       : emptyArray),
-    ...(options.npm ? getNpmPlugin(context, options) : emptyArray),
     ...(options.plugins ?? []),
   ];
 
@@ -107,6 +106,10 @@ export const resolvePlugins = (
         ],
       },
     ]);
+  }
+
+  if (options.npm) {
+    defaultPlugins.push(...getNpmPlugin(context, options));
   }
 
   if (options.github) {
