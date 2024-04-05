@@ -17,9 +17,9 @@ export const testReleasableProjects = [
 ] as const;
 export const testApps = ['app-a', 'app-b', 'app-c'];
 export const testLibs = [
+  'common-lib',
   'lib-a',
   'lib-a-dependency',
-  'common-lib',
   'lib-b',
 ] as const;
 export const testNonReleasableLibs = ['lib-a', 'lib-a-dependency', 'lib-b'];

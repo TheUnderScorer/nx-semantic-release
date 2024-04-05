@@ -23,7 +23,7 @@ const ciEnvToRemove = [
 export const safeRunNxCommandAsync = async (command: string) => {
   const cwd = tmpProjPath();
 
-  await exec(`npx nx ${command}`, {
+  await exec(`pnpm exec nx ${command}`, {
     cwd,
     env: omit(process.env, ciEnvToRemove),
   });
@@ -32,7 +32,7 @@ export const safeRunNxCommandAsync = async (command: string) => {
 export const safeRunNxCommand = (command: string) => {
   const cwd = tmpProjPath();
 
-  execSync(`npx nx ${command}`, {
+  execSync(`pnpm exec nx ${command}`, {
     cwd,
     env: omit(process.env, ciEnvToRemove),
   });
