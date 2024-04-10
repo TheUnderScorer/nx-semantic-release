@@ -1,3 +1,10 @@
+## [2.11.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.10.0...nx-semantic-release-v2.11.0) (2024-04-10)
+
+
+### Features
+
+* release to npm after user defined plugins ([#105](https://github.com/TheUnderScorer/nx-semantic-release/issues/105)) ([a573495](https://github.com/TheUnderScorer/nx-semantic-release/commit/a573495b6f406c5ac7d42ceb384e36f7a76a8c87))
+
 ## [2.10.0](https://github.com/TheUnderScorer/nx-semantic-release/compare/nx-semantic-release-v2.9.0...nx-semantic-release-v2.10.0) (2023-12-28)
 
 
