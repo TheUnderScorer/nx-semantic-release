@@ -84,9 +84,16 @@ export const resolvePlugins = (
           ],
         ]
       : emptyArray),
-    ...(options.npm ? getNpmPlugin(context, options) : emptyArray),
     ...(options.plugins ?? []),
   ];
+
+  if (options.npm) {
+    defaultPlugins.push(...getNpmPlugin(context, options));
+  }
+
+  if (options.github) {
+    defaultPlugins.push(['@semantic-release/github', options.githubOptions]);
+  }
 
   if (options.git) {
     defaultPlugins.push([
@@ -107,10 +114,6 @@ export const resolvePlugins = (
         ],
       },
     ]);
-  }
-
-  if (options.github) {
-    defaultPlugins.push(['@semantic-release/github', options.githubOptions]);
   }
 
   return defaultPlugins;
