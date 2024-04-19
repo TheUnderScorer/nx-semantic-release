@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=14"
+    "node": "^18.17 || >=20"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.base.json",
@@ -46,8 +46,8 @@
     "@semantic-release/changelog": "6.0.2",
     "@semantic-release/exec": "6.0.3",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "8.0.7",
-    "@semantic-release/npm": "9.0.2",
+    "@semantic-release/github": "9.2.6",
+    "@semantic-release/npm": "11.0.3",
     "cosmiconfig": "^7.0.1",
     "deep-map": "^2.0.0",
     "es6-weak-map": "^2.0.3",
