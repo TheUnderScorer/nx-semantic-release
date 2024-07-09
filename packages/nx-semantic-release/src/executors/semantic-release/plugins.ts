@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import { ExecutorContext } from '@nx/devkit';
-import { PluginSpec } from 'semantic-release';
+import type { PluginSpec } from 'semantic-release';
 import { SemanticReleaseOptions } from './semantic-release';
 import { getDefaultProjectRoot } from '../../common/project';
 

@@ -9,13 +9,13 @@ Read more below to get started:
 After cloning repo run:
 
 ```shell
-npm install
+pnpm install
 ```
 
 In order to run tests run:
 
 ```shell
-npm run test
+pnpm test
 ```
 
 > Note: E2E tests use `@nx/plugin` for generating test workspace. You can learn more about it [here](https://nx.dev/packages/nx-plugin).
