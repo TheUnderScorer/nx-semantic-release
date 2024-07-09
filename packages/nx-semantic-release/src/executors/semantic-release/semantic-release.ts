@@ -9,7 +9,7 @@ import {
   workspaceRoot,
 } from '@nx/devkit';
 import { cosmiconfigSync } from 'cosmiconfig';
-import {
+import type {
   Options as BaseSemanticReleaseOptions,
   PluginSpec,
 } from 'semantic-release';
