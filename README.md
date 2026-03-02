@@ -3,6 +3,17 @@
 [nx](https://nx.dev/) plugin for automated releases, powered
 by [semantic-release](https://github.com/semantic-release/semantic-release)
 
+> ⚠️ Warning
+>
+> This package is no longer maintained.
+> 
+> Initially, I created it to automate releases for my personal projects and didn't expect it to grow any further than that.
+> I'm happy that some people found value in it, but unfortunately I no longer work with `nx` on a daily basis, and I don't have the time to maintain it any more.
+> 
+> The code is still available in this repo, please feel free to fork it and modify as you see fit.
+> 
+> Thanks again for everyone who supported and contributed to this project!
+
 ## How it works
 
 Under the hood, it uses project graph from nx to analyze commits for every configured project and filters out these commits that doesn't affect given project or it's dependencies.
